@@ -5,13 +5,17 @@ import "../../assets/css/Login.css";
 
 // reactstrap components
 import { Button, Card, Form, Input, Container, Row, Col } from "reactstrap";
-
-import '../../assets/css/Login.css';
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 
-
+import Home from "./Home";
+import {BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom';
 function LoginPage() {
+  const navigate = useNavigate();
+ 
+  const goHome = () => {
+    navigate('/home')
+  };
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
     document.body.classList.add("register-page");
@@ -19,6 +23,7 @@ function LoginPage() {
       document.body.classList.remove("register-page");
     };
   });
+ 
   return (
     <>
 
@@ -39,10 +44,20 @@ function LoginPage() {
                   <Input placeholder="ID" type="text" />
                   <label>Password</label>
                   <Input placeholder="Password" type="password" />
-                  <Button block className="btn-round" color="info">
+                  <Button
+                    block
+                    className="btn-round"
+                    color="info"
+                    onClick={
+                      goHome
+                    }
+                  >
                     Login
                   </Button>
                 </Form>
+                <Routes>
+                  <Route path="/home" element={<Home/>}></Route>
+                </Routes>
                 <div className="forgot">
                   <Button
                     className="btn-link"
@@ -68,4 +83,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default LoginPage; 
