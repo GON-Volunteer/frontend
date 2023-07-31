@@ -99,7 +99,7 @@ function SectionLogin() {
                     color="danger"
                     type="button"
                   >
-                    Register
+                    Login
                   </Button>
                 </Form>
                 <div className="forgot">
@@ -118,11 +118,11 @@ function SectionLogin() {
                   className="btn-round"
                   outline
                   color="neutral"
-                  href="/register-page"
+                  href="/LoginPage"
                   size="lg"
                   target="_blank"
                 >
-                  View Register Page
+                  Login Page
                 </Button>
               </div>
             </Col>
