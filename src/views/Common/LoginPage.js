@@ -31,6 +31,7 @@ function LoginPage() {
 
   return (
     <>
+
       <div className="login-page">
         <h3 id="logintitle" className="title mx-auto">
           Creative Learners' Academy
@@ -54,6 +55,7 @@ function LoginPage() {
         <Routes>
           <Route path="/home" element={<Home />} />
         </Routes>
+
       </div>
     </>
   );
