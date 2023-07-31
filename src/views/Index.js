@@ -1,6 +1,6 @@
 
-import React from "react";
-
+import React, { useState } from 'react';
+import {BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom';
 // reactstrap components
 
 // core components
@@ -22,11 +22,11 @@ import SectionDark from "views/index-sections/SectionDark.js";
 import SectionLogin from "views/index-sections/SectionLogin.js";
 import SectionExamples from "views/index-sections/SectionExamples.js";
 import SectionDownload from "views/index-sections/SectionDownload.js";
+import LoginPage from "views/Common/LoginPage.js";
 
-import LoginPage from "./Common/LoginPage";
-import Home from "./Common/Home";
 
 function Index() {
+ 
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
     document.body.classList.add("index");
@@ -37,7 +37,7 @@ function Index() {
   return (
     <>
       <div className="main">
-        <LoginPage/>
+        {<LoginPage/>}
        
 {/* 
         <SectionButtons />
@@ -56,6 +56,7 @@ function Index() {
         <DemoFooter />
         <DemoFooter /> */}
       </div> 
+     
     </>
   );
 }
