@@ -14,6 +14,8 @@ import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import LoginPage from "views/Common/LoginPage.js";
 import AnnouncementPage from "views/Common/AnnouncementPage";
+
+import Home from "views/Common/Home";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -28,6 +30,8 @@ root.render(
       <Route path="/Login-page" element={<LoginPage />} />
       <Route path="/Announcement-page" element={<AnnouncementPage />} />
       <Route path="*" element={<Navigate to="/index" replace />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/home" element={<Home/>}></Route>
     </Routes>
   </BrowserRouter>
 );
