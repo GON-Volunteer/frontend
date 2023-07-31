@@ -1,49 +1,49 @@
-.Logo {
-    width: 106px;
-    height: 44px;
-    border: none;
-    outline: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2);
-  }
+.login-page {
+  height: 100%;
+  background-color: #0343cb;
+}
 
-#logoid{
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px 12px 12px 12px;
+.Logo {
+  width: 106px;
+  height: 44px;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#logoid {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px 12px 12px 12px;
 }
 
 .centered-img {
-    display: block;
-    margin: auto;
-  }
-
-#login-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #0343CB;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
+  display: block;
+  margin: auto;
 }
 
-#logintitle{
-    font-size: 1.325em;
-    line-height: 1.4;
-    margin: 0px 0 0px;
-    font-weight: bold; 
-    color: #fff;
-}
-.title.mx-auto{
-    font-weight: bold;
+#logintitle {
+  font-size: 1.325em;
+  line-height: 1.4;
+  margin: 0px 0 0px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
 }
 
-#logintag{
-    color: red;
+#login-text {
+  color: #fff;
+  font-weight: bold;
+}
+
+.title.mx-auto {
+  font-weight: bold;
+}
+
+#logintag {
+  color: red;
 }
