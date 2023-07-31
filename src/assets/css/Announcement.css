@@ -1,55 +1,53 @@
-.Logo {
-    width: 106px;
-    height: 166px;
-    border: none;
-    outline: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2);
-  }
 
-.card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px 12px 12px 12px;
+
+.content-text{
+    font-size: 0.725em;
+    line-height: 1.4;
+    margin: 0px 0 0px;
+    font-weight: bold; 
+    color: black;
+}
+tr{
+    border: 1px solid rgb(151, 151, 151);
 }
 
-.centered-img {
-    display: block;
-    margin: auto;
+table {
+    width: 280px; /* 테이블의 최대 너비를 500px로 설정합니다. */
   }
 
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
+.title-text{
+    font-size: 0.725em;
+    line-height: 1.4;
+    margin: 0px 0 0px;
+    font-weight: bold; 
+    color: black;
 }
 
-h3, .h3 {
+
+
+#Announcementtitle{
     font-size: 1.325em;
     line-height: 1.4;
     margin: 20px 0 0px;
     font-weight: bold; 
-}
-
-.title {
     margin-top: 0px;
     margin-bottom: 10px;
     min-height: 22px;
-    position: absolute; /* Position the title absolutely */
     top: 1; /* Move the title to the top */
     left: 5; /* Move the title to the left */
-}
-
-.title.mx-auto {
     font-weight: bold;
     color: #0343CB;
-  }
+}
+
+
+.page-header .filter::after {
+    background-color: wheat;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}

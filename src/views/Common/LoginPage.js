@@ -27,14 +27,18 @@ function LoginPage() {
   return (
     <>
 
-      <div>
+      <div
+          className="page-header"
+                style={{
+                  backgroundColor: "#ffffff",
+                }}>
         <div className="filter" />
         <Container>
           <Row>
             <Col className="ml-auto mr-auto" lg="4">
-              <Card className="card-register ml-auto mr-auto">
+              <Card id = "login-card" className="card-register ml-auto mr-auto">
                 <h3 id = "logintitle" className="title mx-auto">Creative Learners' Academy</h3>
-                <img id="logoid" width = "200px" className="centered-img" src={require("assets/img/logo.png")} alt="logo" />
+                <img id="logoid" width = "180px" className="centered-img" src={require("assets/img/logo.png")} alt="logo" />
                 <Form className="register-form">
                   <label>ID</label>
                   <Input placeholder="ID" type="text" />

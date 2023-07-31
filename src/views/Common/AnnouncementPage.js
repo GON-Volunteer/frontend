@@ -2,7 +2,7 @@ import React from 'react';
 
 // css
 import "../../assets/css/Announcement.css";
-
+import "../../assets/css/Card.css";
 // reactstrap components
 import {  Card, Container,CardText, Row, Col } from "reactstrap";
 
@@ -20,19 +20,17 @@ function AnnouncementPage() {
     });
     return (
       <>
-        <ExamplesNavbar />
         <div
           className="page-header"
           style={{
-            backgroundImage: "url(" + require("assets/img/login-image.jpg") + ")",
+            backgroundColor: "#ffffff",
           }}
         >
           <div className="filter" />
           <Container>
             <Row>
               <Col className="ml-auto mr-auto" lg="4">
-                <Card className="card-register ml-auto mr-auto">
-                  <h3 className="title mx-auto">Announcement</h3>
+                <Card id ="card" className="card-register ml-auto mr-auto">
                   <CardText><AnnouncementList/></CardText>
                 </Card>
               </Col>
