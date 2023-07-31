@@ -55,9 +55,7 @@ function LoginPage() {
                     Login
                   </Button>
                 </Form>
-                <Routes>
-                  <Route path="/home" element={<Home/>}></Route>
-                </Routes>
+               
                 <div className="forgot">
                   <Button
                     className="btn-link"
