@@ -50,10 +50,14 @@ function Index() {
   });
   return (
     <>
-      {/* <IndexNavbar />
-      <IndexHeader /> */}
-      <Home/>
-      {/* <div className="main">
+
+    
+      <IndexNavbar />
+      <IndexHeader />
+      <div className="main">
+        <SectionLogin/>
+        <Home/>
+
         <SectionButtons />
         <SectionNavbars />
         <SectionNavigation />
