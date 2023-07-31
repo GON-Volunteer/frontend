@@ -6,6 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import '../../assets/css/Home.css';
 import {Button} from 'reactstrap';
+import AnnouncementPage from './AnnouncementPage';
 // import AnnouncementList from "views/Common/AnnouncementList.js"
 
 const Announcement = () => {
@@ -52,7 +53,7 @@ const Home = () => {
       const navigate = useNavigate();
       const handleMore = (e) => {
         e.preventDefault();
-        navigate('/announcements');
+        navigate('AnnouncementPage');
       };
       return (
         <div className="Home-container">
@@ -75,7 +76,7 @@ const Home = () => {
                 <Button color="info" onClick={handleMore}>More</Button>
             </div>
             <div id='simple_announce'>
-
+                <AnnouncementPage/>
             </div>
               
           
