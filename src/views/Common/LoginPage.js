@@ -9,12 +9,17 @@ import { Button, Card, Form, Input, Container, Row, Col } from "reactstrap";
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 
 import Home from "./Home";
-import {BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 function LoginPage() {
   const navigate = useNavigate();
- 
+
   const goHome = () => {
-    navigate('/home')
+    navigate("/home");
   };
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
@@ -23,64 +28,35 @@ function LoginPage() {
       document.body.classList.remove("register-page");
     };
   });
- 
+
   return (
     <>
-
-      <div
-          className="page-header"
-                style={{
-                  backgroundColor: "#ffffff",
-                }}>
-        <div className="filter" />
-        <Container>
-          <Row>
-            <Col className="ml-auto mr-auto" lg="4">
-              <Card id = "login-card" className="card-register ml-auto mr-auto">
-                <h3 id = "logintitle" className="title mx-auto">Creative Learners' Academy</h3>
-                <img id="logoid" width = "180px" className="centered-img" src={require("assets/img/logo.png")} alt="logo" />
-                <Form className="register-form">
-                  <label>ID</label>
-                  <Input placeholder="ID" type="text" />
-                  <label>Password</label>
-                  <Input placeholder="Password" type="password" />
-                  <Button
-                    block
-                    className="btn-round"
-                    color="info"
-                    onClick={
-                      goHome
-                    }
-                  >
-                    Login
-                  </Button>
-                </Form>
-                <Routes>
-                  <Route path="/home" element={<Home/>}></Route>
-                </Routes>
-                <div className="forgot">
-                  <Button
-                    className="btn-link"
-                    color="danger"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Forgot password?
-                  </Button>
-                </div>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-        <div className="footer register-footer text-center">
-          <h6>
-            © {new Date().getFullYear()}, made by{" GON"}
-            <i className="fa fa-heart heart" /> 
-          </h6>
-        </div>
+      <div className="login-page">
+        <h3 id="logintitle" className="title mx-auto">
+          Creative Learners' Academy
+        </h3>
+        <img
+          id="logoid"
+          width="180px"
+          className="centered-img"
+          src={require("assets/img/logo.png")}
+          alt="logo"
+        />
+        <Form className="register-form">
+          <label id="login-text">ID</label>
+          <Input placeholder="ID" type="text" />
+          <label id="login-text">Password</label>
+          <Input placeholder="Password" type="password" />
+          <Button block className="btn-round" color="info" onClick={goHome}>
+            Login
+          </Button>
+        </Form>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+        </Routes>
       </div>
     </>
   );
 }
 
-export default LoginPage; 
+export default LoginPage;
