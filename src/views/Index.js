@@ -39,7 +39,9 @@ import SectionDark from "views/index-sections/SectionDark.js";
 import SectionLogin from "views/index-sections/SectionLogin.js";
 import SectionExamples from "views/index-sections/SectionExamples.js";
 import SectionDownload from "views/index-sections/SectionDownload.js";
-import Home from "views/Common/Home.js"
+
+import LoginPage from "./Common/LoginPage";
+import Home from "./Common/Home";
 function Index() {
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
@@ -50,14 +52,10 @@ function Index() {
   });
   return (
     <>
-
-    
-      <IndexNavbar />
-      <IndexHeader />
       <div className="main">
-        <SectionLogin/>
-        <Home/>
-
+        <LoginPage/>
+       
+{/* 
         <SectionButtons />
         <SectionNavbars />
         <SectionNavigation />
@@ -71,8 +69,8 @@ function Index() {
         <SectionLogin />
         <SectionExamples />
         <SectionDownload />
-        <DemoFooter />
-      </div> */}
+        <DemoFooter /> */}
+      </div> 
     </>
   );
 }
