@@ -14,8 +14,10 @@ import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import LoginPage from "views/Common/LoginPage.js";
 import AnnouncementPage from "views/Common/AnnouncementPage";
+import AnnouncementList from "views/Common/AnnouncementList";
 
 import Home from "views/Common/Home";
+import './assets/css/index.css'
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -32,6 +34,7 @@ root.render(
       <Route path="*" element={<Navigate to="/index" replace />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/home" element={<Home/>}></Route>
+      <Route path="/AnnounceList-page" element={<AnnouncementList/>}></Route>
     </Routes>
   </BrowserRouter>
 );

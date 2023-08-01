@@ -19,13 +19,13 @@ function AnnouncementPage() {
   });
   return (
     <>
-      <AnnouncementList />
-      <div className="footer register-footer text-center">
+      {/* <AnnouncementList /> */}
+      {/* <div className="footer register-footer text-center">
         <h6>
           © {new Date().getFullYear()}, made by{" GON"}
           <i className="fa fa-heart heart" />
         </h6>
-      </div>
+      </div> */}
     </>
   );
 }
