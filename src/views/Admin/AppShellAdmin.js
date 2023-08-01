@@ -6,10 +6,11 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
 import StarIcon from "@material-ui/icons/Star";
+import EditIcon from "@material-ui/icons/Edit";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
-
+import Divider from "@mui/material/Divider";
 import {
   BrowserRouter as Router,
   Routes,
@@ -23,10 +24,22 @@ export default function ButtonAppBar() {
   const goHome = () => {
     navigate("/home");
   };
-
   const goAnnouncement = () => {
     navigate("/Announcement-page");
   };
+  const goTeacherManagement = () => {
+    navigate("/TeacherManagement-page");
+  };
+  const goStudentManagement = () => {
+    navigate("/StudentManagement");
+  };
+  const goClassManagement = () => {
+    navigate("/ClassManagement-page");
+  };
+  const goSubjectManagement = () => {
+    navigate("/SubjectManagement-page");
+  };
+
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const toggleDrawer = () => {
@@ -66,6 +79,36 @@ export default function ButtonAppBar() {
         >
           <StarIcon />
           Announcement
+        </MenuItem>
+
+        <Divider />
+        <MenuItem
+          onClick={goTeacherManagement}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <EditIcon />
+          Teacher Management
+        </MenuItem>
+        <MenuItem
+          onClick={goStudentManagement}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <EditIcon />
+          Student Management
+        </MenuItem>
+        <MenuItem
+          onClick={goClassManagement}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <EditIcon />
+          Class Management
+        </MenuItem>
+        <MenuItem
+          onClick={goSubjectManagement}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <EditIcon />
+          Subject Management
         </MenuItem>
       </Drawer>
     </Box>
