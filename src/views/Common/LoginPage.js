@@ -1,12 +1,9 @@
 import React from "react";
-
 // css
 import "../../assets/css/Login.css";
 
 // reactstrap components
 import { Button, Card, Form, Input, Container, Row, Col } from "reactstrap";
-// core components
-import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 
 import Home from "./Home";
 import {
@@ -15,23 +12,16 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
+
 function LoginPage() {
   const navigate = useNavigate();
 
   const goHome = () => {
     navigate("/home");
   };
-  document.documentElement.classList.remove("nav-open");
-  React.useEffect(() => {
-    document.body.classList.add("register-page");
-    return function cleanup() {
-      document.body.classList.remove("register-page");
-    };
-  });
 
   return (
     <>
-
       <div className="login-page">
         <h3 id="logintitle" className="title mx-auto">
           Creative Learners' Academy
@@ -55,7 +45,12 @@ function LoginPage() {
         <Routes>
           <Route path="/home" element={<Home />} />
         </Routes>
-
+      </div>
+      <div className="footer register-footer text-center">
+        <h6>
+          © {new Date().getFullYear()}, made with{" "}
+          <i className="fa fa-heart heart" /> by GON
+        </h6>
       </div>
     </>
   );
