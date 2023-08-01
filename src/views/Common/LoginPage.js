@@ -8,7 +8,6 @@ import { Button, Card, Form, Input, Container, Row, Col } from "reactstrap";
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 
-import Home from "./Home";
 import {
   BrowserRouter as Router,
   Routes,
@@ -21,13 +20,13 @@ function LoginPage() {
   const goHome = () => {
     navigate("/home");
   };
-  document.documentElement.classList.remove("nav-open");
-  React.useEffect(() => {
-    document.body.classList.add("register-page");
-    return function cleanup() {
-      document.body.classList.remove("register-page");
-    };
-  });
+  // document.documentElement.classList.remove("nav-open");
+  // React.useEffect(() => {
+  //   document.body.classList.add("register-page");
+  //   return function cleanup() {
+  //     document.body.classList.remove("register-page");
+  //   };
+  // });
 
   return (
     <>
@@ -52,11 +51,10 @@ function LoginPage() {
             Login
           </Button>
         </Form>
-        <Routes>
-          <Route path="/home" element={<Home />} />
-        </Routes>
+        
 
       </div>
+      
     </>
   );
 }

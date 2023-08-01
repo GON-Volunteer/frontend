@@ -7,6 +7,7 @@ import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import '../../assets/css/Home.css';
 import {Button} from 'reactstrap';
 import AnnouncementPage from './AnnouncementPage';
+
 // import AnnouncementList from "views/Common/AnnouncementList.js"
 
 const Announcement = () => {
@@ -51,9 +52,13 @@ const Announcement = () => {
 const Home = () => {
       const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
       const navigate = useNavigate();
+
+      const goAncList = () => {
+        navigate("/AnnounceList-page");
+      };
       const handleMore = (e) => {
         e.preventDefault();
-        navigate('AnnouncementPage');
+        
       };
       return (
         <div className="Home-container">
@@ -73,10 +78,11 @@ const Home = () => {
           />
             <div id='simple_announce_div' >
                 <p id="title">Announcement</p>
-                <Button color="info" onClick={handleMore}>More</Button>
+                <Button color="info" onClick={goAncList}>More</Button>
             </div>
             <div id='simple_announce'>
-                <AnnouncementPage/>
+              
+                <Announcement/>
             </div>
               
           
