@@ -5,7 +5,6 @@ import "../../assets/css/Login.css";
 // reactstrap components
 import { Button, Card, Form, Input, Container, Row, Col } from "reactstrap";
 
-import Home from "./Home";
 import {
   BrowserRouter as Router,
   Routes,
@@ -51,7 +50,9 @@ function LoginPage() {
           © {new Date().getFullYear()}, made with{" "}
           <i className="fa fa-heart heart" /> by GON
         </h6>
+        
       </div>
+      
     </>
   );
 }
