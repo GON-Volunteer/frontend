@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -9,6 +10,7 @@ import { Button } from "reactstrap";
 import AnnouncementPage from "./AnnouncementPage";
 import AppShell from "./AppShell";
 import AnnouncementList from "./AnnouncementList.js";
+
 
 const Announcement = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -50,7 +52,7 @@ const Announcement = () => {
 const Home = () => {
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
   const navigate = useNavigate();
-  const handleMore = (e) => {
+  const goAncList = (e) => {
     e.preventDefault();
     navigate("/Announcement-Page");
   };
@@ -73,7 +75,7 @@ const Home = () => {
       />
       <div id="simple_announce_div">
         <p id="title">Announcement</p>
-        <Button color="info" onClick={handleMore}>
+        <Button color="info" onClick={goAncList}>
           More
         </Button>
       </div>
