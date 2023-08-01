@@ -12,8 +12,11 @@
 .fc-day-sat a {
     color: blue;
 }
-
+#myCalendar {
+  margin: 30px;
+}
 #title{
+  margin-left: 20px;
     font-weight: bold;
     color: black;
     font-size:x-large;
@@ -36,7 +39,6 @@
     height: 600px; 
   } */
 
-  
 
 @media (max-width: 768px) {
     #simple_announce {
@@ -56,7 +58,7 @@
       margin-left: 40px;
     }
     #title{
-        margin-right: 70vw;
+        margin-right: 60vw;
     }
   }
   
