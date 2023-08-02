@@ -32,10 +32,12 @@ root.render(
       <Route path="/Login-page" element={<LoginPage />} />
       <Route path="/Announcement-page" element={<AnnouncementPage />} />
       <Route path="*" element={<Navigate to="/index" replace />} />
+
       <Route path="/login" element={<LoginPage />} />
       <Route path="/home" element={<Home />}></Route>
       <Route path="/AnnouncementList" element={<AnnouncementList />}></Route>
       <Route path="/StudentManagement" element={<StudentManagement />}></Route>
+
     </Routes>
   </BrowserRouter>
 );
