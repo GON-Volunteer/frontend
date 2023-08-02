@@ -9,7 +9,6 @@ import StarIcon from "@material-ui/icons/Star";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
-
 import {
   BrowserRouter as Router,
   Routes,
