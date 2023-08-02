@@ -18,7 +18,12 @@ function LoginPage() {
   const goHome = () => {
     navigate("/home");
   };
+  const handleLogin=(e)=>{
+    e.preventDefault();
+    const id = e.target.elements["id"].value; 
+    const password = e.target.elements["password"].value; 
 
+  }
   return (
     <>
       <div className="login-page">
@@ -41,9 +46,7 @@ function LoginPage() {
             Login
           </Button>
         </Form>
-        <Routes>
-          <Route path="/home" element={<Home />} />
-        </Routes>
+       
       </div>
       <div className="footer register-footer text-center">
         <h6>
