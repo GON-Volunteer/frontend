@@ -36,7 +36,7 @@
 }
 
 #login-text {
-  color: #fff;
+  color: #0343cb;
   font-weight: bold;
 }
 
@@ -46,4 +46,15 @@
 
 #logintag {
   color: red;
+}
+
+#bottom {
+  height: 670px;
+  background-color: #fffffff1;
+}
+
+.btn-info {
+  color: #fff;
+  background-color: #0343cb;
+  border-color: #0343cb;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import AppShell from "./AppShell";
+import AppShellAdmin from "..//Admin/AppShellAdmin";
 // css
 import "../../assets/css/Announcement.css";
 // reactstrap components
@@ -11,14 +12,14 @@ function AnnouncementPage() {
   return (
     <>
       <AppShell />
+      <AppShellAdmin />
       <AnnouncementList />
       <div className="footer register-footer text-center">
-
         <h6>
           © {new Date().getFullYear()}, made by{" GON"}
           <i className="fa fa-heart heart" />
         </h6>
-      </div> 
+      </div>
     </>
   );
 }

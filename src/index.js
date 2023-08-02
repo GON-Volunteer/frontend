@@ -1,4 +1,3 @@
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
@@ -15,9 +14,10 @@ import ProfilePage from "views/examples/ProfilePage.js";
 import LoginPage from "views/Common/LoginPage.js";
 import AnnouncementPage from "views/Common/AnnouncementPage";
 import AnnouncementList from "views/Common/AnnouncementList";
+import StudentManagement from "views/Admin/StudentManagement";
 
 import Home from "views/Common/Home";
-import './assets/css/index.css'
+import "./assets/css/index.css";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -32,8 +32,12 @@ root.render(
       <Route path="/Login-page" element={<LoginPage />} />
       <Route path="/Announcement-page" element={<AnnouncementPage />} />
       <Route path="*" element={<Navigate to="/index" replace />} />
-      <Route path="/home" element={<Home/>}></Route>
-      <Route path="/AnnounceList-page" element={<AnnouncementList/>}></Route>
+
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/home" element={<Home />}></Route>
+      <Route path="/AnnouncementList" element={<AnnouncementList />}></Route>
+      <Route path="/StudentManagement" element={<StudentManagement />}></Route>
+
     </Routes>
   </BrowserRouter>
 );
