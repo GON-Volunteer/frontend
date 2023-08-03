@@ -64,7 +64,6 @@ const Home = () => {
   };
   return (
     <div className="Home-container">
-      <LoginCheck />
       <AppShell />
 
       <div id="myCalendar">

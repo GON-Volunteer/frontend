@@ -63,7 +63,7 @@ function LoginPage() {
           body
         )
         .then((res) => {
-          if (res.data.code == 200) {
+          if (res.data.code === 200) {
             console.log(res.data);
             console.log("로그인");
             goHome();

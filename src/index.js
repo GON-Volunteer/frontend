@@ -37,7 +37,9 @@ root.render(
           <Route path="/Announcement-page" element={<AnnouncementPage />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={<Home />}></Route>
+          <Route element={<LoginCheck />}>
+            <Route path="home" element={<Home />} />
+          </Route>
           <Route
             path="/AnnouncementList"
             element={<AnnouncementList />}
