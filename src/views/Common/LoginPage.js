@@ -54,13 +54,18 @@ function LoginPage() {
   const goHome = () => {
     navigate("/home");
   };
-
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const id = e.target.elements["id"].value;
+    const password = e.target.elements["password"].value;
+  };
   return (
     <>
       <div className="login-page">
         <h3 id="logintitle" className="title mx-auto">
           Creative Learners' Academy
         </h3>
+
         <div id="bottom">
           <img
             id="logoid"
