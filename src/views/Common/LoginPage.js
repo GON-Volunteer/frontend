@@ -12,7 +12,7 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
-import { loginInfo } from "../redux/userSlice";
+import { searchAction } from "../store/userSlice";
 
 function LoginPage() {
   const formRef = useRef();
@@ -68,23 +68,21 @@ function LoginPage() {
             console.log("로그인");
             goHome();
             setCookie("id", res.data.token); //cookie에 토큰저장
-
-            // const userInfo = {
-            //   success: res.data.success,
-            //   token: res.data.token,
-            //   code: res.data.code,
-            // };
-            // dispatch(loginInfo.loginUser(res.data.userInfo));
-          }
-          if (res.data.code === 200) {
+            const userInfo = {
+              success: res.data.success,
+              token: res.data.token,
+              code: res.data.code,
+            };
+            // dispatch(searchAction.clearUser());
+            dispatch(searchAction.loginUser(res.data));
+          } else if (res.data.code === 401) {
+            setMsg("존재하지 않는 ID입니다.");
+          } else if (res.data.code === 402) {
+            setMsg("Password가 틀립니다.");
+          } else {
+            alert("계정정보가 틀렸습니다");
             console.log(res.data);
             setMsg("ID, Password가 비어있습니다.");
-          }
-          if (res.data.code === 401) {
-            setMsg("존재하지 않는 ID입니다.");
-          }
-          if (res.data.code === 402) {
-            setMsg("Password가 틀립니다.");
           }
         });
     }

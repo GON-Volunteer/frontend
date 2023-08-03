@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 // styles
 import "bootstrap/scss/bootstrap.scss";
 import "assets/scss/paper-kit.scss?v=1.3.0";
@@ -17,14 +19,15 @@ import AnnouncementList from "views/Common/AnnouncementList";
 import StudentManagement from "views/Admin/StudentManagement";
 import Home from "views/Common/Home";
 import { Provider } from "react-redux"; // Redux Provider 추가
-import store from "./views/redux/store";
+import store from "./views/store";
 import "./assets/css/index.css";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
+export let persistor = persistStore(store);
 root.render(
   <Provider store={store}>
+    {/* <PersistGate loading={null} persistor={persistor}> */}
     <CookiesProvider>
       <BrowserRouter>
         <Routes>
@@ -49,5 +52,6 @@ root.render(
         </Routes>
       </BrowserRouter>
     </CookiesProvider>
+    {/* </PersistGate> */}
   </Provider>
 );
