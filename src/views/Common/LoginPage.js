@@ -41,7 +41,9 @@ function LoginPage() {
         alert("아이디 또는 비밀번호가 틀렸습니다.");
         return;
       }
-      navigate("/home");
+      if (response.data.code === "200") {
+        navigate("/home");
+      }
     } catch (error) {
       console.log("로그인 실패:", error);
     }
