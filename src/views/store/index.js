@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
-
+import { useSelector } from "react-redux";
 import userSlice from "./userSlice";
 // import persistReducer from "redux-persist/es/persistReducer";
 

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,7 +9,7 @@ import { Button } from "reactstrap";
 import AnnouncementPage from "./AnnouncementPage";
 import AppShell from "./AppShell";
 import AnnouncementList from "./AnnouncementList.js";
-
+import LoginCheck from "./LoginCheck";
 
 const Announcement = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -65,10 +64,10 @@ const Home = () => {
   };
   return (
     <div className="Home-container">
+      <LoginCheck />
       <AppShell />
 
       <div id="myCalendar">
-      
         <FullCalendar
           plugins={[dayGridPlugin, googleCalendarPlugin]}
           initialView="dayGridMonth"
@@ -90,9 +89,8 @@ const Home = () => {
           customButtons={{
             // Define the custom "Add" button
             addButton: {
-              text: 'Add', // Button text
+              text: "Add", // Button text
               click: goGoogleCalendar,
-              
             },
           }}
         />
