@@ -33,7 +33,7 @@ export default function ButtonAppBar() {
   const goStudentManagement = () => {
     navigate("/StudentManagement");
   };
-  const goClassManagement = () => {
+  const goCourseManagement = () => {
     navigate("/ClassManagement-page");
   };
   const goSubjectManagement = () => {
@@ -97,7 +97,7 @@ export default function ButtonAppBar() {
           Student Management
         </MenuItem>
         <MenuItem
-          onClick={goClassManagement}
+          onClick={goCourseManagement}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
           <EditIcon />

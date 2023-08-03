@@ -27,14 +27,12 @@ root.render(
     <CookiesProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/index" element={<Index />} />
           <Route path="/nucleo-icons" element={<NucleoIcons />} />
           <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/profile-page" element={<ProfilePage />} />
           <Route path="/Login-page" element={<LoginPage />} />
           <Route path="/Announcement-page" element={<AnnouncementPage />} />
-          <Route path="*" element={<Navigate to="/index" replace />} />
-
+          <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/home" element={<Home />}></Route>
           <Route
