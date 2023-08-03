@@ -20,6 +20,7 @@ import Home from "views/Common/Home";
 import { Provider } from "react-redux"; // Redux Provider 추가
 import store from "./views/store";
 import "./assets/css/index.css";
+import LoginCheck from "views/Common/LoginCheck";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -33,7 +34,6 @@ root.render(
           <Route path="/nucleo-icons" element={<NucleoIcons />} />
           <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/profile-page" element={<ProfilePage />} />
-          <Route path="/Login-page" element={<LoginPage />} />
           <Route path="/Announcement-page" element={<AnnouncementPage />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />

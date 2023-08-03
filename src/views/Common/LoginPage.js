@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios"; // Axios 사용 예시
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 // css
@@ -16,7 +16,7 @@ import { searchAction } from "../store/userSlice";
 
 function LoginPage() {
   const formRef = useRef();
-  const [cookies, setCookie] = useCookies(["id"]);
+  const [cookies, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
   const goHome = () => {
@@ -63,11 +63,11 @@ function LoginPage() {
           body
         )
         .then((res) => {
-          if (res.data.code == 400) {
+          if (res.data.code == 200) {
             console.log(res.data);
             console.log("로그인");
             goHome();
-            setCookie("id", res.data.token); //cookie에 토큰저장
+            setCookie("token", res.data.token); //cookie에 토큰저장
             const userInfo = {
               success: res.data.success,
               token: res.data.token,
