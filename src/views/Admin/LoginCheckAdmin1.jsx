@@ -22,7 +22,7 @@ function LoginCheckAdmin() {
             },
           }
         );
-        if (response === 400 && auth != "teacher") {
+        if (response === 400 && auth != "admin") {
           dispatch(searchAction.clearUser(user));
           return alert("Not authorized"), navigate("/login");
         }

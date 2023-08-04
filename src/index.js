@@ -21,6 +21,7 @@ import { Provider } from "react-redux"; // Redux Provider 추가
 import store from "./views/store";
 import "./assets/css/index.css";
 import LoginCheck from "views/Common/LoginCheck";
+import LoginCheckAdmin from "views/Admin/LoginCheckAdmin";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -37,16 +38,18 @@ root.render(
           <Route path="/Announcement-page" element={<AnnouncementPage />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route element={<LoginCheckAdmin />}>
+            <Route
+              path="/StudentManagement"
+              element={<StudentManagement />}
+            ></Route>
+          </Route>
           <Route element={<LoginCheck />}>
             <Route path="home" element={<Home />} />
           </Route>
           <Route
             path="/AnnouncementList"
             element={<AnnouncementList />}
-          ></Route>
-          <Route
-            path="/StudentManagement"
-            element={<StudentManagement />}
           ></Route>
         </Routes>
       </BrowserRouter>
