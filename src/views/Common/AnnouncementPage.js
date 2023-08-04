@@ -1,6 +1,8 @@
 import React from "react";
 import AppShell from "./AppShell";
 import AppShellAdmin from "..//Admin/AppShellAdmin";
+import { useSelector } from "react-redux";
+import AppShellTeacher from "../Teacher/AppShellTeacher";
 // css
 import "../../assets/css/Announcement.css";
 // reactstrap components
@@ -9,10 +11,17 @@ import "../../assets/css/Announcement.css";
 import AnnouncementList from "./AnnouncementList";
 
 function AnnouncementPage() {
+  const user = useSelector((state) => state.user);
+
   return (
     <>
-      <AppShell />
-      <AppShellAdmin />
+      {user.auth === "teacher" ? (
+        <AppShellTeacher />
+      ) : user.auth === "admin" ? (
+        <AppShellAdmin />
+      ) : (
+        <AppShell />
+      )}
       <AnnouncementList />
       <div className="footer register-footer text-center">
         <h6>

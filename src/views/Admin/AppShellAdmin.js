@@ -12,7 +12,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Divider from "@mui/material/Divider";
-import { searchAction } from "../store/userSlice";
+import { searchAction } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
