@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FullCalendar from "@fullcalendar/react";
@@ -8,6 +9,8 @@ import "../../assets/css/Home.css";
 import { Button } from "reactstrap";
 import AnnouncementPage from "./AnnouncementPage";
 import AppShell from "./AppShell";
+import AppShellAdmin from "../Admin/AppShellAdmin";
+import AppShellTeacher from "../Teacher/AppShellTeacher";
 import AnnouncementList from "./AnnouncementList.js";
 import LoginCheck from "./LoginCheck";
 
@@ -55,6 +58,8 @@ const Home = () => {
     e.preventDefault();
     navigate("/Announcement-Page");
   };
+  const user = useSelector((state) => state.user);
+
   const goGoogleCalendar = () => {
     // 구글 캘린더 링크로 이동하는 URL
     const googleCalendarLink = "https://calendar.google.com";
@@ -64,7 +69,13 @@ const Home = () => {
   };
   return (
     <div className="Home-container">
-      <AppShell />
+      {user.auth === "teacher" ? (
+        <AppShellTeacher />
+      ) : user.auth === "admin" ? (
+        <AppShellAdmin />
+      ) : (
+        <AppShell />
+      )}
 
       <div id="myCalendar">
         <FullCalendar

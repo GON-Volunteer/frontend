@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { searchAction } from "../store/userSlice";
+import { searchAction } from "../../store/userSlice";
 import { useLocation, Outlet, Navigate } from "react-router-dom";
 
 function LoginCheck() {

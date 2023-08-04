@@ -17,18 +17,21 @@ import AnnouncementPage from "views/Common/AnnouncementPage";
 import AnnouncementList from "views/Common/AnnouncementList";
 import StudentManagement from "views/Admin/StudentManagement";
 import Home from "views/Common/Home";
+import AnnounceContents from "components/AnnounceContent";
+
 import { Provider } from "react-redux"; // Redux Provider 추가
-import store from "./views/store";
+import store from "./store";
 import "./assets/css/index.css";
 import LoginCheck from "views/Common/LoginCheck";
 import LoginCheckAdmin from "views/Admin/LoginCheckAdmin";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-export let persistor = persistStore(store);
+export let persistorInfo = persistStore(store); //persistStore():유지하고싶은 redux store을 인자로 넣으면 persistor 객체를 반환
 root.render(
   <Provider store={store}>
-    {/* <PersistGate loading={null} persistor={persistor}> */}
+    {/* persistor={}: localStorage에 저장할 스토어를 persistor객체로 전달 */}
+    {/* <PersistGate loading={null} persistor={persistorInfo}> */}
     <CookiesProvider>
       <BrowserRouter>
         <Routes>
