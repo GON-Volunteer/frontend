@@ -12,7 +12,7 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
-import { searchAction } from "../store/userSlice";
+import { searchAction } from "../../store/userSlice";
 
 function LoginPage() {
   const formRef = useRef();
@@ -63,16 +63,12 @@ function LoginPage() {
           body
         )
         .then((res) => {
-          if (res.data.code == 400) {
+          if (res.data.code == 200) {
             console.log(res.data);
             console.log("로그인");
             goHome();
             setCookie("id", res.data.token); //cookie에 토큰저장
-            const userInfo = {
-              success: res.data.success,
-              token: res.data.token,
-              code: res.data.code,
-            };
+
             // dispatch(searchAction.clearUser());
             dispatch(searchAction.loginUser(res.data));
           } else if (res.data.code === 401) {
