@@ -33,7 +33,7 @@ export default function ButtonAppBar() {
     navigate("/Announcement-page");
   };
   const goTeacherManagement = () => {
-    navigate("/TeacherManagement-page");
+    navigate("/TeacherManagement");
   };
   const goStudentManagement = () => {
     navigate("/StudentManagement");

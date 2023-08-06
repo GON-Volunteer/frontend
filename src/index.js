@@ -15,7 +15,17 @@ import ProfilePage from "views/examples/ProfilePage.js";
 import LoginPage from "views/Common/LoginPage.js";
 import AnnouncementPage from "views/Common/AnnouncementPage";
 import AnnouncementList from "views/Common/AnnouncementList";
+//admin - student manage
 import StudentManagement from "views/Admin/StudentManagement";
+import StudentRegister from "views/Admin/StudentRegister";
+import StudentDelete from "views/Admin/StudentDelete";
+import StudentEdit from "views/Admin/StudentEdit";
+import StudentInfo from "views/Admin/StudentInfo";
+//admin - teacher manage
+import TeacherManagement from "views/Admin/TeacherManagement";
+import TeacherRegister from "views/Admin/TeacherRegister";
+import TeacherEdit from "views/Admin/TeacherEdit";
+import TeacherDelete from "views/Admin/TeacherDelete";
 import Home from "views/Common/Home";
 import AnnounceContents from "components/AnnounceContent";
 
@@ -24,6 +34,8 @@ import store from "./store";
 import "./assets/css/index.css";
 import LoginCheck from "views/Common/LoginCheck";
 import LoginCheckAdmin from "views/Admin/LoginCheckAdmin";
+import TeacherInfo from "views/Admin/TeacherInfo";
+
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -53,6 +65,42 @@ root.render(
           <Route
             path="/AnnouncementList"
             element={<AnnouncementList />}
+          ></Route>
+          <Route
+            path="/studentManagement/register"
+            element={<StudentRegister />}
+          ></Route>
+          <Route
+            path="/studentManagement/delete"
+            element={<StudentDelete />}
+          ></Route>
+          <Route
+            path="/studentManagement/studentinfo/StudentEdit"
+            element={<StudentEdit />}
+          ></Route>
+          <Route
+            path="/studentManagement/studentinfo"
+            element={<StudentInfo />}
+          ></Route>
+          <Route
+            path="/teacherManagement"
+            element={<TeacherManagement />}
+          ></Route>
+          <Route
+            path="/teacherManagement/register"
+            element={<TeacherRegister />}
+          ></Route>
+          <Route
+            path="teacherManagement/teacherinfo"
+            element={<TeacherInfo />}
+          ></Route>
+          <Route
+            path="teacherManagement/delete"
+            element={<TeacherDelete />}
+          ></Route>
+          <Route
+            path="/studentManagement/teacherinfo/teacherEdit"
+            element={<TeacherEdit />}
           ></Route>
         </Routes>
       </BrowserRouter>
