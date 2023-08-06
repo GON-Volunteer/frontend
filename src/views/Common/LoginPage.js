@@ -67,7 +67,7 @@ function LoginPage() {
             console.log(res.data);
             console.log("로그인");
             goHome();
-            setCookie("id", res.data.token); //cookie에 토큰저장
+            setCookie("token", res.data.token); //cookie에 토큰저장
 
             // dispatch(searchAction.clearUser());
             dispatch(searchAction.loginUser(res.data));
