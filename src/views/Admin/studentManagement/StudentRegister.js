@@ -168,7 +168,7 @@ function Register() {
             placeholder="ID"
             style={formItemStyle}
             // input의 기본 config를 작성
-            {...register("ID", {
+            {...register("id", {
               required: "ID is required.",
               pattern: {
                 message: "아이디 형식에 맞지 않습니다.",
@@ -178,13 +178,13 @@ function Register() {
           {errors.id && <small role="alert">{errors.id.message}</small>}
         </div>
         <div className="form-control__items" style={formItemStyle}>
-          <label htmlFor="password">PW : </label>
+          <label htmlFor="pw">PW : </label>
           <input
-            id="password"
+            id="pw"
             type="password"
             placeholder="password"
             style={formItemStyle}
-            {...register("password", {
+            {...register("pw", {
               required: "Password is required.",
               minLength: {
                 value: 7,
@@ -197,10 +197,10 @@ function Register() {
           )} */}
         </div>
         <div className="form-control__items" style={formItemStyle}>
-          <label htmlFor="password">Re-type PW:</label>
+          <label htmlFor="passwordConfirm">Re-type PW:</label>
           <input
             style={formItemStyle}
-            id="password"
+            id="pw"
             type="password"
             placeholder="password"
             {...register("passwordConfirm", {
@@ -211,7 +211,7 @@ function Register() {
               },
               validate: {
                 check: (val) => {
-                  if (getValues("password") !== val) {
+                  if (getValues("pw") !== val) {
                     return "비밀번호가 일치하지 않습니다.";
                   }
                 },
