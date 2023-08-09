@@ -9,14 +9,14 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
-import "../../assets/css/DeleteTable.css";
-import Radio from "../../components/Radio";
-import RadioGroup from "../../components/RadioGroup";
+import "../../../assets/css/DeleteTable.css";
+// import Radio from "../../../components/Radio";
+// import RadioGroup from "../../../components/RadioGroup";
 
-function TeacherDelete() {
+function StudentDelete() {
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
-    navigate("/teacherManagement");
+    navigate("/StudentManagement");
   };
   const [value, setValue] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
@@ -42,6 +42,10 @@ function TeacherDelete() {
   //accessor와 받아오는 data keyname이 같아야함
   const columnData = [
     {
+      accessor: "s_n",
+      Header: "S.N.",
+    },
+    {
       accessor: "full_name",
       Header: "Full Name",
       headerClassName: fullNameHeaderClass,
@@ -58,6 +62,18 @@ function TeacherDelete() {
       accessor: "phone_num",
       Header: "Phone No",
     },
+    {
+      accessor: "father_phone_num",
+      Header: "Father No",
+    },
+    {
+      accessor: "mother_phone_num",
+      Header: "Mother No",
+    },
+    {
+      accessor: "guardians_phone_num",
+      Header: "Guardians No",
+    },
   ];
   const columns = useMemo(() => columnData, []);
 
@@ -67,7 +83,8 @@ function TeacherDelete() {
   useEffect(() => {
     axios
       .get(
-        "https://f12e3ca1-926d-4342-bd7ac-a87451995428.mock.pstmn.io/DeleteTeacher"
+        "/api/students/"
+        // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/StudentList"
       )
       .then((res) => {
         if (Array.isArray(res.data)) {
@@ -88,10 +105,11 @@ function TeacherDelete() {
 
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
     if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
-      console.log("rowIndex" + data[selectedRow]._id);
+      // console.log("rowIndex" + data[selectedRow]._id);
       try {
-        const url = `https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/delete/${data[selectedRow]._id}`;
-        // const res = await axios.delete(url);
+        const url = `/api/students/${data[selectedRow]._id.$oid}`;
+        //f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/delete/${data[selectedRow]._id.$oid};
+
         alert("res.data" + url);
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
@@ -156,7 +174,7 @@ function TeacherDelete() {
               <ArrowBackIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Delete Teacher
+              Delete Student
             </Typography>
           </Toolbar>
         </AppBar>
@@ -203,11 +221,6 @@ function TeacherDelete() {
                         checked={isRowSelected}
                         onClick={() => handleRadioChange(rowIndex)}
                       />
-                      {/* <input
-                        type="checkbox"
-                        checked={isRowChecked}
-                        onChange={() => handleCheckboxChange(rowIndex)}
-                      /> */}
                     </td>
 
                     {row.cells.map((cell) => (
@@ -216,10 +229,10 @@ function TeacherDelete() {
                   </tr>
                 );
               })}
-              <button onClick={handleDelete} id="deleteBtn">
-                Delete
-              </button>
             </tbody>
+            <button onClick={handleDelete} id="deleteBtn">
+              Delete
+            </button>
           </table>
         </div>
         <div>
@@ -243,4 +256,4 @@ function TeacherDelete() {
   );
 }
 
-export default TeacherDelete;
+export default StudentDelete;

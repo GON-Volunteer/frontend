@@ -1,4 +1,4 @@
-import AppShellAdmin from "./AppShellAdmin";
+import AppShellAdmin from "../AppShellAdmin";
 
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -17,14 +17,14 @@ import ContentCopy from "@mui/icons-material/ContentCopy";
 import ContentPaste from "@mui/icons-material/ContentPaste";
 import Cloud from "@mui/icons-material/Cloud";
 import StudentRegister from "./StudentRegister";
-export default function TeacherManagement() {
+export default function StudentManagement() {
   return (
     <div>
       <AppShellAdmin />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Paper sx={{ width: "100%", maxWidth: "100%" }}>
           <MenuList>
-            <MenuItem component={Link} to="/teacherManagement/register">
+            <MenuItem component={Link} to="/studentManagement/register">
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
@@ -33,7 +33,7 @@ export default function TeacherManagement() {
                 ⌘Admin
               </Typography>
             </MenuItem>
-            <MenuItem component={Link} to="/teacherManagement/TeacherInfo">
+            <MenuItem component={Link} to="/studentManagement/delete">
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>
@@ -42,7 +42,7 @@ export default function TeacherManagement() {
                 ⌘Admin
               </Typography>
             </MenuItem>
-            <MenuItem component={Link} to="/teacherManagement/TeacherInfo">
+            <MenuItem component={Link} to="/studentManagement/StudentInfo">
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>

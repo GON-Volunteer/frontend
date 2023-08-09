@@ -2,8 +2,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
 import axios from "axios"; // Axios 사용 예시
-import Radio from "../../components/Radio";
-import RadioGroup from "../../components/RadioGroup";
+// import Radio from "../../components/Radio";
+// import RadioGroup from "../../components/RadioGroup";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -65,7 +65,7 @@ function StudentEdit() {
                 <ArrowBackIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Edit Student
+                Edit Student Info
               </Typography>
             </Toolbar>
           </AppBar>

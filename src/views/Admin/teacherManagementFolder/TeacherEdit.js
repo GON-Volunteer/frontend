@@ -2,8 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
 import axios from "axios"; // Axios 사용 예시
-import Radio from "../../components/Radio";
-import RadioGroup from "../../components/RadioGroup";
+
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -37,7 +36,7 @@ function TeacherEdit() {
 
     const onSubmit = async (data) => {
       console.log("data너ㅁ겨주고" + JSON.stringify(data));
-      navigate("/studentManagement/StudentInfo");
+      //   navigate("/teacherManagement/TeacherInfo");
       await axios
         .patch(
           "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/DeleteStudent",
@@ -46,7 +45,7 @@ function TeacherEdit() {
         .then((res) => console.log("server res: " + JSON.stringify(res)));
     };
     const handleBackButtonClick = () => {
-      navigate("/studentManagement/StudentInfo");
+      navigate("/teacherManagement/teacherinfo");
     };
 
     return (
@@ -65,30 +64,13 @@ function TeacherEdit() {
                 <ArrowBackIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Edit Student
+                Edit Teacher Info
               </Typography>
             </Toolbar>
           </AppBar>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="s_n">S.N : </label>
-            <input
-              style={formItemStyle}
-              id="s_n"
-              type="text"
-              placeholder="Serial Number"
-              defaultValue={rowData.s_n}
-              {...register("s_n", {
-                required: "Serial number is required.",
-
-                pattern: {
-                  message: "아이디 형식에 맞지 않습니다.",
-                },
-              })}
-            />
-          </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="full_name">Full Name : </label>
             <input
@@ -115,39 +97,7 @@ function TeacherEdit() {
               })}
             />
           </div>
-          <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="father_phone">Father Phone No : </label>
-            <input
-              style={formItemStyle}
-              id="father_phone"
-              type="text"
-              placeholder="Father Phone Number"
-              defaultValue={rowData.father_phone_num}
-              {...register("father_phone")}
-            />
-          </div>
-          <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="mother_phone">Mother Phone No : </label>
-            <input
-              id="mother_phone"
-              type="text"
-              placeholder="Mother Phone Number"
-              defaultValue={rowData.mother_phone_num}
-              style={formItemStyle}
-              {...register("mother_phone")}
-            />
-          </div>
-          <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="guardians_phone_num">Guardians Phone No : </label>
-            <input
-              id="guardians_phone_num"
-              type="text"
-              placeholder="Guardians Phone Number"
-              defaultValue={rowData.guardians_phone_num}
-              style={formItemStyle}
-              {...register("guardians_phone_num")}
-            />
-          </div>
+
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="id">ID : </label>
             <input

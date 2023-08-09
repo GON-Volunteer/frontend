@@ -16,25 +16,27 @@ import LoginPage from "views/Common/LoginPage.js";
 import AnnouncementPage from "views/Common/AnnouncementPage";
 import AnnouncementList from "views/Common/AnnouncementList";
 //admin - student manage
-import StudentManagement from "views/Admin/StudentManagement";
-import StudentRegister from "views/Admin/StudentRegister";
-import StudentDelete from "views/Admin/StudentDelete";
-import StudentEdit from "views/Admin/StudentEdit";
-import StudentInfo from "views/Admin/StudentInfo";
+import StudentManagement from "views/Admin/studentManagement/StudentManagement";
+import StudentRegister from "views/Admin/studentManagement/StudentRegister";
+import StudentDelete from "views/Admin/studentManagement/StudentDelete";
+import StudentEdit from "views/Admin/studentManagement/StudentEdit";
+import StudentInfo from "views/Admin/studentManagement/StudentInfo";
 //admin - teacher manage
-import TeacherManagement from "views/Admin/TeacherManagement";
-import TeacherRegister from "views/Admin/TeacherRegister";
-import TeacherEdit from "views/Admin/TeacherEdit";
-import TeacherDelete from "views/Admin/TeacherDelete";
+import TeacherManagement from "views/Admin/teacherManagementFolder/TeacherManagement";
+import TeacherRegister from "views/Admin/teacherManagementFolder/TeacherRegister";
+import TeacherEdit from "views/Admin/teacherManagementFolder/TeacherEdit";
+import TeacherDelete from "views/Admin/teacherManagementFolder/TeacherDelete";
+import TeacherInfo from "views/Admin/teacherManagementFolder/TeacherInfo";
 import Home from "views/Common/Home";
 import AnnounceContents from "components/AnnounceContent";
-
+//admin - course manage
+import CourseManagement from "views/Admin/courseManagementFolder/courseManagement";
+import SubjectManagement from "views/Admin/courseManagementFolder/subjectManagementFolder/subjectManagement";
 import { Provider } from "react-redux"; // Redux Provider 추가
 import store from "./store";
 import "./assets/css/index.css";
 import LoginCheck from "views/Common/LoginCheck";
 import LoginCheckAdmin from "views/Admin/LoginCheckAdmin";
-import TeacherInfo from "views/Admin/TeacherInfo";
 
 // others
 
@@ -53,12 +55,12 @@ root.render(
           <Route path="/Announcement-page" element={<AnnouncementPage />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route element={<LoginCheckAdmin />}>
-            <Route
-              path="/StudentManagement"
-              element={<StudentManagement />}
-            ></Route>
-          </Route>
+          {/* <Route element={<LoginCheckAdmin />}> */}
+          <Route
+            path="/StudentManagement"
+            element={<StudentManagement />}
+          ></Route>
+          {/* </Route> */}
           <Route element={<LoginCheck />}>
             <Route path="home" element={<Home />} />
           </Route>
@@ -91,16 +93,24 @@ root.render(
             element={<TeacherRegister />}
           ></Route>
           <Route
-            path="teacherManagement/teacherinfo"
+            path="/teacherManagement/teacherinfo"
             element={<TeacherInfo />}
           ></Route>
           <Route
-            path="teacherManagement/delete"
+            path="/teacherManagement/delete"
             element={<TeacherDelete />}
           ></Route>
           <Route
-            path="/studentManagement/teacherinfo/teacherEdit"
+            path="/teacherManagement/teacherinfo/teacherEdit"
             element={<TeacherEdit />}
+          ></Route>
+          <Route
+            path="/courseManagement"
+            element={<CourseManagement />}
+          ></Route>
+          <Route
+            path="/courseManagement/subjectManagement"
+            element={<SubjectManagement />}
           ></Route>
         </Routes>
       </BrowserRouter>

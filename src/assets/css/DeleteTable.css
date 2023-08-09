@@ -10,10 +10,25 @@
   margin: 20px;
 }
 #deleteBtn {
+  display: block;
   width: 80px;
   height: 30px;
   margin-top: 15px;
   margin-bottom: 10px;
+}
+#subject_name {
+  width: 280px;
+}
+#subject_title {
+  font-weight: bold;
+}
+#nextBtn {
+  margin-left: 20px;
+  width: 80px;
+  height: 30px;
+}
+table {
+  margin-bottom: 20px;
 }
 @media (max-width: 768px) {
   #table {
