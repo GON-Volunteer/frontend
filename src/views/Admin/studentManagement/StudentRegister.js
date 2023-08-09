@@ -1,8 +1,8 @@
 import React, { Component, useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
-import Radio from "../../components/Radio";
-import RadioGroup from "../../components/RadioGroup";
+// import Radio from "../../components/Radio";
+// import RadioGroup from "../../components/RadioGroup";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -29,14 +29,15 @@ function Register() {
   const navigate = useNavigate();
 
   const handleBackButtonClick = () => {
-    navigate("/StudentManagement");
+    navigate("/studentManagement");
   };
 
   const onSubmit = async (data) => {
     try {
       console.log(data);
       const response = await axios.post(
-        "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/AddStudent",
+        "/api/students/",
+        // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AddStudent",
         data
       );
 
@@ -221,7 +222,7 @@ function Register() {
             <small role="alert">{errors.passwordConfirm.message}</small>
           )}
         </div>
-        <button type="submit">로그인</button>
+        <button type="submit">create</button>
         {/* <RadioGroup label="연락 방법" value={value} onChange={setValue}>
           {resultClass.map((item, idx) => {
             <Radio key={idx} value={item}>

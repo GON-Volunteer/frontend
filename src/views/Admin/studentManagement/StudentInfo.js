@@ -9,11 +9,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
-import "../../assets/css/DeleteTable.css";
-import Radio from "../../components/Radio";
-import RadioGroup from "../../components/RadioGroup";
+import "../../../assets/css/DeleteTable.css";
+// import Radio from "../../components/Radio";
+// import RadioGroup from "../../components/RadioGroup";
+import { Link } from "react-router-dom";
 
-function StudentDelete() {
+function StudentInfo() {
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
     navigate("/StudentManagement");
@@ -83,11 +84,11 @@ function StudentDelete() {
   useEffect(() => {
     axios
       .get(
-        "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/DeleteStudent"
+        "/api/students/"
+        // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/StudentList"
       )
       .then((res) => {
         if (Array.isArray(res.data)) {
-          //map 사용시 새로운 배열 생성해서
           const resultObj = res.data.map((item) => item);
           setstudentInfo(resultObj);
         } else {
@@ -99,22 +100,18 @@ function StudentDelete() {
   //studentInfo에 변경이 있을 때만 업데이트
   const data = useMemo(() => studentInfo, [studentInfo]);
   //student delete
-  const handleDelete = async () => {
+  const handleEdit = async () => {
     // Check if the data array is not empty and the rowIndex is within the valid range
 
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
-    if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
-      console.log("rowIndex" + data[selectedRow]._id);
-      try {
-        const url = `https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/delete/${data[selectedRow]._id}`;
-        // const res = await axios.delete(url);
-        alert("res.data" + url);
-      } catch (error) {
-        console.error("delete 실패. 에러발생:" + error);
-      }
-    } else {
-      console.log("Invalid rowIndex or data is empty.");
-    }
+    const selectedRowData = data[selectedRow];
+    navigate("/studentManagement/StudentInfo/StudentEdit", {
+      state: { rowData: selectedRowData },
+    });
+    // if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    // } else {
+    //   console.log("Invalid rowIndex or data is empty.");
+    // }
   };
 
   // 현재 페이지에 해당하는 데이터를 가져오는 함수
@@ -172,7 +169,7 @@ function StudentDelete() {
               <ArrowBackIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Delete Student
+              Edit Student Info
             </Typography>
           </Toolbar>
         </AppBar>
@@ -219,11 +216,6 @@ function StudentDelete() {
                         checked={isRowSelected}
                         onClick={() => handleRadioChange(rowIndex)}
                       />
-                      {/* <input
-                        type="checkbox"
-                        checked={isRowChecked}
-                        onChange={() => handleCheckboxChange(rowIndex)}
-                      /> */}
                     </td>
 
                     {row.cells.map((cell) => (
@@ -232,10 +224,10 @@ function StudentDelete() {
                   </tr>
                 );
               })}
-              <button onClick={handleDelete} id="deleteBtn">
-                Delete
-              </button>
             </tbody>
+            <button onClick={handleEdit} id="EditBtn">
+              Edit
+            </button>
           </table>
         </div>
         <div>
@@ -259,4 +251,4 @@ function StudentDelete() {
   );
 }
 
-export default StudentDelete;
+export default StudentInfo;

@@ -39,10 +39,10 @@ export default function ButtonAppBar() {
     navigate("/StudentManagement");
   };
   const goCourseManagement = () => {
-    navigate("/ClassManagement-page");
+    navigate("/courseManagement");
   };
   const goSubjectManagement = () => {
-    navigate("/SubjectManagement-page");
+    navigate("/courseManagement");
   };
   const logout = () => {
     dispatch(searchAction.clearUser(user));
