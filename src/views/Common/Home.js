@@ -15,12 +15,13 @@ import AnnouncementList from "./AnnouncementList.js";
 import LoginCheck from "./LoginCheck";
 
 const Announcement = () => {
+  const url = "http://localhost:5000";
   const [announcements, setAnnouncements] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios
-      .get("/api/announcements")
+      .get(url + "/api/announcements")
       .then((res) => {
         setAnnouncements(res.data);
         setIsLoading(false);

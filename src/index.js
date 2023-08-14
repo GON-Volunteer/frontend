@@ -18,6 +18,8 @@ import AnnouncementList from "views/Common/AnnouncementList";
 import StudentManagement from "views/Admin/StudentManagement";
 import Home from "views/Common/Home";
 import AnnounceContents from "components/AnnounceContent";
+import Posting from "views/Common/Posting";
+import ArticleCreate from "views/Common/ArticleCreate";
 
 import { Provider } from "react-redux"; // Redux Provider 추가
 import store from "./store";
@@ -36,6 +38,8 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/nucleo-icons" element={<NucleoIcons />} />
+          <Route path="/articles/:idx" element={<Posting />} />
+          <Route path="/ArticleCreate" element={<ArticleCreate />} />
           <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/profile-page" element={<ProfilePage />} />
           <Route path="/Announcement-page" element={<AnnouncementPage />} />

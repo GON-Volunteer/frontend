@@ -15,8 +15,9 @@ import {
 import { searchAction } from "../../store/userSlice";
 
 function LoginPage() {
+  const url = "http://localhost:5000";
   const formRef = useRef();
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies, setCookie] = useCookies(["id"]);
   const navigate = useNavigate();
 
   const goHome = () => {
@@ -57,30 +58,23 @@ function LoginPage() {
         password,
       };
 
-      axios
-        .post(
-          "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io",
-          body
-        )
-        .then((res) => {
-          if (res.data.code == 200) {
-            console.log(res.data);
-            console.log("로그인");
-            goHome();
-            setCookie("id", res.data.token); //cookie에 토큰저장
-
-            // dispatch(searchAction.clearUser());
-            dispatch(searchAction.loginUser(res.data));
-          } else if (res.data.code === 401) {
-            setMsg("존재하지 않는 ID입니다.");
-          } else if (res.data.code === 402) {
-            setMsg("Password가 틀립니다.");
-          } else {
-            alert("계정정보가 틀렸습니다");
-            console.log(res.data);
-            setMsg("ID, Password가 비어있습니다.");
-          }
-        });
+      axios.post(url + "/api/login", body).then((res) => {
+        if (res.data.code == 200) {
+          console.log(res.data);
+          console.log("로그인");
+          goHome();
+          setCookie("token", res.data.token); //cookie에 토큰저장
+          dispatch(searchAction.loginUser(res.data));
+        } else if (res.data.code === 401) {
+          setMsg("존재하지 않는 ID입니다.");
+        } else if (res.data.code === 402) {
+          setMsg("Password가 틀립니다.");
+        } else {
+          alert("계정정보가 틀렸습니다");
+          console.log(res.data);
+          setMsg("ID, Password가 비어있습니다.");
+        }
+      });
     }
     setLoading(true);
   };
