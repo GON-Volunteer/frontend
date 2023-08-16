@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable, usePagination } from "react-table";
+import { Button, UncontrolledAlert } from "reactstrap";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
@@ -13,6 +14,7 @@ import "../../../assets/css/DeleteTable.css";
 // import Radio from "../../components/Radio";
 // import RadioGroup from "../../components/RadioGroup";
 import { Link } from "react-router-dom";
+import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 
 function StudentInfo() {
   const navigate = useNavigate();
@@ -55,10 +57,7 @@ function StudentInfo() {
       accessor: "id",
       Header: "ID",
     },
-    {
-      accessor: "pw",
-      Header: "PW",
-    },
+
     {
       accessor: "phone_num",
       Header: "Phone No",
@@ -80,7 +79,7 @@ function StudentInfo() {
 
   const [studentInfo, setstudentInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(7); //한페이지에 보여줄 페이지개수
   useEffect(() => {
     axios
       .get(
@@ -144,7 +143,6 @@ function StudentInfo() {
     rows,
     prepareRow,
     page,
-    state: { pageIndex, pageCount },
   } = useTable(
     {
       columns,
@@ -153,6 +151,7 @@ function StudentInfo() {
     },
     usePagination
   );
+  const pageCount = Math.ceil(data.length / pageSize);
 
   return (
     <div>
@@ -175,7 +174,7 @@ function StudentInfo() {
         </AppBar>
       </div>
       <div>
-        <div id="table">
+        <div id="Stdtable">
           <table {...getTableProps()}>
             {" "}
             <thead>
@@ -225,27 +224,38 @@ function StudentInfo() {
                 );
               })}
             </tbody>
-            <button onClick={handleEdit} id="EditBtn">
-              Edit
-            </button>
           </table>
         </div>
         <div>
-          <button
-            onClick={goToPrevPage}
-            id="tableLeftBtn"
-            disabled={currentPage === 1}
+          <Pagination
+            className="pagination justify-content-center"
+            listClassName="justify-content-center"
+            aria-label="Page navigation example"
           >
-            {" << "}prev
-          </button>
-          <button
-            id="tableRightBtn"
-            onClick={goToNextPage}
-            disabled={currentPage === Math.ceil(data.length / pageSize)}
-          >
-            next{" >> "}
-          </button>
+            <PaginationItem disabled={currentPage === 1}>
+              <PaginationLink previous href="#" onClick={goToPrevPage} />
+            </PaginationItem>
+            {Array.from({ length: pageCount }, (_, index) => (
+              <PaginationItem key={index} active={index + 1 === currentPage}>
+                <PaginationLink
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(index + 1);
+                  }}
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem disabled={currentPage === pageCount}>
+              <PaginationLink next href="#" onClick={goToNextPage} />
+            </PaginationItem>
+          </Pagination>
         </div>
+        <Button onClick={handleEdit} id="EditBtn">
+          Edit
+        </Button>
       </div>
     </div>
   );

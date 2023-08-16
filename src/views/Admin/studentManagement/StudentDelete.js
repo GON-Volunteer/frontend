@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable, usePagination } from "react-table";
-
+import { Button, UncontrolledAlert } from "reactstrap";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
 import AppBar from "@material-ui/core/AppBar";
@@ -9,6 +9,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+
 import "../../../assets/css/DeleteTable.css";
 // import Radio from "../../../components/Radio";
 // import RadioGroup from "../../../components/RadioGroup";
@@ -26,14 +28,6 @@ function StudentDelete() {
   // 체크박스가 체크되었는지 여부를 관리하는 상태
   const [checkedRows, setCheckedRows] = useState([]);
 
-  // 체크박스를 클릭할 때마다 해당 행의 인덱스를 상태에 추가 또는 제거하는 함수
-  const handleCheckboxChange = (rowIndex) => {
-    if (checkedRows.includes(rowIndex)) {
-      setCheckedRows((prev) => prev.filter((index) => index !== rowIndex));
-    } else {
-      setCheckedRows((prev) => [...prev, rowIndex]);
-    }
-  };
   //radio를 클릭하면 인덱스 받아오기
   const handleRadioChange = (rowIndex) => {
     setSelectedRow(rowIndex);
@@ -54,10 +48,7 @@ function StudentDelete() {
       accessor: "id",
       Header: "ID",
     },
-    {
-      accessor: "pw",
-      Header: "PW",
-    },
+
     {
       accessor: "phone_num",
       Header: "Phone No",
@@ -79,7 +70,8 @@ function StudentDelete() {
 
   const [studentInfo, setstudentInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(5); //한페이지에 보여줄 페이지개수
+
   useEffect(() => {
     axios
       .get(
@@ -89,6 +81,7 @@ function StudentDelete() {
       .then((res) => {
         if (Array.isArray(res.data)) {
           //map 사용시 새로운 배열 생성해서
+          console.log(res.data);
           const resultObj = res.data.map((item) => item);
           setstudentInfo(resultObj);
         } else {
@@ -141,6 +134,7 @@ function StudentDelete() {
     () => getCurrentPageData(),
     [data, currentPage]
   );
+  const pageCount = Math.ceil(data.length / pageSize);
 
   const {
     getTableProps,
@@ -149,7 +143,6 @@ function StudentDelete() {
     rows,
     prepareRow,
     page,
-    state: { pageIndex, pageCount },
   } = useTable(
     {
       columns,
@@ -180,7 +173,7 @@ function StudentDelete() {
         </AppBar>
       </div>
       <div>
-        <div id="table">
+        <div id="Stdtable">
           <table {...getTableProps()}>
             {" "}
             <thead>
@@ -230,27 +223,38 @@ function StudentDelete() {
                 );
               })}
             </tbody>
-            <button onClick={handleDelete} id="deleteBtn">
-              Delete
-            </button>
           </table>
         </div>
         <div>
-          <button
-            onClick={goToPrevPage}
-            id="tableLeftBtn"
-            disabled={currentPage === 1}
+          <Pagination
+            className="pagination justify-content-center"
+            listClassName="justify-content-center"
+            aria-label="Page navigation example"
           >
-            {" << "}prev
-          </button>
-          <button
-            id="tableRightBtn"
-            onClick={goToNextPage}
-            disabled={currentPage === Math.ceil(data.length / pageSize)}
-          >
-            next{" >> "}
-          </button>
+            <PaginationItem disabled={currentPage === 1}>
+              <PaginationLink previous href="#" onClick={goToPrevPage} />
+            </PaginationItem>
+            {Array.from({ length: pageCount }, (_, index) => (
+              <PaginationItem key={index} active={index + 1 === currentPage}>
+                <PaginationLink
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(index + 1);
+                  }}
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem disabled={currentPage === pageCount}>
+              <PaginationLink next href="#" onClick={goToNextPage} />
+            </PaginationItem>
+          </Pagination>
         </div>
+        <Button onClick={handleDelete} id="deleteBtn">
+          Delete
+        </Button>
       </div>
     </div>
   );

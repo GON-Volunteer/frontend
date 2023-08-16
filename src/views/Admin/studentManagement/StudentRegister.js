@@ -34,6 +34,7 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
+      data["account"] = 2;
       console.log(data);
       const response = await axios.post(
         "/api/students/",
@@ -119,35 +120,35 @@ function Register() {
           />
         </div>
         <div className="form-control__items" style={formItemStyle}>
-          <label htmlFor="user_phone">Phone No : </label>
+          <label htmlFor="phone_num">Phone No : </label>
           <input
             style={formItemStyle}
-            id="user_phone"
+            id="phone_num"
             type="text"
             placeholder="Phone Number"
-            {...register("user_phone", {
+            {...register("phone_num", {
               required: "Phone Number is required.",
             })}
           />
         </div>
         <div className="form-control__items" style={formItemStyle}>
-          <label htmlFor="father_phone">Father Phone No : </label>
+          <label htmlFor="father_phone_num">Father Phone No : </label>
           <input
             style={formItemStyle}
-            id="father_phone"
+            id="father_phone_num"
             type="text"
             placeholder="Father Phone Number"
-            {...register("father_phone")}
+            {...register("father_phone_num")}
           />
         </div>
         <div className="form-control__items" style={formItemStyle}>
-          <label htmlFor="mother_phone">Mother Phone No : </label>
+          <label htmlFor="mother_phone_num">Mother Phone No : </label>
           <input
-            id="mother_phone"
+            id="mother_phone_num"
             type="text"
             placeholder="Mother Phone Number"
             style={formItemStyle}
-            {...register("mother_phone")}
+            {...register("mother_phone_num")}
           />
         </div>
         <div className="form-control__items" style={formItemStyle}>

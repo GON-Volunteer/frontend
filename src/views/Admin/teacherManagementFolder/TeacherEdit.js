@@ -85,14 +85,14 @@ function TeacherEdit() {
             />
           </div>
           <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="user_phone">Phone No : </label>
+            <label htmlFor="phone_num">Phone No : </label>
             <input
               style={formItemStyle}
-              id="user_phone"
+              id="phone_num"
               type="text"
               placeholder="Phone Number"
               defaultValue={rowData.phone_num}
-              {...register("user_phone", {
+              {...register("phone_num", {
                 required: "Phone Number is required.",
               })}
             />
@@ -107,7 +107,7 @@ function TeacherEdit() {
               style={formItemStyle}
               defaultValue={rowData.id}
               // input의 기본 config를 작성
-              {...register("ID", {
+              {...register("id", {
                 required: "ID is required.",
                 pattern: {
                   message: "아이디 형식에 맞지 않습니다.",
@@ -117,14 +117,14 @@ function TeacherEdit() {
             {errors.id && <small role="alert">{errors.id.message}</small>}
           </div>
           <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="password">PW : </label>
+            <label htmlFor="pw">PW : </label>
             <input
-              id="password"
+              id="pw"
               type="password"
               placeholder="password"
               style={formItemStyle}
               defaultValue={rowData.pw}
-              {...register("password", {
+              {...register("pw", {
                 required: "Password is required.",
                 minLength: {
                   value: 7,
@@ -137,10 +137,10 @@ function TeacherEdit() {
                   )} */}
           </div>
           <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="password">Re-type PW:</label>
+            <label htmlFor="passwordConfirm">Re-type PW:</label>
             <input
               style={formItemStyle}
-              id="password"
+              id="passwordConfirm"
               type="password"
               placeholder="password"
               defaultValue={rowData.pw}
