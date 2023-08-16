@@ -202,7 +202,7 @@ function StudentEdit() {
                 required: "비밀번호 확인 필수.",
                 minLength: {
                   value: 7,
-                  message: "7자리 이상 비밀번호를 사용하세요.",
+                  message: "7자리 이상 비밀번호를 .",
                 },
                 validate: {
                   check: (val) => {
