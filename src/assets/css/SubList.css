@@ -1,0 +1,102 @@
+#rowFont {
+  color: black;
+  font-weight: bolder;
+  font-size: large;
+}
+#tableLeftBtn {
+  margin-left: 15px;
+}
+#radioBtn {
+  margin: 0 10px 0 20px;
+}
+#deleteBtn {
+  width: 80px;
+  height: 40px;
+  /* margin-top: 10px; */
+  margin-bottom: 10px;
+  margin-left: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#createBtn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  width: 80px;
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#subjectInput {
+  display: inline;
+  width: 280px;
+  height: 40px;
+
+  font-size: 20px;
+}
+#subListTitle {
+  font-weight: bold;
+
+  font-size: 22px;
+}
+#newSubTitle {
+  font-weight: bold;
+  margin-left: 20px;
+  font-size: 22px;
+  margin-top: 20px;
+}
+#newSubDiv {
+  margin-top: 18px;
+  margin-left: 22px;
+}
+#isElectiveDiv {
+  margin-top: 18px;
+}
+#nextBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 20px;
+  width: 80px;
+  height: 40px;
+}
+#table {
+  overflow-x: hidden;
+}
+#tbody {
+  display: block;
+  width: 100%;
+  overflow-y: auto;
+
+  max-height: 200px;
+  border-collapse: collapse;
+}
+#tbody > tr {
+  display: block;
+  width: 100%;
+  border: 1px solid rgb(100, 99, 102);
+}
+
+#newSubDiv {
+  display: inline;
+}
+#isElectiveDiv {
+  display: inline;
+}
+@media (max-width: 768px) {
+}
+/* .btnSelect {
+  background-color: rgb(228, 10, 10);
+  color: white;
+} */
+.btnDefault {
+  background-color: rgb(255, 255, 255);
+  color: black;
+}

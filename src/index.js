@@ -37,6 +37,7 @@ import store from "./store";
 import "./assets/css/index.css";
 import LoginCheck from "views/Common/LoginCheck";
 import LoginCheckAdmin from "views/Admin/LoginCheckAdmin";
+import CourseRegister from "views/Admin/courseManagementFolder/subjectManagementFolder/courseRegister";
 
 // others
 
@@ -111,6 +112,10 @@ root.render(
           <Route
             path="/courseManagement/subjectManagement"
             element={<SubjectManagement />}
+          ></Route>
+          <Route
+            path="/courseManagement/subjectManagement/courseRegister"
+            element={<CourseRegister />}
           ></Route>
         </Routes>
       </BrowserRouter>

@@ -27,14 +27,15 @@
   width: 80px;
   height: 30px;
 }
-table {
-  margin-bottom: 20px;
+#EditBtn {
+  margin-left: 20px;
 }
 @media (max-width: 768px) {
-  #table {
-    width: 500px;
-    margin: 20px;
+  #Stdtable {
+    width: 90%;
+    margin: 20px 0 10px 20px;
     overflow-x: scroll;
+
     /* border-collapse: separate;
     border-spacing: 10px; */
   }
