@@ -29,6 +29,9 @@ import TeacherDelete from "views/Admin/teacherManagementFolder/TeacherDelete";
 import TeacherInfo from "views/Admin/teacherManagementFolder/TeacherInfo";
 import Home from "views/Common/Home";
 import AnnounceContents from "components/AnnounceContent";
+import Posting from "views/Common/Posting";
+import ArticleCreate from "views/Common/ArticleCreate";
+
 //admin - course manage
 import CourseManagement from "views/Admin/courseManagementFolder/courseManagement";
 import SubjectManagement from "views/Admin/courseManagementFolder/subjectManagementFolder/subjectManagement";
@@ -51,6 +54,8 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/nucleo-icons" element={<NucleoIcons />} />
+          <Route path="/articles/:idx" element={<Posting />} />
+          <Route path="/ArticleCreate" element={<ArticleCreate />} />
           <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/profile-page" element={<ProfilePage />} />
           <Route path="/Announcement-page" element={<AnnouncementPage />} />

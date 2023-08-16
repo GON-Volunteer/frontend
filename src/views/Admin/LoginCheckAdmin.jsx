@@ -5,7 +5,8 @@ import axios from "axios";
 import { searchAction } from "../../store/userSlice";
 import { useLocation, Outlet, Navigate } from "react-router-dom";
 
-function LoginCheck() {
+function LoginCheckAdmin() {
+  const url = "http://localhost:5000";
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const token = cookies.token;
@@ -17,16 +18,13 @@ function LoginCheck() {
     const checkAuthorization = async () => {
       if (token) {
         try {
-          const response = await axios.get(
-            "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/check",
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            }
-          );
+          const response = await axios.get(url + "/api/auth", {
+            headers: {
+              Authorization: token,
+            },
+          });
           console.log(response);
-          if (response.data.code === 400 || user.auth !== "admin") {
+          if (response.data.code === 400 || user.account != 0) {
             dispatch(searchAction.clearUser(user));
             alert("Not authorized");
             setRenderComponent(
@@ -53,4 +51,4 @@ function LoginCheck() {
   return renderComponent;
 }
 
-export default LoginCheck;
+export default LoginCheckAdmin;

@@ -32,7 +32,23 @@ function StudentDelete() {
   const handleRadioChange = (rowIndex) => {
     setSelectedRow(rowIndex);
   };
-
+  async function showStdList() {
+    axios
+      .get(
+        "/api/students/"
+        // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/StudentList"
+      )
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          //map 사용시 새로운 배열 생성해서
+          console.log(res.data);
+          const resultObj = res.data.map((item) => item);
+          setstudentInfo(resultObj);
+        } else {
+          console.log("데이터가 배열이 아닙니다.");
+        }
+      });
+  }
   //accessor와 받아오는 data keyname이 같아야함
   const columnData = [
     {
@@ -93,20 +109,34 @@ function StudentDelete() {
   //studentInfo에 변경이 있을 때만 업데이트
   const data = useMemo(() => studentInfo, [studentInfo]);
   //student delete
+  const [errpopupVisible, setErrPopupVisible] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
   const handleDelete = async () => {
     // Check if the data array is not empty and the rowIndex is within the valid range
 
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
     if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
       // console.log("rowIndex" + data[selectedRow]._id);
-      try {
-        const url = `/api/students/${data[selectedRow]._id.$oid}`;
-        //f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/delete/${data[selectedRow]._id.$oid};
-
-        alert("res.data" + url);
-      } catch (error) {
-        console.error("delete 실패. 에러발생:" + error);
-      }
+      const url = `/api/students/${data[selectedRow]._id.$oid}`;
+      axios
+        .delete(url)
+        .then((res) => {
+          console.log("삭제 성공", JSON.stringify(res.data));
+          if (res.data.code === "200") {
+            // 성공적으로 추가된 경우
+            setPopupVisible(true);
+          } else if (res.data.code == "400") {
+            // 실패한 경우 처리
+            setErrPopupVisible(true);
+          } else {
+            //유효하지않은 요청입니다.
+            console.log("어케할까");
+          }
+          showStdList();
+        })
+        .catch((err) => {
+          console.error("delete 실패. 에러발생:" + err);
+        });
     } else {
       console.log("Invalid rowIndex or data is empty.");
     }
@@ -172,6 +202,19 @@ function StudentDelete() {
           </Toolbar>
         </AppBar>
       </div>
+      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <b>Failed!</b> Failed to delete student information.
+        <button className="close" onClick={() => setErrPopupVisible(false)}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </UncontrolledAlert>
+      <UncontrolledAlert color="info" isOpen={popupVisible}>
+        <b>Success!</b>
+        Successful deletion of student information
+        <button className="close" onClick={() => setPopupVisible(false)}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </UncontrolledAlert>
       <div>
         <div id="Stdtable">
           <table {...getTableProps()}>

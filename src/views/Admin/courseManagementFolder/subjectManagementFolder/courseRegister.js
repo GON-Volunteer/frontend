@@ -74,12 +74,14 @@ export default function CourseRegister() {
       console.log("서버 응답:");
       console.log(response.data);
 
-      if (response.data.code === 200) {
+      if (response.data.code === "200") {
         // 성공적으로 추가된 경우
         setPopupVisible(true);
-      } else {
+      } else if (response.data.code === "400") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
+      } else {
+        console.log("어케할까");
       }
     } catch (error) {
       console.error("Error adding course:", error);

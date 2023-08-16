@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useLocation } from "react-router-dom";
+import { FormGroup, Label, Input, Button, UncontrolledAlert } from "reactstrap";
 
 import axios from "axios"; // Axios 사용 예시
 // import Radio from "../../components/Radio";
@@ -23,7 +24,8 @@ function StudentEdit() {
     getValues, //input 값을 가져올 수 있는 함수
     formState: { errors }, //form state에 관한 정보를 담고 있는 객체
   } = useForm({ mode: "onSubmit" });
-
+  const [errpopupVisible, setErrPopupVisible] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
   //server에 form data 전송 코드 작성하기
   const [value, setValue] = useState("");
   const [resultClass, setResultClass] = useState([]);
@@ -38,16 +40,28 @@ function StudentEdit() {
     const onSubmit = async (data) => {
       console.log("data너ㅁ겨주고" + JSON.stringify(data));
       navigate("/studentManagement/StudentInfo");
-      const url = `/api/students/${data._id.$oid}`;
-      alert("res.data" + url);
 
       await axios
         .patch(
-          `/api/students/${data._id.$oid}`,
+          `/api/students/${rowData._id.$oid}`,
           // "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/DeleteStudent",
           data
         )
-        .then((res) => console.log("server res: " + JSON.stringify(res)));
+        .then((response) => {
+          console.log("server res: " + JSON.stringify(response));
+          if (response.code === 200) {
+            // 성공적으로 추가된 경우
+            setPopupVisible(true);
+          } else if (response.code == 400) {
+            // 실패한 경우 처리
+            setErrPopupVisible(true);
+          } else {
+            console.log("어케할까");
+          }
+        })
+        .catch((err) => {
+          console.log("student info edit error:" + err);
+        });
     };
     const handleBackButtonClick = () => {
       navigate("/studentManagement/StudentInfo");
@@ -74,7 +88,18 @@ function StudentEdit() {
             </Toolbar>
           </AppBar>
         </div>
-
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b> SerialNum or ID is already exists.
+          <button className="close" onClick={() => setErrPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={popupVisible}>
+          <b>Success!</b> Student info edited successfully!
+          <button className="close" onClick={() => setPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="s_n">S.N : </label>
