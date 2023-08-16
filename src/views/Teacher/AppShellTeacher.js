@@ -6,9 +6,12 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
 import StarIcon from "@material-ui/icons/Star";
+import CloseIcon from "@material-ui/icons/Close";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
+import { searchAction } from "../../store/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,7 +20,9 @@ import {
 } from "react-router-dom";
 
 export default function ButtonAppBar() {
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const goHome = () => {
     navigate("/home");
@@ -26,6 +31,11 @@ export default function ButtonAppBar() {
   const goAnnouncement = () => {
     navigate("/Announcement-page");
   };
+  const logout = () => {
+    dispatch(searchAction.clearUser(user));
+    navigate("/login");
+  };
+
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const toggleDrawer = () => {
@@ -65,6 +75,13 @@ export default function ButtonAppBar() {
         >
           <StarIcon />
           Announcement
+        </MenuItem>
+        <MenuItem
+          onClick={logout}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <CloseIcon />
+          Logout
         </MenuItem>
       </Drawer>
     </Box>
