@@ -38,12 +38,10 @@ function StudentEdit() {
     const onSubmit = async (data) => {
       console.log("data너ㅁ겨주고" + JSON.stringify(data));
       navigate("/studentManagement/StudentInfo");
-      const url = `/api/students/${data._id.$oid}`;
-      alert("res.data" + url);
 
       await axios
         .patch(
-          `/api/students/${data._id.$oid}`,
+          `/api/students/${rowData._id.$oid}`,
           // "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/DeleteStudent",
           data
         )
