@@ -38,9 +38,13 @@ function StudentEdit() {
     const onSubmit = async (data) => {
       console.log("data너ㅁ겨주고" + JSON.stringify(data));
       navigate("/studentManagement/StudentInfo");
+      const url = `/api/students/${data._id.$oid}`;
+      alert("res.data" + url);
+
       await axios
         .patch(
-          "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/DeleteStudent",
+          `/api/students/${data._id.$oid}`,
+          // "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/DeleteStudent",
           data
         )
         .then((res) => console.log("server res: " + JSON.stringify(res)));
@@ -198,7 +202,7 @@ function StudentEdit() {
                 required: "비밀번호 확인 필수.",
                 minLength: {
                   value: 7,
-                  message: "7자리 이상 비밀번호를 사용하세요.",
+                  message: "7자리 이상 비밀번호를 .",
                 },
                 validate: {
                   check: (val) => {

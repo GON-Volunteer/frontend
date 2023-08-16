@@ -7,12 +7,11 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import "../../assets/css/Home.css";
 import { Button } from "reactstrap";
-import AnnouncementPage from "./AnnouncementPage";
+
 import AppShell from "./AppShell";
 import AppShellAdmin from "../Admin/AppShellAdmin";
 import AppShellTeacher from "../Teacher/AppShellTeacher";
 import AnnouncementList from "./AnnouncementList.js";
-import LoginCheck from "./LoginCheck";
 
 const Announcement = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -88,8 +87,8 @@ const Home = () => {
           eventDisplay={"block"}
           eventTextColor={"#fff"}
           eventColor={"#0343CB"}
-          height={"660px"}
-          width={"400px"}
+          height={"auto"}
+          width={"100%"}
           // Toolbar
           headerToolbar={{
             left: "prev,next", // Display today, prev, and next buttons
