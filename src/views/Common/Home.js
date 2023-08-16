@@ -69,9 +69,9 @@ const Home = () => {
   };
   return (
     <div className="Home-container">
-      {user.auth === "teacher" ? (
+      {user.account === 1 ? (
         <AppShellTeacher />
-      ) : user.auth === "admin" ? (
+      ) : user.account === 0 ? (
         <AppShellAdmin />
       ) : (
         <AppShell />
