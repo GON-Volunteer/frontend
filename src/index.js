@@ -54,74 +54,75 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/nucleo-icons" element={<NucleoIcons />} />
-          <Route path="/articles/:idx" element={<Posting />} />
-          <Route path="/ArticleCreate" element={<ArticleCreate />} />
-          <Route path="/landing-page" element={<LandingPage />} />
-          <Route path="/profile-page" element={<ProfilePage />} />
-          <Route path="/Announcement-page" element={<AnnouncementPage />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
-          {/* <Route element={<LoginCheckAdmin />}> */}
-          <Route
-            path="/StudentManagement"
-            element={<StudentManagement />}
-          ></Route>
-          {/* </Route> */}
-          <Route element={<LoginCheck />}>
-            <Route path="home" element={<Home />} />
-          </Route>
           <Route
             path="/AnnouncementList"
             element={<AnnouncementList />}
           ></Route>
-          <Route
-            path="/studentManagement/register"
-            element={<StudentRegister />}
-          ></Route>
-          <Route
-            path="/studentManagement/delete"
-            element={<StudentDelete />}
-          ></Route>
-          <Route
-            path="/studentManagement/studentinfo/StudentEdit"
-            element={<StudentEdit />}
-          ></Route>
-          <Route
-            path="/studentManagement/studentinfo"
-            element={<StudentInfo />}
-          ></Route>
-          <Route
-            path="/teacherManagement"
-            element={<TeacherManagement />}
-          ></Route>
-          <Route
-            path="/teacherManagement/register"
-            element={<TeacherRegister />}
-          ></Route>
-          <Route
-            path="/teacherManagement/teacherinfo"
-            element={<TeacherInfo />}
-          ></Route>
-          <Route
-            path="/teacherManagement/delete"
-            element={<TeacherDelete />}
-          ></Route>
-          <Route
-            path="/teacherManagement/teacherinfo/teacherEdit"
-            element={<TeacherEdit />}
-          ></Route>
-          <Route
-            path="/courseManagement"
-            element={<CourseManagement />}
-          ></Route>
-          <Route
-            path="/courseManagement/subjectManagement"
-            element={<SubjectManagement />}
-          ></Route>
-          <Route
-            path="/courseManagement/subjectManagement/courseRegister"
-            element={<CourseRegister />}
-          ></Route>
+
+          {/* </Route> */}
+          <Route element={<LoginCheck />}>
+            <Route path="home" element={<Home />} />
+            <Route path="/articles/:idx" element={<Posting />} />
+            <Route path="/Announcement-page" element={<AnnouncementPage />} />
+          </Route>
+          <Route element={<LoginCheckAdmin />}>
+            <Route path="home" element={<Home />} />
+            <Route path="/ArticleCreate" element={<ArticleCreate />} />
+            <Route
+              path="/StudentManagement"
+              element={<StudentManagement />}
+            ></Route>
+            <Route
+              path="/studentManagement/register"
+              element={<StudentRegister />}
+            ></Route>
+            <Route
+              path="/studentManagement/delete"
+              element={<StudentDelete />}
+            ></Route>
+            <Route
+              path="/studentManagement/studentinfo/StudentEdit"
+              element={<StudentEdit />}
+            ></Route>
+            <Route
+              path="/studentManagement/studentinfo"
+              element={<StudentInfo />}
+            ></Route>
+            <Route
+              path="/teacherManagement"
+              element={<TeacherManagement />}
+            ></Route>
+            <Route
+              path="/teacherManagement/register"
+              element={<TeacherRegister />}
+            ></Route>
+            <Route
+              path="/teacherManagement/teacherinfo"
+              element={<TeacherInfo />}
+            ></Route>
+            <Route
+              path="/teacherManagement/delete"
+              element={<TeacherDelete />}
+            ></Route>
+            <Route
+              path="/teacherManagement/teacherinfo/teacherEdit"
+              element={<TeacherEdit />}
+            ></Route>
+            <Route
+              path="/courseManagement"
+              element={<CourseManagement />}
+            ></Route>
+            <Route
+              path="/courseManagement/subjectManagement"
+              element={<SubjectManagement />}
+            ></Route>
+            <Route
+              path="/courseManagement/subjectManagement/courseRegister"
+              element={<CourseRegister />}
+            ></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </CookiesProvider>

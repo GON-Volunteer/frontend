@@ -17,7 +17,7 @@ import { searchAction } from "../../store/userSlice";
 function LoginPage() {
   const url = "http://localhost:5000";
   const formRef = useRef();
-  const [cookies, setCookie] = useCookies(["id"]);
+  const [cookies, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
   const goHome = () => {
@@ -58,12 +58,12 @@ function LoginPage() {
         password,
       };
 
-      axios.post(url + "/api/login", body).then((res) => {
+      axios.post(url + "/api/login/", body).then((res) => {
         if (res.data.code == 200) {
           console.log(res.data);
           console.log("로그인");
           goHome();
-          setCookie("token", res.data.token); //cookie에 토큰저장
+          setCookie("token", res.data.access_token); //cookie에 토큰저장
           dispatch(searchAction.loginUser(res.data));
         } else if (res.data.code === 401) {
           setMsg("존재하지 않는 ID입니다.");

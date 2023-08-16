@@ -46,3 +46,14 @@ table {
   width: 100%;
   z-index: 1;
 }
+.announcement-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.create-button {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  margin: 0px;
+}

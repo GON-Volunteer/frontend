@@ -29,10 +29,16 @@ function AnnouncementPage() {
       ) : (
         <AppShell />
       )}
-      <AnnouncementList />
-      <Button color="info" onClick={goArticleCreate}>
-        Create
-      </Button>
+      <div>
+        <AnnouncementList />
+      </div>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        {user.account === 0 && (
+          <Button color="info" onClick={goArticleCreate}>
+            Create
+          </Button>
+        )}
+      </div>
 
       <div className="footer register-footer text-center">
         <h6>
