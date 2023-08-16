@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Button, UncontrolledAlert } from "reactstrap";
 
 import { useNavigate } from "react-router-dom";
 function Register() {
@@ -18,16 +19,17 @@ function Register() {
   const {
     register, //input 요소를 react hook form과 연결해서 검증 규칙 적용 메소드
     handleSubmit, // form을 submit 할때 실행 함수
+    reset,
     getValues, //input 값을 가져올 수 있는 함수
     formState: { errors }, //form state에 관한 정보를 담고 있는 객체
   } = useForm({ mode: "onSubmit" });
 
   //server에 form data 전송 코드 작성하기
   // const onSubmit = (data) => console.log(data);
-  const [value, setValue] = useState("");
-  const [resultClass, setResultClass] = useState([]);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const [errpopupVisible, setErrPopupVisible] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
   const handleBackButtonClick = () => {
     navigate("/studentManagement");
   };
@@ -43,8 +45,17 @@ function Register() {
       );
 
       console.log("서버 응답:");
-      console.log(response.data);
-      // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
+      console.log(response.data.code);
+      if (response.data.code === "200") {
+        // 성공적으로 추가된 경우
+        setPopupVisible(true);
+      } else if (response.data.code == "400") {
+        // 실패한 경우 처리
+        setErrPopupVisible(true);
+      } else {
+        console.log("어케할까");
+      }
+      reset();
     } catch (error) {
       console.error("Error sending data to server:", error);
       // 요청이 실패했을 경우, 예외 처리를 하거나 에러 메시지를 표시하도록 처리합니다.
@@ -90,7 +101,18 @@ function Register() {
           </Toolbar>
         </AppBar>
       </div>
-
+      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <b>Failed!</b> SerialNum or ID is already exists.
+        <button className="close" onClick={() => setErrPopupVisible(false)}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </UncontrolledAlert>
+      <UncontrolledAlert color="info" isOpen={popupVisible}>
+        <b>Success!</b> Student info edited successfully!
+        <button className="close" onClick={() => setPopupVisible(false)}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </UncontrolledAlert>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="s_n">S.N : </label>
@@ -223,7 +245,7 @@ function Register() {
             <small role="alert">{errors.passwordConfirm.message}</small>
           )}
         </div>
-        <button type="submit">create</button>
+        <Button type="submit">create</Button>
         {/* <RadioGroup label="연락 방법" value={value} onChange={setValue}>
           {resultClass.map((item, idx) => {
             <Radio key={idx} value={item}>

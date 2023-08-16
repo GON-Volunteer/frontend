@@ -43,6 +43,7 @@ export default function SubjectManagement() {
     try {
       const response = await axios.get("/api/subjects/");
       const subjects = response.data.subject;
+      console.log(subjects);
       setSubjectInfo(subjects);
     } catch (error) {
       console.log("API 요청에 실패하였습니다.", error);
@@ -67,10 +68,10 @@ export default function SubjectManagement() {
       console.log("서버 응답:");
       console.log(response.data);
       // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
-      if (response.data.code == 200) {
+      if (response.data.code == "200") {
         setPopupVisible(true);
         SetSubList();
-      } else if (response.data.code == 400) {
+      } else if (response.data.code == "400") {
         setErrPopupVisible(true);
       }
     } catch (error) {
