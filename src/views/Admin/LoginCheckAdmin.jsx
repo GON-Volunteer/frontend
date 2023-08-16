@@ -18,19 +18,19 @@ function LoginCheckAdmin() {
     const checkAuthorization = async () => {
       if (token) {
         try {
-          const response = await axios.get(url + "/api/auth", {
+          const response = await axios.get(url + "/api/auth/", {
             headers: {
               Authorization: token,
             },
           });
           console.log(response);
-          if (response.data.code === 400 || user.account != 0) {
+          if (response.data.code === "400" || user.account != 0) {
             dispatch(searchAction.clearUser(user));
             alert("Not authorized");
             setRenderComponent(
               <Navigate to="/login" state={{ from: location }} replace />
             );
-          } else if (response.data.code === 200) {
+          } else if (response.data.code === "200") {
             setRenderComponent(<Outlet />);
           }
         } catch (error) {

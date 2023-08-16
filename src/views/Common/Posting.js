@@ -160,7 +160,7 @@ const Posting = ({}) => {
     onReadComment();
     onReadBoard();
     console.log("check");
-  }, [newComment]);
+  }, [newComment, likeState]);
 
   // [게시글] 사용자 게시글 좋아요 클릭 여부 확인
   function liked(element) {
