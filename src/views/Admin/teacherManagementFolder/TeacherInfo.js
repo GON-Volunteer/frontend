@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable, usePagination } from "react-table";
 
-import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
@@ -9,13 +8,15 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import { Button, UncontrolledAlert } from "reactstrap";
+import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 
 function TeacherInfo() {
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
     navigate("/teacherManagement");
   };
-  const [value, setValue] = useState("");
+
   const [selectedRow, setSelectedRow] = useState(null);
 
   const fullNameHeaderClass = "fullNameHeader";
@@ -69,25 +70,23 @@ function TeacherInfo() {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
   useEffect(() => {
-    axios
-      .get(
-        "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/teacherlist"
-      )
-      .then((res) => {
-        if (
-          Array.isArray(res.data) &&
-          res.data.length > 0 &&
-          Array.isArray(res.data[0].teacher)
-        ) {
-          //map 사용시 새로운 배열 생성해서
-          // const resultObj = res.data.map((item) => item);
-          // setTeacherInfo(resultObj);
-          const teachers = res.data[0].teacher;
-          setTeacherInfo(teachers);
-        } else {
-          console.log("데이터가 배열이 아닙니다.");
-        }
-      });
+    axios.get("/api/teachers/").then((res) => {
+      console.log("???" + res);
+      if (
+        Array.isArray(res.data) &&
+        res.data.length > 0 &&
+        Array.isArray(res.data[0].teacher)
+      ) {
+        //map 사용시 새로운 배열 생성해서
+        // const resultObj = res.data.map((item) => item);
+        // setTeacherInfo(resultObj);
+        const teachers = res.data[0].teacher;
+        setTeacherInfo(teachers);
+        console.log("teacherinfo" + teachers);
+      } else {
+        console.log("데이터가 배열이 아닙니다.");
+      }
+    });
   }, []);
 
   //teacherInfo 변경이 있을 때만 업데이트
@@ -137,7 +136,7 @@ function TeacherInfo() {
     rows,
     prepareRow,
     page,
-    state: { pageIndex, pageCount },
+    state: { pageIndex },
   } = useTable(
     {
       columns,
@@ -146,7 +145,7 @@ function TeacherInfo() {
     },
     usePagination
   );
-
+  const pageCount = Math.ceil(data.length / pageSize);
   return (
     <div>
       <div>
@@ -223,27 +222,38 @@ function TeacherInfo() {
                 );
               })}
 
-              <button onClick={handleEdit} id="EditBtn">
+              <Button onClick={handleEdit} id="EditBtn">
                 Edit
-              </button>
+              </Button>
             </tbody>
           </table>
         </div>
         <div>
-          <button
-            onClick={goToPrevPage}
-            id="tableLeftBtn"
-            disabled={currentPage === 1}
+          <Pagination
+            className="pagination justify-content-center"
+            listClassName="justify-content-center"
+            aria-label="Page navigation example"
           >
-            {" << "}prev
-          </button>
-          <button
-            id="tableRightBtn"
-            onClick={goToNextPage}
-            disabled={currentPage === Math.ceil(data.length / pageSize)}
-          >
-            next{" >> "}
-          </button>
+            <PaginationItem disabled={currentPage === 1}>
+              <PaginationLink previous href="#" onClick={goToPrevPage} />
+            </PaginationItem>
+            {Array.from({ length: pageCount }, (_, index) => (
+              <PaginationItem key={index} active={index + 1 === currentPage}>
+                <PaginationLink
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(index + 1);
+                  }}
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem disabled={currentPage === pageCount}>
+              <PaginationLink next href="#" onClick={goToNextPage} />
+            </PaginationItem>
+          </Pagination>
         </div>
       </div>
     </div>

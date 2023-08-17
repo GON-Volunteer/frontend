@@ -29,14 +29,6 @@ function StudentInfo() {
   // 체크박스가 체크되었는지 여부를 관리하는 상태
   const [checkedRows, setCheckedRows] = useState([]);
 
-  // 체크박스를 클릭할 때마다 해당 행의 인덱스를 상태에 추가 또는 제거하는 함수
-  const handleCheckboxChange = (rowIndex) => {
-    if (checkedRows.includes(rowIndex)) {
-      setCheckedRows((prev) => prev.filter((index) => index !== rowIndex));
-    } else {
-      setCheckedRows((prev) => [...prev, rowIndex]);
-    }
-  };
   //radio를 클릭하면 인덱스 받아오기
   const handleRadioChange = (rowIndex) => {
     setSelectedRow(rowIndex);

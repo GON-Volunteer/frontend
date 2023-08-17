@@ -60,25 +60,7 @@ function Register() {
       console.error("Error sending data to server:", error);
       // 요청이 실패했을 경우, 예외 처리를 하거나 에러 메시지를 표시하도록 처리합니다.
     }
-    // axios
-    //   .post(
-    //     "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/AddStudent",
-    //     {
-    //       data,
-    //     }
-    //   )
-    //   .then((response) => {
-    //     console.log(response);
-    //     // console.log(response.data);
-    //     // if (Array.isArray(response.data)) {
-    //     //   //map 사용시 새로운 배열 생성해서
-    //     //   const names = response.data.map((item) => item.name);
-    //     //   setResultClass(names);
-    //     // } else {
-    //     //   console.log("데이터가 배열이 아닙니다.");
-    //     // }
-    //   });
-  }; //빈배열을 넘겨주면 컴포넌트가 마운트 되었을 때 한번만 실행됩니다.
+  };
 
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
