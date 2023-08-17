@@ -39,15 +39,23 @@ export default function SubjectManagement() {
     setInputValue(event.target.value);
   };
 
-  async function SetSubList() {
-    try {
-      const response = await axios.get("/api/subjects/");
-      const subjects = response.data.subject;
-      console.log(subjects);
-      setSubjectInfo(subjects);
-    } catch (error) {
-      console.log("API 요청에 실패하였습니다.", error);
-    }
+  async function showSubList() {
+    axios
+      .get("/api/subjects/")
+      .then((res) => {
+        console.log("res.data??" + res.data);
+        if (Array.isArray(res.data)) {
+          //map 사용시 새로운 배열 생성해서
+          console.log(res.data);
+          const resultObj = res.data.map((item) => item);
+          setSubjectInfo(resultObj);
+        } else {
+          console.log("SubManagement::데이터가 배열이 아닙니다.");
+        }
+      })
+      .catch((Err) => {
+        console.log(Err);
+      });
   }
   const [isElective, setIsElective] = useState(false);
   const [errpopupVisible, setErrPopupVisible] = useState(false);
@@ -70,7 +78,7 @@ export default function SubjectManagement() {
       // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
       if (response.data.code == "200") {
         setPopupVisible(true);
-        SetSubList();
+        showSubList();
       } else if (response.data.code == "400") {
         setErrPopupVisible(true);
       }
@@ -86,7 +94,7 @@ export default function SubjectManagement() {
         const url = `/api/subjects/${data[selectedRow]._id}`;
         // const res = await axios.delete(url);
         alert("res.data" + url);
-        SetSubList();
+        showSubList();
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
       }
@@ -100,27 +108,46 @@ export default function SubjectManagement() {
       .get("/api/subjects/")
       .then((res) => {
         console.log(res.data);
-
-        if (
-          res.data.hasOwnProperty("subject") &&
-          Array.isArray(res.data.subject)
-        ) {
-          const subjects = res.data.subject;
-          setSubjectInfo(subjects);
+        if (Array.isArray(res.data)) {
+          console.log("res.data??" + res.data);
+          const resultObj = res.data.map((item) => item);
+          setSubjectInfo(res.data);
+        } else if (typeof res.data === "string") {
+          // 객체를 배열로 변환
+          const dataArray = Object.values(res.data);
+          setSubjectInfo(dataArray);
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
       })
-      .catch((error) => {
-        console.log("API 요청에 실패하였습니다.", error);
+      .catch((Err) => {
+        console.log(Err);
       });
-  }, []);
+    // async function fetchData() {
+    //   try {
+    //     const response = await axios.get("/api/subjects/");
+    //     const subjects = response.data.subject;
+    //     console.log(subjects);
+    //     setSubjectInfo(subjects);
+    //     setData(subjects); // 데이터를 받아온 후 data 배열 업데이트
+    //   } catch (error) {
+    //     console.log("API 요청에 실패하였습니다.", error);
+    //   }
+    // }
 
+    // fetchData(); // 데이터 가져오기
+    // SetSubList();
+    // 데이터를 받아온 후 data 배열 업데이트
+  }, []);
   const data = useMemo(() => subjectInfo, [subjectInfo]);
+  //data = useMemo(() => subjectInfo, [subjectInfo]);
   const getCurrentPageData = () => {
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    return data.slice(startIndex, endIndex);
+    if (data) {
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      return data.slice(startIndex, endIndex);
+    }
+    return [];
   };
 
   // 현재 페이지에 해당하는 데이터를 가져옵니다.

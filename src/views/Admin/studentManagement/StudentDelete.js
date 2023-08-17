@@ -20,13 +20,9 @@ function StudentDelete() {
   const handleBackButtonClick = () => {
     navigate("/StudentManagement");
   };
-  const [value, setValue] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
 
   const fullNameHeaderClass = "fullNameHeader";
-
-  // 체크박스가 체크되었는지 여부를 관리하는 상태
-  const [checkedRows, setCheckedRows] = useState([]);
 
   //radio를 클릭하면 인덱스 받아오기
   const handleRadioChange = (rowIndex) => {
