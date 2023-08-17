@@ -38,11 +38,8 @@ function TeacherEdit() {
       console.log("data너ㅁ겨주고" + JSON.stringify(data));
       //   navigate("/teacherManagement/TeacherInfo");
       await axios
-        .patch(
-          "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/DeleteStudent",
-          data
-        )
-        .then((res) => console.log("server res: " + JSON.stringify(res)));
+        .patch(`/api/teachers/${rowData._id.$oid}`, data)
+        .then((res) => console.log("teacher edit이후 server res: " + res));
     };
     const handleBackButtonClick = () => {
       navigate("/teacherManagement/teacherinfo");
