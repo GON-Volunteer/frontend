@@ -150,7 +150,7 @@ function TeacherEdit() {
                 },
                 validate: {
                   check: (val) => {
-                    if (getValues("password") !== val) {
+                    if (getValues("pw") !== val) {
                       return "비밀번호가 일치하지 않습니다.";
                     }
                   },

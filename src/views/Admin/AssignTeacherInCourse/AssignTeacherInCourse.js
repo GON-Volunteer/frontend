@@ -26,7 +26,14 @@ function AssignTeacherInCourse() {
     subject_id: "",
   });
   const [selectedRow, setSelectedRow] = useState(null);
-
+  const [teacherInfo, setTeacherInfo] = useState([]);
+  const handleSubjectChange = (event, row) => {
+    // const { value } = event.target;
+    // setSelectedRow(row.index); // 선택한 행 인덱스를 설정합니다.
+    // setFormData((prevFormData) => ({
+    //   subject_id: row.original.subject_id, // 선택한 행의 subject_id를 설정합니다.
+    // }));
+  };
   const columnData = [
     {
       accessor: "grade",
@@ -43,6 +50,26 @@ function AssignTeacherInCourse() {
     {
       accessor: "subject",
       Header: "subject",
+    },
+    {
+      accessor: "teacherInfo",
+      Header: "teacher",
+      Cell: ({ row }) => (
+        <Input
+          type="select"
+          name="subject"
+          id={`inputSubject-${row.index}`}
+          value={formData.subject_id}
+          onChange={(event) => handleSubjectChange(event, row)}
+        >
+          <option value="">-- 과목 선택 --</option>
+          {teacherInfo.map((teacher) => (
+            <option key={teacher.full_name} value={teacher.full_name}>
+              {teacher.full_name}
+            </option>
+          ))}
+        </Input>
+      ),
     },
   ];
   const TeacherData = [];
@@ -150,6 +177,19 @@ function AssignTeacherInCourse() {
       .catch((Err) => {
         console.log(Err);
       });
+    axios.get("/api/teachers/").then((res) => {
+      console.log("???" + res);
+      if (Array.isArray(res.data) && res.data.length > 0) {
+        //map 사용시 새로운 배열 생성해서
+        // const resultObj = res.data.map((item) => item);
+        // setTeacherInfo(resultObj);
+        const teachers = res.data;
+        setTeacherInfo(teachers);
+        console.log("teacherinfo" + teachers);
+      } else {
+        console.log("데이터가 배열이 아닙니다.");
+      }
+    });
   }, []);
   const data = useMemo(() => courseInfo, [courseInfo]);
   //data = useMemo(() => courseInfo, [courseInfo]);
@@ -191,7 +231,7 @@ function AssignTeacherInCourse() {
         <div>
           <table {...getTableProps()} id="courseListTable">
             {" "}
-            <thead>
+            <tbody {...getTableBodyProps()} id="tbody">
               {headerGroups.map((header) => (
                 <tr {...header.getHeaderGroupProps()} id="headerRow">
                   {header.headers.map((col) => (
@@ -201,8 +241,7 @@ function AssignTeacherInCourse() {
                   ))}
                 </tr>
               ))}
-            </thead>
-            <tbody {...getTableBodyProps()} id="tbody">
+
               {rows.map((row, rowIndex) => {
                 prepareRow(row);
                 const isRowSelected = rowIndex === selectedRow;
@@ -224,18 +263,6 @@ function AssignTeacherInCourse() {
                   </tr>
                 );
               })}
-              <Input
-                type="select"
-                name="section"
-                id="inputState"
-                value={formData.section} // 선택한 옵션의 값 formData에 할당
-                onChange={handleInputChange}
-              >
-                <option value="">-- Select Section --</option>
-                {sectionOptions.map((option, index) => (
-                  <option key={index}>{option}</option>
-                ))}
-              </Input>
             </tbody>
           </table>
         </div>
