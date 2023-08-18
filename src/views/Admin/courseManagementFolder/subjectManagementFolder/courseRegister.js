@@ -38,7 +38,7 @@ export default function CourseRegister() {
     sectionOptions.push(i);
   }
 
-  const [subjectInfo, setSubjectInfo] = useState([]);
+  const [courseInfo, setCourseInfo] = useState([]);
   useEffect(() => {
     axios
       .get("/api/subjects/")
@@ -48,7 +48,7 @@ export default function CourseRegister() {
           Array.isArray(res.data.subject)
         ) {
           const subjectNames = res.data.subject.map((subject) => subject.name);
-          setSubjectInfo(subjectNames);
+          setCourseInfo(subjectNames);
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
@@ -189,7 +189,7 @@ export default function CourseRegister() {
             onChange={handleInputChange}
           >
             <option value="">-- Select Subject --</option>
-            {subjectInfo.map((option, index) => (
+            {courseInfo.map((option, index) => (
               <option key={index} value={option}>
                 {option}
               </option>

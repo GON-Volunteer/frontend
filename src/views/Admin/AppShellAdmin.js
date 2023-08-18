@@ -41,7 +41,12 @@ export default function ButtonAppBar() {
   const goCourseManagement = () => {
     navigate("/courseManagement");
   };
-
+  const goAssignTeacherInCourse = () => {
+    navigate("/assignTeacherInCourse");
+  };
+  const goAssignStudentInCourse = () => {
+    navigate("/assignStudentInCourse");
+  };
   const logout = () => {
     dispatch(searchAction.clearUser(user));
     navigate("/login");
@@ -109,6 +114,20 @@ export default function ButtonAppBar() {
         >
           <EditIcon />
           Course Management
+        </MenuItem>
+        <MenuItem
+          onClick={goAssignTeacherInCourse}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <EditIcon />
+          Assign Teacher in Course
+        </MenuItem>
+        <MenuItem
+          onClick={goAssignTeacherInCourse}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <EditIcon />
+          Assign Student in Course
         </MenuItem>
 
         <MenuItem
