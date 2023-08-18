@@ -42,6 +42,7 @@ import LoginCheck from "views/Common/LoginCheck";
 import LoginCheckAdmin from "views/Admin/LoginCheckAdmin";
 import CourseRegister from "views/Admin/courseManagementFolder/subjectManagementFolder/courseRegister";
 
+import AssignTeacherInCourse from "views/Admin/AssignTeacherInCourse/AssignTeacherInCourse";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -123,6 +124,10 @@ root.render(
               element={<CourseRegister />}
             ></Route>
           </Route>
+          <Route
+            path="/assignTeacherInCourse"
+            element={<AssignTeacherInCourse></AssignTeacherInCourse>}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </CookiesProvider>
