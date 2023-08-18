@@ -35,10 +35,11 @@ function TeacherEdit() {
     };
 
     const onSubmit = async (data) => {
-      console.log("data너ㅁ겨주고" + JSON.stringify(data));
+      // console.log("data너ㅁ겨주고" + JSON.stringify(data));
       //   navigate("/teacherManagement/TeacherInfo");
       await axios
-        .patch(`/api/teachers/${rowData._id.$oid}`, data)
+
+        .patch(`/api/teachers/${rowData._id}`, data)
         .then((res) => console.log("teacher edit이후 server res: " + res));
     };
     const handleBackButtonClick = () => {
