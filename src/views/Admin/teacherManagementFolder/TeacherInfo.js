@@ -45,24 +45,6 @@ function TeacherInfo() {
       accessor: "phone_num",
       Header: "Phone No",
     },
-    {
-      Header: "Subjects", // Header for the "subject" column
-      accessor: "subject", // Accessor for the "subject" array
-      Cell: ({ value }) => (
-        <ul>
-          {value.map((subject, index) => (
-            <li
-              key={index}
-              style={{
-                color: subject.is_elective_subject ? "blue" : "inherit",
-              }}
-            >
-              {subject.name}
-            </li>
-          ))}
-        </ul>
-      ),
-    },
   ];
   const columns = useMemo(() => columnData, []);
 
@@ -72,15 +54,11 @@ function TeacherInfo() {
   useEffect(() => {
     axios.get("/api/teachers/").then((res) => {
       console.log("???" + res);
-      if (
-        Array.isArray(res.data) &&
-        res.data.length > 0 &&
-        Array.isArray(res.data[0].teacher)
-      ) {
+      if (Array.isArray(res.data) && res.data.length > 0) {
         //map 사용시 새로운 배열 생성해서
         // const resultObj = res.data.map((item) => item);
         // setTeacherInfo(resultObj);
-        const teachers = res.data[0].teacher;
+        const teachers = res.data;
         setTeacherInfo(teachers);
         console.log("teacherinfo" + teachers);
       } else {
