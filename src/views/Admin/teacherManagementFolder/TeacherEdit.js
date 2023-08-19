@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
 import axios from "axios"; // Axios 사용 예시
-
+import { FormGroup, Label, Input, Button, UncontrolledAlert } from "reactstrap";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -27,6 +27,7 @@ function TeacherEdit() {
   const [value, setValue] = useState("");
   const [resultClass, setResultClass] = useState([]);
   const navigate = useNavigate();
+  const [errpopupVisible, setErrPopupVisible] = useState(false);
   if (!rowData) {
     return <div>data loading error </div>;
   } else {
@@ -37,10 +38,23 @@ function TeacherEdit() {
     const onSubmit = async (data) => {
       // console.log("data너ㅁ겨주고" + JSON.stringify(data));
       //   navigate("/teacherManagement/TeacherInfo");
-      await axios
+      await axios.patch(`/api/teachers/${rowData._id}`, data).then((res) => {
+        console.log("teacher edit이후 server res: " + res);
 
-        .patch(`/api/teachers/${rowData._id}`, data)
-        .then((res) => console.log("teacher edit이후 server res: " + res));
+        if (res.data.code == "200") {
+          // 성공적으로 추가된 경우
+          navigate("/teacherManagement/TeacherInfo");
+          //setPopupVisible(true);
+        } else if (res.data.code == "400") {
+          // 실패한 경우 처리
+          setErrPopupVisible(true);
+          setTimeout(() => {
+            setErrPopupVisible(false);
+          }, 3000);
+        } else {
+          console.log("어케할까");
+        }
+      });
     };
     const handleBackButtonClick = () => {
       navigate("/teacherManagement/teacherinfo");
@@ -67,7 +81,12 @@ function TeacherEdit() {
             </Toolbar>
           </AppBar>
         </div>
-
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b> SerialNum or ID is already exists.
+          <button className="close" onClick={() => setErrPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="full_name">Full Name : </label>
@@ -150,7 +169,7 @@ function TeacherEdit() {
                 },
                 validate: {
                   check: (val) => {
-                    if (getValues("password") !== val) {
+                    if (getValues("pw") !== val) {
                       return "비밀번호가 일치하지 않습니다.";
                     }
                   },
@@ -161,7 +180,7 @@ function TeacherEdit() {
               <small role="alert">{errors.passwordConfirm.message}</small>
             )}
           </div>
-          <button type="submit">Edit</button>
+          <Button type="submit">Edit</Button>
           {/* <RadioGroup label="연락 방법" value={value} onChange={setValue}>
                   {resultClass.map((item, idx) => {
                     <Radio key={idx} value={item}>

@@ -43,12 +43,11 @@ export default function CourseRegister() {
     axios
       .get("/api/subjects/")
       .then((res) => {
-        if (
-          res.data.hasOwnProperty("subject") &&
-          Array.isArray(res.data.subject)
-        ) {
-          const subjectNames = res.data.subject.map((subject) => subject.name);
+        console.log("courseInfo:" + JSON.stringify(res.data));
+        if (Array.isArray(res.data)) {
+          const subjectNames = res.data.map((subject) => subject.name);
           setCourseInfo(subjectNames);
+          console.log("courseInfo:" + courseInfo);
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
