@@ -15,6 +15,7 @@ import ProfilePage from "views/examples/ProfilePage.js";
 import LoginPage from "views/Common/LoginPage.js";
 import AnnouncementPage from "views/Common/AnnouncementPage";
 import AnnouncementList from "views/Common/AnnouncementList";
+import ChangePassword from "views/Common/changePassword";
 //admin - student manage
 import StudentManagement from "views/Admin/studentManagement/StudentManagement";
 import StudentRegister from "views/Admin/studentManagement/StudentRegister";
@@ -43,6 +44,7 @@ import LoginCheckAdmin from "views/Admin/LoginCheckAdmin";
 import CourseRegister from "views/Admin/courseManagementFolder/subjectManagementFolder/courseRegister";
 
 import AssignTeacherInCourse from "views/Admin/AssignTeacherInCourse/AssignTeacherInCourse";
+import AssignStdInCourse from "views/Admin/AssignStdInCourse/AssignStdInCourse";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -128,6 +130,11 @@ root.render(
             path="/assignTeacherInCourse"
             element={<AssignTeacherInCourse></AssignTeacherInCourse>}
           ></Route>
+          <Route
+            path="/assignStdInCourse"
+            element={<AssignStdInCourse></AssignStdInCourse>}
+          ></Route>
+          <Route path="/changePassword" element={<ChangePassword />}></Route>
         </Routes>
       </BrowserRouter>
     </CookiesProvider>

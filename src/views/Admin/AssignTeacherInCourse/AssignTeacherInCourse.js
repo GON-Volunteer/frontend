@@ -13,28 +13,32 @@ import "../../../assets/css/AssignTeacher.css";
 import AppShellAdmin from "../AppShellAdmin";
 function AssignTeacherInCourse() {
   const navigate = useNavigate();
-  const handleBackButtonClick = () => {
-    navigate("/courseManagement");
-  };
-  const handleNext = () => {
-    navigate("/courseManagement/subjectManagement/courseRegister");
-  };
+
   const [formData, setFormData] = useState({
     grade: "",
     section: "",
     batch: "",
     subject_id: "",
+    teacher: "",
   });
+
   const [selectedRow, setSelectedRow] = useState(null);
-  const [teacherInfo, setTeacherInfo] = useState([]);
+
+  const [selectedSecondRow, setSelectedSecondRow] = useState(null);
+  const [teachers, setTeachers] = useState([]);
   const handleSubjectChange = (event, row) => {
-    // const { value } = event.target;
-    // setSelectedRow(row.index); // 선택한 행 인덱스를 설정합니다.
-    // setFormData((prevFormData) => ({
-    //   subject_id: row.original.subject_id, // 선택한 행의 subject_id를 설정합니다.
-    // }));
+    const { value } = event.target;
+
+    setCourseInfo((prevCourseInfo) => {
+      const updatedCourseInfo = [...prevCourseInfo];
+      updatedCourseInfo[row.index] = {
+        ...updatedCourseInfo[row.index],
+        teacher: value,
+      };
+      return updatedCourseInfo;
+    });
   };
-  const columnData = [
+  const secondTableColumns = [
     {
       accessor: "grade",
       Header: "grade",
@@ -52,18 +56,40 @@ function AssignTeacherInCourse() {
       Header: "subject",
     },
     {
-      accessor: "teacherInfo",
+      accessor: "teacher",
+      Header: "teacher",
+    },
+  ];
+  const firstTableColumns = [
+    {
+      accessor: "grade",
+      Header: "grade",
+    },
+    {
+      accessor: "section",
+      Header: "section",
+    },
+    {
+      accessor: "batch",
+      Header: "batch",
+    },
+    {
+      accessor: "subject",
+      Header: "subject",
+    },
+    {
+      accessor: "teachers",
       Header: "teacher",
       Cell: ({ row }) => (
         <Input
           type="select"
-          name="subject"
-          id={`inputSubject-${row.index}`}
-          value={formData.subject_id}
+          name="teacher"
+          id={`inputTeacher-${row.index}`}
+          value={row.original.teacher}
           onChange={(event) => handleSubjectChange(event, row)}
         >
-          <option value="">-- 과목 선택 --</option>
-          {teacherInfo.map((teacher) => (
+          <option value="">-- 선생님 선택 --</option>
+          {teachers.map((teacher) => (
             <option key={teacher.full_name} value={teacher.full_name}>
               {teacher.full_name}
             </option>
@@ -73,14 +99,18 @@ function AssignTeacherInCourse() {
     },
   ];
   const TeacherData = [];
-  const columns = useMemo(() => columnData, []);
+  const columns = useMemo(() => firstTableColumns, []);
+  const secondcolumns = useMemo(() => secondTableColumns, []);
   const [courseInfo, setCourseInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageSize, setPageSize] = useState(5);
   const [inputValue, setInputValue] = useState("");
-
+  const [registerCourseInfo, setRegisterCourseInfo] = useState([]);
   const handleRadioChange = (rowIndex) => {
     setSelectedRow(rowIndex);
+  };
+  const handleSecondSelectRow = (rowIndex) => {
+    setSelectedSecondRow(rowIndex);
   };
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -95,16 +125,13 @@ function AssignTeacherInCourse() {
   }
   async function showCourseList() {
     axios
-      .get(
-        "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/CourseList"
-      )
-      //   .get("/api/courses/")
+      .get("/api/courses/")
       .then((res) => {
         console.log("res.data??" + res.data);
-        if (Array.isArray(res.data)) {
+        if (Array.isArray(res.data.course)) {
           //map 사용시 새로운 배열 생성해서
-          console.log(res.data);
-          const resultObj = res.data.map((item) => item);
+          console.log(res.data.course);
+          const resultObj = res.data.course.map((item) => item);
           setCourseInfo(resultObj);
         } else {
           console.log("SubManagement::데이터가 배열이 아닙니다.");
@@ -117,16 +144,11 @@ function AssignTeacherInCourse() {
   const [isElective, setIsElective] = useState(false);
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
-  const handleElectiveButtonClick = (value) => {
-    setIsElective(value);
-    console.log(isElective + "?");
-  };
-  const handleCreate = async () => {
-    const data = {
-      name: inputValue,
-      is_elective_subject: isElective,
-    };
 
+  const handleCreate = async () => {
+    data["teachers"] = inputValue;
+    const selectedRowData = data[selectedRow]._id;
+    data["course_id"] = selectedRowData;
     try {
       console.log(data);
       const response = await axios.post("/api/subjects/", data);
@@ -159,37 +181,52 @@ function AssignTeacherInCourse() {
       console.log("Invalid rowIndex or data is empty.");
     }
   };
-
+  const API_DELAY_MS = 1000;
   useEffect(() => {
-    axios
-      .get(
-        "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/CourseList"
-      )
-      //   .get("/api/subjects/")
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.course && Array.isArray(res.data.course)) {
-          setCourseInfo(res.data.course);
+    const fetchData = async () => {
+      try {
+        const [registerCourseRes, courseRes, teachersRes] = await Promise.all([
+          axios.get(
+            // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AssignCourse"
+            "api/courses/"
+          ),
+          axios.get(
+            // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/CourseList"
+            "api/courses/"
+          ),
+          axios.get("/api/teachers/"),
+        ]);
+
+        if (
+          registerCourseRes.data.course &&
+          Array.isArray(registerCourseRes.data.course)
+        ) {
+          setRegisterCourseInfo(registerCourseRes.data.course);
+        } else {
+          console.log("데이터가 배열이 아닙니다.");
+          console.log(registerCourseRes.data);
+        }
+
+        if (courseRes.data.course && Array.isArray(courseRes.data.course)) {
+          setCourseInfo(courseRes.data.course);
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
-      })
-      .catch((Err) => {
-        console.log(Err);
-      });
-    axios.get("/api/teachers/").then((res) => {
-      console.log("???" + res);
-      if (Array.isArray(res.data) && res.data.length > 0) {
-        //map 사용시 새로운 배열 생성해서
-        // const resultObj = res.data.map((item) => item);
-        // setTeacherInfo(resultObj);
-        const teachers = res.data;
-        setTeacherInfo(teachers);
-        console.log("teacherinfo" + teachers);
-      } else {
-        console.log("데이터가 배열이 아닙니다.");
+
+        if (Array.isArray(teachersRes.data) && teachersRes.data.length > 0) {
+          const teachers = teachersRes.data;
+          setTeachers(teachers);
+          console.log("teacherinfo" + JSON.stringify(teachers));
+        } else {
+          console.log("데이터가 배열이 아닙니다.");
+        }
+        await new Promise((resolve) => setTimeout(resolve, API_DELAY_MS));
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-    });
+    };
+
+    fetchData();
   }, []);
   const data = useMemo(() => courseInfo, [courseInfo]);
   //data = useMemo(() => courseInfo, [courseInfo]);
@@ -217,12 +254,45 @@ function AssignTeacherInCourse() {
       },
       usePagination
     );
+
+  const lowerTableData = useMemo(
+    () => registerCourseInfo,
+    [registerCourseInfo]
+  );
+  const getLowerCurrentPageData = () => {
+    if (lowerTableData) {
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      return lowerTableData.slice(startIndex, endIndex);
+    }
+    return [];
+  };
+  // 현재 페이지에 해당하는 데이터를 가져옵니다.
+  const secondCurrentPageData = useMemo(
+    () => getLowerCurrentPageData(),
+    [data, currentPage]
+  );
+
+  const {
+    getTableProps: getSecondTableProps,
+    getTableBodyProps: getSecondTableBodyProps,
+    headerGroups: secondTableHeaderGroups,
+    rows: secondTableRows,
+    prepareRow: prepareSecondTableRow,
+  } = useTable(
+    {
+      columns: secondcolumns,
+      data: secondCurrentPageData, // 두 번째 테이블의 데이터
+      initialState: { pageIndex: 0, pageSize }, // 초기 페이지 설정
+    },
+    usePagination // 페이지네이션 사용
+  );
   return (
     <div>
       <AppShellAdmin />
-      <div style={{ fontWeight: "bold", fontSize: "30px" }}>
+      {/* <div style={{ fontWeight: "bold", fontSize: "30px" }}>
         Assign Teacher in Course
-      </div>
+      </div> */}
       <div id="table">
         <h4 id="subListTitle">Assign Teacher</h4>
         <div>
@@ -267,12 +337,53 @@ function AssignTeacherInCourse() {
           </table>
         </div>
       </div>
-      <Button color="info" onClick={handleDelete} id="deleteBtn">
-        Delete
+      <Button color="info" onClick={handleCreate} id="createBtn">
+        Create
       </Button>
-      <h4 id="newSubTitle">Teacher Assigned course</h4>
-      <div>
-        <hr style={{ width: "100%", borderTop: "1px solid black" }} />
+
+      <div id="table">
+        <h4 id="subListTitle">Assign Teacher in Course</h4>
+        <div>
+          <hr style={{ width: "100%", borderTop: "1px solid black" }} />
+        </div>
+        <div>
+          <table {...getSecondTableProps()}>
+            {" "}
+            <tbody {...getSecondTableBodyProps()} id="tbody">
+              {secondTableHeaderGroups.map((header) => (
+                <tr {...header.getHeaderGroupProps()} id="headerRow">
+                  {header.headers.map((col) => (
+                    <th {...col.getHeaderProps()} id="headerCell">
+                      {col.render("Header")}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+
+              {secondTableRows.map((row, rowIndex) => {
+                prepareSecondTableRow(row);
+                const isRowSelected = rowIndex === selectedSecondRow;
+                return (
+                  <tr
+                    key={rowIndex}
+                    id="rowFont"
+                    {...row.getRowProps()}
+                    style={{
+                      background: isRowSelected ? "skyblue" : "none",
+                    }}
+                    onClick={() => handleSecondSelectRow(rowIndex)}
+                  >
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} id="dataCell">
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div>
@@ -283,19 +394,8 @@ function AssignTeacherInCourse() {
             marginRight: "20px",
           }}
         >
-          <Button color="info" onClick={handleCreate} id="createBtn">
-            Create
-          </Button>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginRight: "20px",
-          }}
-        >
-          <Button color="info" onClick={handleNext} id="nextBtn">
-            Next
+          <Button color="info" onClick={handleDelete} id="deleteBtn">
+            Delete
           </Button>
         </div>
       </div>

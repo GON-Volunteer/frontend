@@ -121,9 +121,15 @@ function StudentDelete() {
           if (res.data.code === "200") {
             // 성공적으로 추가된 경우
             setPopupVisible(true);
+            setTimeout(() => {
+              setPopupVisible(false);
+            }, 3000);
           } else if (res.data.code == "400") {
             // 실패한 경우 처리
             setErrPopupVisible(true);
+            setTimeout(() => {
+              setErrPopupVisible(false);
+            }, 3000);
           } else {
             //유효하지않은 요청입니다.
             console.log("어케할까");

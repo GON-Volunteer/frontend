@@ -45,7 +45,10 @@ export default function ButtonAppBar() {
     navigate("/assignTeacherInCourse");
   };
   const goAssignStudentInCourse = () => {
-    navigate("/assignStudentInCourse");
+    navigate("/assignStdInCourse");
+  };
+  const changePassword = () => {
+    navigate("/changePassword");
   };
   const logout = () => {
     dispatch(searchAction.clearUser(user));
@@ -123,11 +126,18 @@ export default function ButtonAppBar() {
           Assign Teacher in Course
         </MenuItem>
         <MenuItem
-          onClick={goAssignTeacherInCourse}
+          onClick={goAssignStudentInCourse}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
           <EditIcon />
           Assign Student in Course
+        </MenuItem>
+        <MenuItem
+          onClick={changePassword}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <EditIcon />
+          Change Password
         </MenuItem>
 
         <MenuItem
