@@ -22,10 +22,11 @@ function StudentEdit() {
     register, //input 요소를 react hook form과 연결해서 검증 규칙 적용 메소드
     handleSubmit, // form을 submit 할때 실행 함수
     getValues, //input 값을 가져올 수 있는 함수
+    reset,
     formState: { errors }, //form state에 관한 정보를 담고 있는 객체
   } = useForm({ mode: "onSubmit" });
   const [errpopupVisible, setErrPopupVisible] = useState(false);
-  const [popupVisible, setPopupVisible] = useState(false);
+
   //server에 form data 전송 코드 작성하기
   const [value, setValue] = useState("");
   const [resultClass, setResultClass] = useState([]);
@@ -39,8 +40,8 @@ function StudentEdit() {
 
     const onSubmit = async (data) => {
       console.log("data너ㅁ겨주고" + JSON.stringify(data));
-      navigate("/studentManagement/StudentInfo");
-
+      // navigate("/studentManagement/StudentInfo");
+      console.log(`/api/students/${rowData._id.$oid}`);
       await axios
         .patch(
           `/api/students/${rowData._id.$oid}`,
@@ -49,12 +50,16 @@ function StudentEdit() {
         )
         .then((response) => {
           console.log("server res: " + JSON.stringify(response));
-          if (response.code === 200) {
+          if (response.data.code == "200") {
             // 성공적으로 추가된 경우
-            setPopupVisible(true);
-          } else if (response.code == 400) {
+            navigate("/studentManagement/StudentInfo");
+            //setPopupVisible(true);
+          } else if (response.data.code == "400") {
             // 실패한 경우 처리
             setErrPopupVisible(true);
+            setTimeout(() => {
+              setErrPopupVisible(false);
+            }, 3000);
           } else {
             console.log("어케할까");
           }
@@ -94,12 +99,7 @@ function StudentEdit() {
             <span aria-hidden="true">&times;</span>
           </button>
         </UncontrolledAlert>
-        <UncontrolledAlert color="info" isOpen={popupVisible}>
-          <b>Success!</b> Student info edited successfully!
-          <button className="close" onClick={() => setPopupVisible(false)}>
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </UncontrolledAlert>
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="s_n">S.N : </label>
@@ -132,38 +132,38 @@ function StudentEdit() {
             />
           </div>
           <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="user_phone">Phone No : </label>
+            <label htmlFor="phone_num">Phone No : </label>
             <input
               style={formItemStyle}
-              id="user_phone"
+              id="phone_num"
               type="text"
               placeholder="Phone Number"
               defaultValue={rowData.phone_num}
-              {...register("user_phone", {
+              {...register("phone_num", {
                 required: "Phone Number is required.",
               })}
             />
           </div>
           <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="father_phone">Father Phone No : </label>
+            <label htmlFor="father_phone_num">Father Phone No : </label>
             <input
               style={formItemStyle}
-              id="father_phone"
+              id="father_phone_num"
               type="text"
               placeholder="Father Phone Number"
               defaultValue={rowData.father_phone_num}
-              {...register("father_phone")}
+              {...register("father_phone_num")}
             />
           </div>
           <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="mother_phone">Mother Phone No : </label>
+            <label htmlFor="mother_phone_num">Mother Phone No : </label>
             <input
-              id="mother_phone"
+              id="mother_phone_num"
               type="text"
               placeholder="Mother Phone Number"
               defaultValue={rowData.mother_phone_num}
               style={formItemStyle}
-              {...register("mother_phone")}
+              {...register("mother_phone_num")}
             />
           </div>
           <div className="form-control__items" style={formItemStyle}>
@@ -186,7 +186,7 @@ function StudentEdit() {
               style={formItemStyle}
               defaultValue={rowData.id}
               // input의 기본 config를 작성
-              {...register("ID", {
+              {...register("id", {
                 required: "ID is required.",
                 pattern: {
                   message: "아이디 형식에 맞지 않습니다.",
@@ -196,14 +196,14 @@ function StudentEdit() {
             {errors.id && <small role="alert">{errors.id.message}</small>}
           </div>
           <div className="form-control__items" style={formItemStyle}>
-            <label htmlFor="password">PW : </label>
+            <label htmlFor="pw">PW : </label>
             <input
-              id="password"
+              id="pw"
               type="password"
               placeholder="password"
               style={formItemStyle}
               defaultValue={rowData.pw}
-              {...register("password", {
+              {...register("pw", {
                 required: "Password is required.",
                 minLength: {
                   value: 7,
@@ -231,7 +231,7 @@ function StudentEdit() {
                 },
                 validate: {
                   check: (val) => {
-                    if (getValues("password") !== val) {
+                    if (getValues("pw") !== val) {
                       return "비밀번호가 일치하지 않습니다.";
                     }
                   },
@@ -242,7 +242,7 @@ function StudentEdit() {
               <small role="alert">{errors.passwordConfirm.message}</small>
             )}
           </div>
-          <button type="submit">Edit</button>
+          <Button type="submit">Edit</Button>
           {/* <RadioGroup label="연락 방법" value={value} onChange={setValue}>
                   {resultClass.map((item, idx) => {
                     <Radio key={idx} value={item}>
