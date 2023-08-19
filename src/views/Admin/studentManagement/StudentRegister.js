@@ -48,10 +48,17 @@ function Register() {
       console.log(response.data.code);
       if (response.data.code === "200") {
         // 성공적으로 추가된 경우
+
         setPopupVisible(true);
+        setTimeout(() => {
+          setPopupVisible(false);
+        }, 3000);
       } else if (response.data.code == "400") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
+        setTimeout(() => {
+          setErrPopupVisible(false);
+        }, 3000);
       } else {
         console.log("어케할까");
       }
