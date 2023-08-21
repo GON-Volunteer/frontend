@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable, usePagination } from "react-table";
-import { Button, UncontrolledAlert } from "reactstrap";
+import { Input, Button, UncontrolledAlert } from "reactstrap";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
 import AppBar from "@material-ui/core/AppBar";
@@ -253,7 +253,7 @@ function StudentDelete() {
                     onClick={() => handleRadioChange(rowIndex)}
                   >
                     <td>
-                      <input
+                      <Input
                         id="radioBtn"
                         type="radio"
                         checked={isRowSelected}

@@ -90,7 +90,7 @@ function TeacherEdit() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="full_name">Full Name : </label>
-            <input
+            <Input
               style={formItemStyle}
               id="full_name"
               type="text"
@@ -103,7 +103,7 @@ function TeacherEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="phone_num">Phone No : </label>
-            <input
+            <Input
               style={formItemStyle}
               id="phone_num"
               type="text"
@@ -117,7 +117,7 @@ function TeacherEdit() {
 
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="id">ID : </label>
-            <input
+            <Input
               id="id"
               type="text"
               placeholder="ID"
@@ -135,7 +135,7 @@ function TeacherEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="pw">PW : </label>
-            <input
+            <Input
               id="pw"
               type="password"
               placeholder="password"
@@ -155,7 +155,7 @@ function TeacherEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="passwordConfirm">Re-type PW:</label>
-            <input
+            <Input
               style={formItemStyle}
               id="passwordConfirm"
               type="password"

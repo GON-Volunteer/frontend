@@ -29,7 +29,7 @@ function ChangePassword() {
       console.log("request data:" + JSON.stringify(requestData));
       console.log(`/api/password/${_id}`);
 
-      const response = await axios.post(`/api/password/${_id}`, requestData);
+      const response = await axios.fetch(`/api/password/${_id}`, requestData);
 
       console.log(response.data);
       if (response.data.code === "200") {
@@ -74,7 +74,7 @@ function ChangePassword() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="current_password">Current Password : </label>
-          <input
+          <Input
             style={formItemStyle}
             id="current_password"
             type="password"
@@ -86,7 +86,7 @@ function ChangePassword() {
         </div>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="new_password">New PW : </label>
-          <input
+          <Input
             id="new_password"
             type="password"
             placeholder="new_password"
@@ -100,12 +100,12 @@ function ChangePassword() {
             })}
           />
           {/* {errors.password && (
-            <small role="alert">{errors.password.message}</small>
+            <s small role="alert">{errors.password.message}</s>
           )} */}
         </div>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="passwordConfirm">Re-type New PW:</label>
-          <input
+          <Input
             style={formItemStyle}
             id="passwordConfirm"
             type="password"
