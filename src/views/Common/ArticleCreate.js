@@ -26,7 +26,7 @@ const ArticleCreate = () => {
   const [postings, setPostings] = useState([]); // 게시글 배열
   const [currentPage, setCurrentPage] = useState(0);
   const [attachment, setAttachment] = useState("");
-
+  const isDisabled = !title.trim();
   // 새 게시글 작성 후 글 올리기하면 호출
   useEffect(
     () => {},
@@ -167,6 +167,7 @@ const ArticleCreate = () => {
                           }}
                           aria-label="create"
                           onClick={onCreatePosting}
+                          disabled={isDisabled}
                         >
                           <SendIcon />
                         </IconButton>
