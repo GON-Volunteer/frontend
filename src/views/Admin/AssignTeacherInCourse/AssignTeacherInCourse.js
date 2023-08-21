@@ -213,7 +213,7 @@ function AssignTeacherInCourse() {
     if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
       console.log("rowIndex" + data[selectedRow]._id);
       try {
-        const url = `/api/subjects/${data[selectedRow]._id}`;
+        const url = `/api/assign/teacher/${data[selectedRow]._id}`;
         // const res = await axios.delete(url);
         alert("res.data" + url);
         showCourseList();
@@ -257,7 +257,7 @@ function AssignTeacherInCourse() {
         }
 
         if (courseRes.data && Array.isArray(courseRes.data)) {
-          console.log("second?" + courseRes);
+          console.log("second?" + JSON.stringify(courseRes));
           setCourseInfo(courseRes.data);
         } else {
           console.log("데이터가 배열이 아닙니다.");
