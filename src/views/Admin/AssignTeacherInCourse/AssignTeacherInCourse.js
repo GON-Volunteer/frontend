@@ -85,43 +85,50 @@ function AssignTeacherInCourse() {
     {
       accessor: "teachers", // 현재 "teacher" 컬럼
       Header: "teacher",
-      Cell: ({ row }) => (
-        <div
-          style={{ display: "flex", gap: "10px" }}
-          className="teacher-dropdowns"
-        >
-          <Input
-            type="select"
-            name="teacher1_id"
-            id={`inputTeacher-${row.index}`}
-            value={row.original.teache1_id}
-            onChange={(event) => handleTeacherChange(event, row)}
-          >
-            <option value="">-- 선생님 선택 --</option>
-            {teachers.map((teacher) => (
-              <option key={teacher.full_name} value={teacher._id}>
-                {teacher.full_name}
-              </option>
-            ))}
-          </Input>
-          <Input
-            type="select"
-            name="teacher2_id" // 두 번째 드롭다운 상자의 이름
-            id={`inputTeacher2-${row.index}`} // 두 번째 드롭다운 상자의 ID
-            value={row.original.teacher2_id} // 두 번째 선생님 값
-            onChange={(event) => handleTeacherChange(event, row, true)} // 두 번째 드롭다운 상자에 대한 핸들러
-          >
-            <option value="">-- 선생님 선택 --</option>
-            {teachers.map((teacher) => (
-              <option key={teacher.full_name} value={teacher._id}>
-                {teacher.full_name}
-              </option>
-            ))}
-          </Input>
-        </div>
-      ),
+      // Cell: ({ row }) => (
+      //   <div
+      //     style={{ display: "flex", gap: "10px" }}
+      //     className="teacher-dropdowns"
+      //   >
+      //     <Input
+      //       type="select"
+      //       name="teacher1_id"
+      //       id={`inputTeacher-${row.index}`}
+      //       value={row.original.teache1_id}
+      //       onChange={(event) => handleTeacherChange(event, row)}
+      //     >
+      //       <option value="">-- 선생님 선택 --</option>
+      //       {teachers.map((teacher) => (
+      //         <option key={teacher.full_name} value={teacher._id}>
+      //           {teacher.full_name}
+      //         </option>
+      //       ))}
+      //     </Input>
+      //     <Input
+      //       type="select"
+      //       name="teacher2_id" // 두 번째 드롭다운 상자의 이름
+      //       id={`inputTeacher2-${row.index}`} // 두 번째 드롭다운 상자의 ID
+      //       value={row.original.teacher2_id} // 두 번째 선생님 값
+      //       onChange={(event) => handleTeacherChange(event, row, true)} // 두 번째 드롭다운 상자에 대한 핸들러
+      //     >
+      //       <option value="">-- 선생님 선택 --</option>
+      //       {teachers.map((teacher) => (
+      //         <option key={teacher.full_name} value={teacher._id}>
+      //           {teacher.full_name}
+      //         </option>
+      //       ))}
+      //     </Input>
+      //   </div>
+      // ),
     },
   ];
+  const renderTeacher1Options = () => {
+    return teachers.map((teacher) => (
+      <option key={teacher.full_name} value={teacher._id}>
+        {teacher.full_name}
+      </option>
+    ));
+  };
 
   const columns = useMemo(() => firstTableColumns, []);
   const secondcolumns = useMemo(() => secondTableColumns, []);
@@ -187,9 +194,15 @@ function AssignTeacherInCourse() {
       // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
       if (response.data.code == "200") {
         setPopupVisible(true);
+        setTimeout(() => {
+          setPopupVisible(false);
+        }, 3000);
         showCourseList();
       } else if (response.data.code == "400") {
         setErrPopupVisible(true);
+        setTimeout(() => {
+          setErrPopupVisible(false);
+        }, 3000);
       }
     } catch (error) {
       console.error("Error sending new Subject data to server:", error);
@@ -257,7 +270,7 @@ function AssignTeacherInCourse() {
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
-        await new Promise((resolve) => setTimeout(resolve, API_DELAY_MS));
+        // await new Promise((resolve) => setTimeout(resolve, API_DELAY_MS));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -367,6 +380,39 @@ function AssignTeacherInCourse() {
                         {cell.render("Cell")}
                       </td>
                     ))}
+                    <td>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "10px", // 드롭다운 박스 사이의 간격
+                          alignItems: "center", // 세로 중앙 정렬
+                          // 기타 스타일 속성
+                        }}
+                      >
+                        <Input
+                          type="select"
+                          name="teacher1_id"
+                          id={`inputTeacher-${row.index}`}
+                          value={isRowSelected ? row.original.teache1_id : ""}
+                          onChange={(event) => handleTeacherChange(event, row)}
+                        >
+                          <option value="">-- 선생님 선택 --</option>
+                          {renderTeacher1Options()}
+                        </Input>
+                        <Input
+                          type="select"
+                          name="teacher2_id" // 두 번째 드롭다운 상자의 이름
+                          id={`inputTeacher2-${row.index}`}
+                          value={isRowSelected ? row.original.teache2_id : ""}
+                          onChange={(event) =>
+                            handleTeacherChange(event, row, true)
+                          } // 두 번째 드롭다운 상자에 대한 핸들러
+                        >
+                          <option value="">-- 선생님 선택 --</option>
+                          {renderTeacher1Options()}
+                        </Input>
+                      </div>
+                    </td>
                   </tr>
                 );
               })}
