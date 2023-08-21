@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 //import { storageService } from "fBase";
-import Comment from "./Comment";
+import Course_Comment from "./Course_Comment";
 import { Grid, Paper } from "@material-ui/core";
 import { Container, Col, Row } from "react-bootstrap";
 import { makeStyles } from "@material-ui/core/styles";
@@ -43,9 +43,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // [게시글] 컴포넌트
-const Posting = ({}) => {
+const Course_Posting = ({}) => {
   const url = "http://localhost:5000";
   const { idx } = useParams(); // /articles/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
+  const { id } = useParams(); // /articles/:id와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
   const [loading, setLoading] = useState(true);
   const [board, setBoard] = useState({});
 
@@ -66,7 +67,7 @@ const Posting = ({}) => {
   // [READ] 게시글 DB에서 불러오기 핸들러
   const onReadBoard = async () => {
     await axios
-      .get(url + "/api/articles/" + idx)
+      .get(url + "/api/courses/" + id + "/articles/" + idx)
       .then((res) => {
         console.log("[READ] 게시글 내용 Reloading");
         console.log("Response data type:", typeof res.data);
@@ -86,7 +87,6 @@ const Posting = ({}) => {
           setNewTitle(article?.title);
           setNewPosting(article?.content);
           setAttachment(article?.attachmentUrl);
-          console.log(likeState);
           setLoading(false);
         } else {
           console.error("No article data received in the response.");
@@ -97,7 +97,7 @@ const Posting = ({}) => {
       });
   };
   // [게시글] 목록 버튼 토글
-  const toggleListing = () => navigate("/Announcement-Page");
+  const toggleListing = () => navigate("/courses/" + id + "/articles");
 
   // [게시글] 수정 버튼 토글
   const toggleEditing = () => setEditing((prev) => !prev);
@@ -110,7 +110,7 @@ const Posting = ({}) => {
     if (ok) {
       event.preventDefault();
       await axios
-        .post(url + "/api/articles/" + idx + "/update", {
+        .post(url + "/api/courses/" + id + "/articles/" + idx + "/update", {
           method: "POST",
           body: JSON.stringify({
             edittitle: newTitle,
@@ -132,7 +132,7 @@ const Posting = ({}) => {
   //[DELETE] 삭제 네비게이트
   const goList = (e) => {
     e.preventDefault();
-    navigate("/AnnouncementPage");
+    navigate("/courses/" + id + "/articles");
   };
 
   // [DELETE] 게시글 삭제 핸들러
@@ -142,10 +142,10 @@ const Posting = ({}) => {
     });
     if (ok) {
       await axios
-        .delete(url + "/api/articles/" + idx + "/delete")
+        .delete(url + "/api/courses/" + id + "/articles/" + idx + "/delete")
         .then(() => {
           console.log("[DELETE] 게시글 삭제");
-          navigate("/Announcement-Page");
+          navigate("/courses/" + id + "/articles");
         })
         .catch(() => {
           //alert("[DELETE] response (x)");
@@ -174,7 +174,7 @@ const Posting = ({}) => {
   const onClickLike = async (event) => {
     setLikeCount(likeCount + 1);
     await axios
-      .post(url + "/api/articles/" + idx + "/like/click", {
+      .post(url + "/api/courses/" + id + "/articles/" + idx + "/like/click", {
         method: "POST",
         body: JSON.stringify({
           likeuser: user._id,
@@ -194,7 +194,7 @@ const Posting = ({}) => {
       setLikeCount(likeCount - 1);
     }
     await axios
-      .post(url + "/api/articles/" + idx + "/like/cancel", {
+      .post(url + "/api/courses/" + id + "/articles/" + idx + "/like/cancel", {
         method: "POST",
         body: JSON.stringify({
           likeuser: user._id,
@@ -246,14 +246,17 @@ const Posting = ({}) => {
   const onCreateComment = async (event) => {
     event.preventDefault();
     await axios
-      .post(url + "/api/articles/" + idx + "/comment/create", {
-        method: "POST",
-        body: JSON.stringify({
-          user_id: user._id,
-          full_name: user.full_name,
-          content: comment,
-        }),
-      })
+      .post(
+        url + "/api/courses/" + id + "/articles/" + idx + "/comment/create",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            user_id: user._id,
+            full_name: user.full_name,
+            content: comment,
+          }),
+        }
+      )
       .then(() => {
         console.log("[CREATE] 새 댓글 생성");
         setCommentCount(commentCount + 1);
@@ -268,7 +271,10 @@ const Posting = ({}) => {
   // [READ] 댓글 읽기 핸들러
   const onReadComment = async () => {
     await axios
-      .get(url + "/api/articles/" + idx + "/comment/read", {})
+      .get(
+        url + "/api/courses/" + id + "/articles/" + idx + "/comment/read",
+        {}
+      )
       .then((response) => {
         response.data.reverse();
         setComments(response.data);
@@ -285,7 +291,15 @@ const Posting = ({}) => {
     });
     if (ok) {
       await axios
-        .delete(url + "/api/articles/" + idx + "/comment/" + comment_id)
+        .delete(
+          url +
+            "/api/courses/" +
+            id +
+            "/articles" +
+            idx +
+            "/comment/" +
+            comment_id
+        )
         .then(() => {
           console.log("[DELETE] comment");
           setCommentCount(commentCount - 1);
@@ -298,7 +312,6 @@ const Posting = ({}) => {
         });
     }
   };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -412,7 +425,7 @@ const Posting = ({}) => {
                   <Link
                     style={{ color: "black" }}
                     to={{
-                      pathname: "/Announcement-page",
+                      pathname: "/courses/" + id + "/articles",
                       state: { targetUser: board?.posting_id },
                     }}
                   >
@@ -548,7 +561,7 @@ const Posting = ({}) => {
                 <Container style={{ margin: 2 }}>
                   {/* 댓글 목록 */}
                   {comments.map((comment) => (
-                    <Comment
+                    <Course_Comment
                       key={comment.comment_id}
                       posting_id={comment.posting_id}
                       commentObj={comment}
@@ -604,4 +617,4 @@ const Posting = ({}) => {
   );
 };
 
-export default Posting;
+export default Course_Posting;

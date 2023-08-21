@@ -31,6 +31,10 @@ import TeacherInfo from "views/Admin/teacherManagementFolder/TeacherInfo";
 import Home from "views/Common/Home";
 import AnnounceContents from "components/AnnounceContent";
 import Posting from "views/Common/Posting";
+import Course_List from "views/Common/Course_List";
+import Course_Posting from "views/Common/Course_Posting";
+import Course_ArticleCreate from "views/Common/Course_ArticleCreate";
+import Course_ArticleList from "views/Common/Course_ArticleList";
 import ArticleCreate from "views/Common/ArticleCreate";
 
 //admin - course manage
@@ -69,6 +73,19 @@ root.render(
             <Route path="home" element={<Home />} />
             <Route path="/articles/:idx" element={<Posting />} />
             <Route path="/Announcement-page" element={<AnnouncementPage />} />
+            <Route
+              path="/courses/:id/articles/:idx"
+              element={<Course_Posting />}
+            />
+            <Route
+              path="/courses/:id/articles"
+              element={<Course_ArticleList />}
+            ></Route>
+            <Route
+              path="/courses/:id/articles/create"
+              element={<Course_ArticleCreate />}
+            />
+            <Route path="/Course_List" element={<Course_List />} />
           </Route>
           <Route element={<LoginCheckAdmin />}>
             <Route path="home" element={<Home />} />
