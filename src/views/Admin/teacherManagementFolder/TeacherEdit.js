@@ -38,6 +38,7 @@ function TeacherEdit() {
     const onSubmit = async (data) => {
       // console.log("data너ㅁ겨주고" + JSON.stringify(data));
       //   navigate("/teacherManagement/TeacherInfo");
+      console.log("req" + data);
       await axios.patch(`/api/teachers/${rowData._id}`, data).then((res) => {
         console.log("teacher edit이후 server res: " + res);
 
@@ -90,7 +91,7 @@ function TeacherEdit() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="full_name">Full Name : </label>
-            <Input
+            <input
               style={formItemStyle}
               id="full_name"
               type="text"
@@ -103,7 +104,7 @@ function TeacherEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="phone_num">Phone No : </label>
-            <Input
+            <input
               style={formItemStyle}
               id="phone_num"
               type="text"
@@ -117,7 +118,7 @@ function TeacherEdit() {
 
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="id">ID : </label>
-            <Input
+            <input
               id="id"
               type="text"
               placeholder="ID"
@@ -135,7 +136,7 @@ function TeacherEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="pw">PW : </label>
-            <Input
+            <input
               id="pw"
               type="password"
               placeholder="password"
@@ -155,7 +156,7 @@ function TeacherEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="passwordConfirm">Re-type PW:</label>
-            <Input
+            <input
               style={formItemStyle}
               id="passwordConfirm"
               type="password"
