@@ -15,7 +15,7 @@ export default function CourseRegister() {
     grade: "",
     section: "",
     batch: "",
-    subject_id: "",
+    subject_idx: "",
   });
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -38,7 +38,8 @@ export default function CourseRegister() {
     sectionOptions.push(i);
   }
 
-  const [courseInfo, setCourseInfo] = useState([]);
+  const [subInfo, setSubInfo] = useState([]);
+  const [subId, setSubId] = useState([]);
   useEffect(() => {
     axios
       .get("/api/subjects/")
@@ -46,8 +47,10 @@ export default function CourseRegister() {
         console.log("courseInfo:" + JSON.stringify(res.data));
         if (Array.isArray(res.data)) {
           const subjectNames = res.data.map((subject) => subject.name);
-          setCourseInfo(subjectNames);
-          console.log("courseInfo:" + courseInfo);
+          setSubInfo(subjectNames);
+          const subIds = res.data.map((sub) => sub._id);
+          setSubId(subIds);
+          console.log("courseInfo:" + subInfo);
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
@@ -64,7 +67,7 @@ export default function CourseRegister() {
       grade: formData.grade,
       section: formData.section,
       batch: formData.batch,
-      subject_id: formData.subject_id,
+      subject_id: subId[formData.subject_idx],
     };
 
     try {
@@ -182,14 +185,14 @@ export default function CourseRegister() {
           <Label for="inputState">Subject</Label>
           <Input
             type="select"
-            name="subject_id"
+            name="subject_idx"
             id="inputState"
-            value={formData.subject_id} // 선택한 옵션의 값 formData에 할당
+            value={formData.subject_idx} // 선택한 옵션의 값 formData에 할당
             onChange={handleInputChange}
           >
             <option value="">-- Select Subject --</option>
-            {courseInfo.map((option, index) => (
-              <option key={index} value={option}>
+            {subInfo.map((option, index) => (
+              <option key={index} value={index}>
                 {option}
               </option>
             ))}

@@ -15,29 +15,34 @@ function AssignTeacherInCourse() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    grade: "",
-    section: "",
-    batch: "",
-    subject_id: "",
-    teacher: "",
+    teacher1_id: "",
+    teacher2_id: "",
   });
 
   const [selectedRow, setSelectedRow] = useState(null);
 
   const [selectedSecondRow, setSelectedSecondRow] = useState(null);
   const [teachers, setTeachers] = useState([]);
-  const handleSubjectChange = (event, row) => {
-    const { value } = event.target;
+  const handleTeacherChange = (event, row, isSecondTeacher) => {
+    const { name, value } = event.target;
+    // console.log("teacherid?" + event.target.value);
+    //console.log("teacher?" + teachers);
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
 
     setCourseInfo((prevCourseInfo) => {
       const updatedCourseInfo = [...prevCourseInfo];
-      updatedCourseInfo[row.index] = {
-        ...updatedCourseInfo[row.index],
-        teacher: value,
+      const rowIndex = row.index;
+      updatedCourseInfo[rowIndex] = {
+        ...updatedCourseInfo[rowIndex],
+        [isSecondTeacher ? "teacher2" : "teacher"]: value,
       };
       return updatedCourseInfo;
     });
   };
+
   const secondTableColumns = [
     {
       accessor: "grade",
@@ -52,11 +57,11 @@ function AssignTeacherInCourse() {
       Header: "batch",
     },
     {
-      accessor: "subject",
+      accessor: "subject_name",
       Header: "subject",
     },
     {
-      accessor: "teacher",
+      accessor: "teacher_id",
       Header: "teacher",
     },
   ];
@@ -74,37 +79,55 @@ function AssignTeacherInCourse() {
       Header: "batch",
     },
     {
-      accessor: "subject",
+      accessor: "subject_name",
       Header: "subject",
     },
     {
-      accessor: "teachers",
+      accessor: "teachers", // 현재 "teacher" 컬럼
       Header: "teacher",
       Cell: ({ row }) => (
-        <Input
-          type="select"
-          name="teacher"
-          id={`inputTeacher-${row.index}`}
-          value={row.original.teacher}
-          onChange={(event) => handleSubjectChange(event, row)}
+        <div
+          style={{ display: "flex", gap: "10px" }}
+          className="teacher-dropdowns"
         >
-          <option value="">-- 선생님 선택 --</option>
-          {teachers.map((teacher) => (
-            <option key={teacher.full_name} value={teacher.full_name}>
-              {teacher.full_name}
-            </option>
-          ))}
-        </Input>
+          <Input
+            type="select"
+            name="teacher1_id"
+            id={`inputTeacher-${row.index}`}
+            value={row.original.teache1_id}
+            onChange={(event) => handleTeacherChange(event, row)}
+          >
+            <option value="">-- 선생님 선택 --</option>
+            {teachers.map((teacher) => (
+              <option key={teacher.full_name} value={teacher._id}>
+                {teacher.full_name}
+              </option>
+            ))}
+          </Input>
+          <Input
+            type="select"
+            name="teacher2_id" // 두 번째 드롭다운 상자의 이름
+            id={`inputTeacher2-${row.index}`} // 두 번째 드롭다운 상자의 ID
+            value={row.original.teacher2_id} // 두 번째 선생님 값
+            onChange={(event) => handleTeacherChange(event, row, true)} // 두 번째 드롭다운 상자에 대한 핸들러
+          >
+            <option value="">-- 선생님 선택 --</option>
+            {teachers.map((teacher) => (
+              <option key={teacher.full_name} value={teacher._id}>
+                {teacher.full_name}
+              </option>
+            ))}
+          </Input>
+        </div>
       ),
     },
   ];
-  const TeacherData = [];
+
   const columns = useMemo(() => firstTableColumns, []);
   const secondcolumns = useMemo(() => secondTableColumns, []);
   const [courseInfo, setCourseInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageSize, setPageSize] = useState(5);
-  const [inputValue, setInputValue] = useState("");
   const [registerCourseInfo, setRegisterCourseInfo] = useState([]);
   const handleRadioChange = (rowIndex) => {
     setSelectedRow(rowIndex);
@@ -112,9 +135,7 @@ function AssignTeacherInCourse() {
   const handleSecondSelectRow = (rowIndex) => {
     setSelectedSecondRow(rowIndex);
   };
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
+
   const sectionOptions = [];
   for (
     let i = "a", idx = 0;
@@ -125,13 +146,13 @@ function AssignTeacherInCourse() {
   }
   async function showCourseList() {
     axios
-      .get("/api/courses/")
+      .get("/api/courses/assigned")
       .then((res) => {
         console.log("res.data??" + res.data);
-        if (Array.isArray(res.data.course)) {
+        if (Array.isArray(res.data)) {
           //map 사용시 새로운 배열 생성해서
-          console.log(res.data.course);
-          const resultObj = res.data.course.map((item) => item);
+          console.log(res.data);
+          const resultObj = res.data.map((item) => item);
           setCourseInfo(resultObj);
         } else {
           console.log("SubManagement::데이터가 배열이 아닙니다.");
@@ -146,12 +167,21 @@ function AssignTeacherInCourse() {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const handleCreate = async () => {
-    data["teachers"] = inputValue;
-    const selectedRowData = data[selectedRow]._id;
-    data["course_id"] = selectedRowData;
+    const teacherIdArr = [formData.teacher1_id, formData.teacher2_id];
+    const transformedVal = teacherIdArr.map((val) => ({
+      _id: val,
+    }));
+
+    const requestData = {
+      teachers: transformedVal,
+      course_id: data[selectedRow]._id,
+    };
+    // data["teachers"] = inputValue;
+    // const selectedRowData = data[selectedRow]._id;
+    // data["course_id"] = selectedRowData;
     try {
-      console.log(data);
-      const response = await axios.post("/api/subjects/", data);
+      console.log("request data:" + JSON.stringify(requestData));
+      const response = await axios.post("/api/assign/teacher", requestData);
       console.log("서버 응답:");
       console.log(response.data);
       // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
@@ -185,30 +215,37 @@ function AssignTeacherInCourse() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // axios
+        //   .get(
+        //     // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AssignCourse"
+        //     "/api/courses/not-assigned"
+        //   )
+        //   .then((res) => {
+        //     console.log("res??:" + JSON.stringify(res));
+        //   });
         const [registerCourseRes, courseRes, teachersRes] = await Promise.all([
           axios.get(
             // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AssignCourse"
-            "api/courses/"
+            "/api/courses/assigned"
           ),
           axios.get(
             // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/CourseList"
-            "api/courses/"
+            "api/courses/not-assigned"
           ),
           axios.get("/api/teachers/"),
         ]);
 
-        if (
-          registerCourseRes.data.course &&
-          Array.isArray(registerCourseRes.data.course)
-        ) {
-          setRegisterCourseInfo(registerCourseRes.data.course);
+        if (registerCourseRes.data && Array.isArray(registerCourseRes.data)) {
+          console.log("first table:" + JSON.stringify(registerCourseRes.data));
+          setRegisterCourseInfo(registerCourseRes.data);
         } else {
           console.log("데이터가 배열이 아닙니다.");
           console.log(registerCourseRes.data);
         }
 
-        if (courseRes.data.course && Array.isArray(courseRes.data.course)) {
-          setCourseInfo(courseRes.data.course);
+        if (courseRes.data && Array.isArray(courseRes.data)) {
+          console.log("second?" + courseRes);
+          setCourseInfo(courseRes.data);
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
