@@ -188,15 +188,7 @@ function AssignTeacherInCourse() {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const handleCreate = async () => {
-    var teacherIdArr;
-    if (formData.teacher1_id == "") {
-      teacherIdArr = formData2_id;
-    } else if (formData.teacher2_id == "") {
-      teacherIdArr = formData1_id;
-    } else {
-      teacherIdArr = [formData.teacher1_id, formData.teacher2_id];
-    }
-
+    const teacherIdArr = [formData.teacher1_id, formData.teacher2_id];
     const transformedVal = teacherIdArr.map((val) => ({
       _id: val,
     }));
