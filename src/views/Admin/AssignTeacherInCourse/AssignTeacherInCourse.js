@@ -61,7 +61,7 @@ function AssignTeacherInCourse() {
       Header: "subject",
     },
     {
-      accessor: "teacher_id",
+      accessor: "teacher_name",
       Header: "teacher",
     },
   ];
@@ -188,7 +188,15 @@ function AssignTeacherInCourse() {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const handleCreate = async () => {
-    const teacherIdArr = [formData.teacher1_id, formData.teacher2_id];
+    var teacherIdArr;
+    if (formData.teacher1_id == "") {
+      teacherIdArr = formData2_id;
+    } else if (formData.teacher2_id == "") {
+      teacherIdArr = formData1_id;
+    } else {
+      teacherIdArr = [formData.teacher1_id, formData.teacher2_id];
+    }
+
     const transformedVal = teacherIdArr.map((val) => ({
       _id: val,
     }));
