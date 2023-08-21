@@ -63,7 +63,6 @@ const Posting = ({}) => {
   const [isOwner, setIsOwner] = useState(false);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-
   // [READ] 게시글 DB에서 불러오기 핸들러
   const onReadBoard = async () => {
     await axios
@@ -79,7 +78,6 @@ const Posting = ({}) => {
         if (res.data && Array.isArray(res.data) && res.data.length > 0) {
           const article = res.data[0];
           setBoard(article);
-          setLoading(false);
           console.log(article.content);
           setLikeState(Boolean(article.likepeople.find(liked)));
           setIsOwner(article.user_id === user._id);
@@ -88,6 +86,8 @@ const Posting = ({}) => {
           setNewTitle(article?.title);
           setNewPosting(article?.content);
           setAttachment(article?.attachmentUrl);
+          console.log(likeState);
+          setLoading(false);
         } else {
           console.error("No article data received in the response.");
         }
@@ -159,7 +159,6 @@ const Posting = ({}) => {
   useEffect(() => {
     onReadComment();
     onReadBoard();
-    console.log("check");
   }, [newComment, likeState]);
 
   // [게시글] 사용자 게시글 좋아요 클릭 여부 확인
@@ -299,6 +298,11 @@ const Posting = ({}) => {
         });
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       {editing ? (
