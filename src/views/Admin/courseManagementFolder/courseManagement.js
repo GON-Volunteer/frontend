@@ -32,7 +32,7 @@ export default function courseManagement() {
                 ⌘Admin
               </Typography>
             </MenuItem>
-            <MenuItem component={Link} to="/courseManagement/delete">
+            <MenuItem component={Link} to="/courseDelete">
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>
