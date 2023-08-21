@@ -21,9 +21,6 @@ export default function StudentManagement() {
   return (
     <div>
       <AppShellAdmin />
-      <div style={{ fontWeight: "bold", fontSize: "30px" }}>
-        CourseManagement
-      </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Paper sx={{ width: "100%", maxWidth: "100%" }}>
           <MenuList>
