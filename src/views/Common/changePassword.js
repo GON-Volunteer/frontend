@@ -25,11 +25,12 @@ function ChangePassword() {
       current_password: data.current_password,
       new_password: data.new_password,
     };
+    console.log(JSON.stringify(requestData));
     try {
       console.log("request data:" + JSON.stringify(requestData));
       console.log(`/api/password/${_id}`);
 
-      const response = await axios.fetch(`/api/password/${_id}`, requestData);
+      const response = await axios.patch(`/api/password/${_id}`, requestData);
 
       console.log(response.data);
       if (response.data.code === "200") {
@@ -74,7 +75,7 @@ function ChangePassword() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="current_password">Current Password : </label>
-          <Input
+          <input
             style={formItemStyle}
             id="current_password"
             type="password"
@@ -86,7 +87,7 @@ function ChangePassword() {
         </div>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="new_password">New PW : </label>
-          <Input
+          <input
             id="new_password"
             type="password"
             placeholder="new_password"
@@ -105,7 +106,7 @@ function ChangePassword() {
         </div>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="passwordConfirm">Re-type New PW:</label>
-          <Input
+          <input
             style={formItemStyle}
             id="passwordConfirm"
             type="password"
@@ -118,7 +119,10 @@ function ChangePassword() {
               },
               validate: {
                 check: (val) => {
-                  if (getValues("new_password") !== val) {
+                  if (!val) {
+                    return "비밀번호 확인 필수.";
+                  }
+                  if (val !== getValues("new_password")) {
                     return "비밀번호가 일치하지 않습니다.";
                   }
                 },
