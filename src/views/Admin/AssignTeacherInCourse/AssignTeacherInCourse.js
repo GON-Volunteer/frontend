@@ -151,7 +151,21 @@ function AssignTeacherInCourse() {
   ) {
     sectionOptions.push(i);
   }
-  async function showCourseList() {
+  async function showNonAssignCourseList() {
+    axios
+      .get(
+        // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AssignCourse"
+        "/api/courses/not-assigned"
+      )
+      .then((courseRes) => {
+        if (courseRes.data && Array.isArray(courseRes.data)) {
+          setCourseInfo(courseRes.data);
+        } else {
+          console.log("데이터가 배열이 아닙니다.");
+        }
+      });
+  }
+  async function showAssignedCourseList() {
     axios
       .get("/api/courses/assigned")
       .then((res) => {
@@ -197,7 +211,8 @@ function AssignTeacherInCourse() {
         setTimeout(() => {
           setPopupVisible(false);
         }, 3000);
-        showCourseList();
+        showNonAssignCourseList();
+        showAssignedCourseList();
       } else if (response.data.code == "400") {
         setErrPopupVisible(true);
         setTimeout(() => {
@@ -216,7 +231,8 @@ function AssignTeacherInCourse() {
         const url = `/api/assign/teacher/${data[selectedRow]._id}`;
         // const res = await axios.delete(url);
         alert("res.data" + url);
-        showCourseList();
+        showNonAssignCourseList();
+        showAssignedCourseList();
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
       }
@@ -228,14 +244,6 @@ function AssignTeacherInCourse() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // axios
-        //   .get(
-        //     // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AssignCourse"
-        //     "/api/courses/not-assigned"
-        //   )
-        //   .then((res) => {
-        //     console.log("res??:" + JSON.stringify(res));
-        //   });
         const [registerCourseRes, courseRes, teachersRes] = await Promise.all([
           axios.get(
             // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AssignCourse"
