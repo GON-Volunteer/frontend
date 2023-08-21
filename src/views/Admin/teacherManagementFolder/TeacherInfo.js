@@ -37,10 +37,7 @@ function TeacherInfo() {
       accessor: "id",
       Header: "ID",
     },
-    {
-      accessor: "pw",
-      Header: "PW",
-    },
+
     {
       accessor: "phone_num",
       Header: "Phone No",

@@ -40,32 +40,11 @@ function TeacherDelete() {
       accessor: "id",
       Header: "ID",
     },
-    {
-      accessor: "pw",
-      Header: "PW",
-    },
+
     {
       accessor: "phone_num",
       Header: "Phone No",
     },
-    // {
-    //   Header: "Subjects", // Header for the "subject" column
-    //   accessor: "subject", // Accessor for the "subject" array
-    //   Cell: ({ value }) => (
-    //     <ul>
-    //       {value.map((subject, index) => (
-    //         <li
-    //           key={index}
-    //           style={{
-    //             color: subject.is_elective_subject ? "blue" : "inherit",
-    //           }}
-    //         >
-    //           {subject.name}
-    //         </li>
-    //       ))}
-    //     </ul>
-    //   ),
-    // },
   ];
   const columns = useMemo(() => columnData, []);
 
