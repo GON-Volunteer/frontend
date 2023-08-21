@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Posting from "./Posting";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Paper } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ref, getDownloadURL, uploadString } from "firebase/storage";
 // 글 작성
 // [커뮤니티] 컴포넌트
-const ArticleCreate = () => {
+const Course_ArticleCreate = () => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const url = "http://localhost:5000";
@@ -26,6 +26,7 @@ const ArticleCreate = () => {
   const [postings, setPostings] = useState([]); // 게시글 배열
   const [currentPage, setCurrentPage] = useState(0);
   const [attachment, setAttachment] = useState("");
+  const { id } = useParams(); // /articles/:id와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
   const isDisabled = !title.trim();
   // 새 게시글 작성 후 글 올리기하면 호출
   useEffect(
@@ -68,7 +69,7 @@ const ArticleCreate = () => {
     }
 
     await axios
-      .post(url + "/api/articles/create", {
+      .post(url + "/api/courses/" + id + "/articles/create", {
         method: "POST",
         body: JSON.stringify({
           user_id: user._id,
@@ -80,11 +81,11 @@ const ArticleCreate = () => {
       })
       .then(() => {
         console.log("[CREATE] 새 게시글 생성");
-        navigate("/Announcement-page");
+        navigate("/courses/" + id + "/articles");
         //setNewPosting(posting);
       })
       .catch(() => {
-        console.log(url + "/api/articles/create");
+        console.log(url + "/api/courses/" + id + "/articles/create");
         alert("[CREATE] response (x)");
       });
 
@@ -266,4 +267,4 @@ const ArticleCreate = () => {
   );
 };
 
-export default ArticleCreate;
+export default Course_ArticleCreate;
