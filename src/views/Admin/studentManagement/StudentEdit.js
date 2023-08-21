@@ -19,9 +19,9 @@ function StudentEdit() {
     ? location.state.rowData
     : console.log("rowData null");
   const {
-    register, //input 요소를 react hook form과 연결해서 검증 규칙 적용 메소드
+    register, //Input 요소를 react hook form과 연결해서 검증 규칙 적용 메소드
     handleSubmit, // form을 submit 할때 실행 함수
-    getValues, //input 값을 가져올 수 있는 함수
+    getValues, //Input 값을 가져올 수 있는 함수
     reset,
     formState: { errors }, //form state에 관한 정보를 담고 있는 객체
   } = useForm({ mode: "onSubmit" });
@@ -103,7 +103,7 @@ function StudentEdit() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="s_n">S.N : </label>
-            <input
+            <Input
               style={formItemStyle}
               id="s_n"
               type="text"
@@ -120,7 +120,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="full_name">Full Name : </label>
-            <input
+            <Input
               style={formItemStyle}
               id="full_name"
               type="text"
@@ -133,7 +133,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="phone_num">Phone No : </label>
-            <input
+            <Input
               style={formItemStyle}
               id="phone_num"
               type="text"
@@ -146,7 +146,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="father_phone_num">Father Phone No : </label>
-            <input
+            <Input
               style={formItemStyle}
               id="father_phone_num"
               type="text"
@@ -157,7 +157,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="mother_phone_num">Mother Phone No : </label>
-            <input
+            <Input
               id="mother_phone_num"
               type="text"
               placeholder="Mother Phone Number"
@@ -168,7 +168,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="guardians_phone_num">Guardians Phone No : </label>
-            <input
+            <Input
               id="guardians_phone_num"
               type="text"
               placeholder="Guardians Phone Number"
@@ -179,7 +179,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="id">ID : </label>
-            <input
+            <Input
               id="id"
               type="text"
               placeholder="ID"
@@ -197,7 +197,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="pw">PW : </label>
-            <input
+            <Input
               id="pw"
               type="password"
               placeholder="password"
@@ -217,7 +217,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="password">Re-type PW:</label>
-            <input
+            <Input
               style={formItemStyle}
               id="password"
               type="password"

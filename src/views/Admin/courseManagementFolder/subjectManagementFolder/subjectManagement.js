@@ -29,7 +29,7 @@ export default function SubjectManagement() {
   const columns = useMemo(() => columnData, []);
   const [subjectInfo, setSubjectInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(100);
   const [inputValue, setInputValue] = useState("");
 
   const handleRadioChange = (rowIndex) => {
@@ -76,11 +76,20 @@ export default function SubjectManagement() {
       console.log("서버 응답:");
       console.log(response.data);
       // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
+
       if (response.data.code == "200") {
         setPopupVisible(true);
+        setTimeout(() => {
+          setPopupVisible(false);
+        }, 3000);
         showSubList();
+        setInputValue("");
       } else if (response.data.code == "400") {
         setErrPopupVisible(true);
+        setTimeout(() => {
+          setErrPopupVisible(false);
+        }, 3000);
+        setInputValue("");
       }
     } catch (error) {
       console.error("Error sending new Subject data to server:", error);
@@ -92,8 +101,8 @@ export default function SubjectManagement() {
       console.log("rowIndex" + data[selectedRow]._id);
       try {
         const url = `/api/subjects/${data[selectedRow]._id}`;
-        // const res = await axios.delete(url);
-        alert("res.data" + url);
+        const res = await axios.delete(url);
+
         showSubList();
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
