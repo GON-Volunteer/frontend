@@ -245,7 +245,13 @@ function CourseDelete() {
                     </td>
 
                     {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td {...cell.getCellProps()}>
+                        {cell.column.accessor === "is_elective_subject"
+                          ? cell.value
+                            ? "✓"
+                            : "𐄂"
+                          : cell.render("Cell")}
+                      </td>
                     ))}
                   </tr>
                 );

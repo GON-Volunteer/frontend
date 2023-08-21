@@ -103,7 +103,7 @@ function StudentEdit() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="s_n">S.N : </label>
-            <Input
+            <input
               style={formItemStyle}
               id="s_n"
               type="text"
@@ -120,7 +120,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="full_name">Full Name : </label>
-            <Input
+            <input
               style={formItemStyle}
               id="full_name"
               type="text"
@@ -133,7 +133,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="phone_num">Phone No : </label>
-            <Input
+            <input
               style={formItemStyle}
               id="phone_num"
               type="text"
@@ -146,7 +146,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="father_phone_num">Father Phone No : </label>
-            <Input
+            <input
               style={formItemStyle}
               id="father_phone_num"
               type="text"
@@ -157,7 +157,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="mother_phone_num">Mother Phone No : </label>
-            <Input
+            <input
               id="mother_phone_num"
               type="text"
               placeholder="Mother Phone Number"
@@ -168,7 +168,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="guardians_phone_num">Guardians Phone No : </label>
-            <Input
+            <input
               id="guardians_phone_num"
               type="text"
               placeholder="Guardians Phone Number"
@@ -179,7 +179,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="id">ID : </label>
-            <Input
+            <input
               id="id"
               type="text"
               placeholder="ID"
@@ -197,7 +197,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="pw">PW : </label>
-            <Input
+            <input
               id="pw"
               type="password"
               placeholder="password"
@@ -217,7 +217,7 @@ function StudentEdit() {
           </div>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="password">Re-type PW:</label>
-            <Input
+            <input
               style={formItemStyle}
               id="password"
               type="password"
