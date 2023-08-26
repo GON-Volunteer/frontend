@@ -14,7 +14,10 @@ function TeacherRegister() {
   const formItemStyle = {
     margin: "5px",
   };
-
+  const redBorderStyle = {
+    margin: "10px",
+    border: "2px solid orange",
+  };
   const {
     register, //input 요소를 react hook form과 연결해서 검증 규칙 적용 메소드
     handleSubmit, // form을 submit 할때 실행 함수
@@ -30,6 +33,7 @@ function TeacherRegister() {
   const navigate = useNavigate();
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [isIdError, setIsIdError] = useState(false);
   const handleBackButtonClick = () => {
     navigate("/TeacherManagement");
   };
@@ -47,16 +51,19 @@ function TeacherRegister() {
         setTimeout(() => {
           setPopupVisible(false);
         }, 3000);
+        reset();
+        setIsIdError(false);
       } else if (response.data.code == "400") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
         }, 3000);
+        setIsIdError(true); // ID 에러 상태 설정
       } else {
         console.log("어케할까");
       }
-      reset();
+
       // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
     } catch (error) {
       console.error("Error sending data to server:", error);
@@ -128,7 +135,7 @@ function TeacherRegister() {
             id="id"
             type="text"
             placeholder="ID"
-            style={formItemStyle}
+            style={isIdError ? redBorderStyle : formItemStyle}
             // input의 기본 config를 작성
             {...register("id", {
               required: "ID is required.",
@@ -139,6 +146,7 @@ function TeacherRegister() {
           />
           {errors.id && <small role="alert">{errors.id.message}</small>}
         </div>
+
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="pw">PW : </label>
           <input

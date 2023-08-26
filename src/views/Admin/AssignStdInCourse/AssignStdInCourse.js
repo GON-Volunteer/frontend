@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { useTable, usePagination } from "react-table";
 import { FormGroup, Label, Input, Button, UncontrolledAlert } from "reactstrap";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -14,31 +14,9 @@ import AppShellAdmin from "../AppShellAdmin";
 function AssignStdInCourse() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    grade: "",
-    section: "",
-    batch: "",
-    subject_id: "",
-    teacher: "",
-  });
+  const outerDivRef = useRef(null);
 
-  const [selectedRow, setSelectedRow] = useState(null);
-
-  const [teachers, setTeachers] = useState([]);
-  const handleSubjectChange = (event, row) => {
-    const { value } = event.target;
-
-    setCourseInfo((prevCourseInfo) => {
-      const updatedCourseInfo = [...prevCourseInfo];
-      updatedCourseInfo[row.index] = {
-        ...updatedCourseInfo[row.index],
-        teacher: value,
-      };
-      return updatedCourseInfo;
-    });
-  };
-
-  const firstTableColumns = [
+  const secondTableColumns = [
     {
       accessor: "grade",
       Header: "grade",
@@ -52,23 +30,39 @@ function AssignStdInCourse() {
       Header: "batch",
     },
     {
-      accessor: "subject",
+      accessor: "subject_name",
       Header: "subject",
     },
     {
-      accessor: "teachers",
+      accessor: "teacher_name",
       Header: "teacher",
     },
   ];
-  const TeacherData = [];
-  const columns = useMemo(() => firstTableColumns, []);
+
+  const secondcolumns = useMemo(() => secondTableColumns, []);
   const [courseInfo, setCourseInfo] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(5);
-  const [inputValue, setInputValue] = useState("");
+  const [pageSize, setPageSize] = useState(100);
   const [registerCourseInfo, setRegisterCourseInfo] = useState([]);
-  const handleRadioChange = (rowIndex) => {
-    setSelectedRow(rowIndex);
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+
+  const handleSecondSelectRow = async (rowIndex) => {
+    if (selectedRowIndex === rowIndex) {
+      // 두 번 클릭되었을 때 페이지 이동
+      goAssignStudentInCourse();
+    } else {
+      // 한 번 클릭되었을 때 배경색 변경
+      setSelectedRowIndex(rowIndex);
+    }
+  };
+  const goAssignStudentInCourse = async () => {
+    if (selectedRowIndex !== null) {
+      const selectedRowData = registerCourseInfo[selectedRowIndex];
+      navigate("/assignStdInCourse/students", {
+        state: { rowData: selectedRowData },
+      });
+    }
   };
 
   const sectionOptions = [];
@@ -79,41 +73,26 @@ function AssignStdInCourse() {
   ) {
     sectionOptions.push(i);
   }
-  async function showCourseList() {
-    axios
-      .get("/api/courses/")
-      .then((res) => {
-        console.log("res.data??" + res.data);
-        if (Array.isArray(res.data.course)) {
-          //map 사용시 새로운 배열 생성해서
-          console.log(res.data.course);
-          const resultObj = res.data.course.map((item) => item);
-          setCourseInfo(resultObj);
-        } else {
-          console.log("SubManagement::데이터가 배열이 아닙니다.");
-        }
-      })
-      .catch((Err) => {
-        console.log(Err);
-      });
-  }
 
   useEffect(() => {
-    axios
-      .get(
-        // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/CourseList"
-        "api/courses/"
-      )
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.course && Array.isArray(res.data.course)) {
-          setRegisterCourseInfo(res.data.course);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/courses");
+        if (Array.isArray(response.data)) {
+          setRegisterCourseInfo(response.data);
+          console.log("eneter " + registerCourseInfo);
         } else {
           console.log("데이터가 배열이 아닙니다.");
+          console.log(response.data);
         }
-      });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
-  const data = useMemo(() => courseInfo, [courseInfo]);
+  const data = useMemo(() => registerCourseInfo, [registerCourseInfo]);
   //data = useMemo(() => courseInfo, [courseInfo]);
   const getCurrentPageData = () => {
     if (data) {
@@ -130,53 +109,77 @@ function AssignStdInCourse() {
     [data, currentPage]
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns,
-        data: currentPageData,
-        initialState: { pageIndex: 0, pageSize },
-      },
-      usePagination
-    );
+  const lowerTableData = useMemo(
+    () => registerCourseInfo,
+    [registerCourseInfo]
+  );
+  const getLowerCurrentPageData = () => {
+    if (lowerTableData) {
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      return lowerTableData.slice(startIndex, endIndex);
+    }
+    return [];
+  };
+  // 현재 페이지에 해당하는 데이터를 가져옵니다.
+  const secondCurrentPageData = useMemo(
+    () => getLowerCurrentPageData(),
+    [data, currentPage]
+  );
 
+  const {
+    getTableProps: getSecondTableProps,
+    getTableBodyProps: getSecondTableBodyProps,
+    headerGroups: secondTableHeaderGroups,
+    rows: secondTableRows,
+    prepareRow: prepareSecondTableRow,
+  } = useTable(
+    {
+      columns: secondcolumns,
+      data: secondCurrentPageData, // 두 번째 테이블의 데이터
+      initialState: { pageIndex: 0, pageSize }, // 초기 페이지 설정
+    },
+    usePagination // 페이지네이션 사용
+  );
   return (
     <div>
       <AppShellAdmin />
       {/* <div style={{ fontWeight: "bold", fontSize: "30px" }}>
-        Assign Teacher in Course
-      </div> */}
+          Assign Teacher in Course
+        </div> */}
+
       <div id="table">
-        <h4 id="subListTitle">Course List</h4>
+        <h4 id="subListTitle">Assign Student in Course - Course List</h4>
         <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
-        <div>
-          <table {...getTableProps()} id="courseListTable">
-            {" "}
-            <tbody {...getTableBodyProps()} id="tbody">
-              {headerGroups.map((header) => (
-                <tr {...header.getHeaderGroupProps()} id="headerRow">
-                  {header.headers.map((col) => (
-                    <th {...col.getHeaderProps()} id="headerCell">
-                      {col.render("Header")}
-                    </th>
-                  ))}
-                </tr>
-              ))}
 
-              {rows.map((row, rowIndex) => {
-                prepareRow(row);
-                const isRowSelected = rowIndex === selectedRow;
+        <div>
+          {secondTableHeaderGroups.map((header) => (
+            <tr {...header.getHeaderGroupProps()} id="headerRow">
+              {header.headers.map((col) => (
+                <th {...col.getHeaderProps()} id="headerCell">
+                  {col.render("Header")}
+                </th>
+              ))}
+            </tr>
+          ))}
+          <table {...getSecondTableProps()}>
+            {" "}
+            <tbody {...getSecondTableBodyProps()} id="std_course_body">
+              {secondTableRows.map((row, rowIndex) => {
+                prepareSecondTableRow(row);
+
                 return (
                   <tr
                     key={rowIndex}
                     id="rowFont"
                     {...row.getRowProps()}
                     style={{
-                      background: isRowSelected ? "skyblue" : "none",
+                      background:
+                        selectedRowIndex === rowIndex ? "skyblue" : "none",
                     }}
-                    onClick={() => handleRadioChange(rowIndex)}
+                    onClick={() => handleSecondSelectRow(rowIndex)}
                   >
                     {row.cells.map((cell) => (
                       <td {...cell.getCellProps()} id="dataCell">
@@ -189,6 +192,16 @@ function AssignStdInCourse() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginRight: "20px",
+          }}
+        ></div>
       </div>
     </div>
   );

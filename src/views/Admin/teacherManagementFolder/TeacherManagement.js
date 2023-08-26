@@ -22,7 +22,7 @@ export default function TeacherManagement() {
     <div>
       <AppShellAdmin />
       <div style={{ fontWeight: "bold", fontSize: "30px" }}>
-        CourseManagement
+        TeacherManagement
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Paper sx={{ width: "100%", maxWidth: "100%" }}>
