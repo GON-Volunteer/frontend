@@ -173,8 +173,8 @@ function AssignStudents() {
     // const body = {
     //   student_id: deleteStd,
     // };
-    const queryString = deleteStd.map((id) => `student_id=${id}`).join("&");
-    const url = `/api/assign/students?course_id=id&${queryString}`;
+    const queryString = deleteStd.map((id) => `student-id=${id}`).join("&");
+    const url = `/api/assign/student?course-id=${rowData._id}&${queryString}`;
     await axios.delete(url).then((response) => {
       if (response.data.code === "200") {
         // 성공적으로 추가된 경우
