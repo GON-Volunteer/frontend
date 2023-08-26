@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { useTable, usePagination } from "react-table";
 import { FormGroup, Label, Input, Button, UncontrolledAlert } from "reactstrap";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -19,14 +19,13 @@ function AssignTeacherInCourse() {
     teacher2_id: "",
   });
 
-  const [selectedRow, setSelectedRow] = useState(null);
-
-  const [selectedSecondRow, setSelectedSecondRow] = useState(null);
   const [teachers, setTeachers] = useState([]);
+  const outerDivRef = useRef(null);
   const handleTeacherChange = (event, row, isSecondTeacher) => {
     const { name, value } = event.target;
-    // console.log("teacherid?" + event.target.value);
-    //console.log("teacher?" + teachers);
+
+    console.log("teacherid?" + event.target.value);
+    // console.log("teacher?" + teachers);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -85,41 +84,6 @@ function AssignTeacherInCourse() {
     {
       accessor: "teachers", // 현재 "teacher" 컬럼
       Header: "teacher",
-      // Cell: ({ row }) => (
-      //   <div
-      //     style={{ display: "flex", gap: "10px" }}
-      //     className="teacher-dropdowns"
-      //   >
-      //     <Input
-      //       type="select"
-      //       name="teacher1_id"
-      //       id={`inputTeacher-${row.index}`}
-      //       value={row.original.teache1_id}
-      //       onChange={(event) => handleTeacherChange(event, row)}
-      //     >
-      //       <option value="">-- 선생님 선택 --</option>
-      //       {teachers.map((teacher) => (
-      //         <option key={teacher.full_name} value={teacher._id}>
-      //           {teacher.full_name}
-      //         </option>
-      //       ))}
-      //     </Input>
-      //     <Input
-      //       type="select"
-      //       name="teacher2_id" // 두 번째 드롭다운 상자의 이름
-      //       id={`inputTeacher2-${row.index}`} // 두 번째 드롭다운 상자의 ID
-      //       value={row.original.teacher2_id} // 두 번째 선생님 값
-      //       onChange={(event) => handleTeacherChange(event, row, true)} // 두 번째 드롭다운 상자에 대한 핸들러
-      //     >
-      //       <option value="">-- 선생님 선택 --</option>
-      //       {teachers.map((teacher) => (
-      //         <option key={teacher.full_name} value={teacher._id}>
-      //           {teacher.full_name}
-      //         </option>
-      //       ))}
-      //     </Input>
-      //   </div>
-      // ),
     },
   ];
   const renderTeacher1Options = () => {
@@ -133,14 +97,35 @@ function AssignTeacherInCourse() {
   const columns = useMemo(() => firstTableColumns, []);
   const secondcolumns = useMemo(() => secondTableColumns, []);
   const [courseInfo, setCourseInfo] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageSize, setPageSize] = useState(5);
   const [registerCourseInfo, setRegisterCourseInfo] = useState([]);
-  const handleRadioChange = (rowIndex) => {
+  const [selectedRow, setSelectedRow] = useState();
+  const [selectedSecondRow, setSelectedSecondRow] = useState();
+
+  const handleRowClick = (rowIndex) => {
     setSelectedRow(rowIndex);
+    console.log(selectedRow);
+    setSelectedSecondRow(null);
   };
   const handleSecondSelectRow = (rowIndex) => {
+    console.log(rowIndex);
+
     setSelectedSecondRow(rowIndex);
+    setSelectedRow(null);
+    console.log("selectedSecondRow" + selectedSecondRow);
+  };
+  const handleOuterDivClick = (event) => {
+    if (outerDivRef.current && !outerDivRef.current.contains(event.target)) {
+      // 최상위 div 외부를 클릭한 경우에만 선택 초기화
+      // setSelectedRow();
+      // setSelectedSecondRow();
+      // setFormData({
+      //   teacher1_id: "",
+      //   teacher2_id: "",
+      // });
+    }
   };
 
   const sectionOptions = [];
@@ -158,6 +143,7 @@ function AssignTeacherInCourse() {
         "/api/courses/not-assigned"
       )
       .then((courseRes) => {
+        console.log("non assign response" + JSON.stringify(courseRes.data));
         if (courseRes.data && Array.isArray(courseRes.data)) {
           setCourseInfo(courseRes.data);
         } else {
@@ -169,12 +155,12 @@ function AssignTeacherInCourse() {
     axios
       .get("/api/courses/assigned")
       .then((res) => {
-        console.log("res.data??" + res.data);
+        console.log("assigned res.data??" + JSON.stringify(res.data));
         if (Array.isArray(res.data)) {
           //map 사용시 새로운 배열 생성해서
-          console.log(res.data);
+
           const resultObj = res.data.map((item) => item);
-          setCourseInfo(resultObj);
+          setRegisterCourseInfo(resultObj);
         } else {
           console.log("SubManagement::데이터가 배열이 아닙니다.");
         }
@@ -186,52 +172,79 @@ function AssignTeacherInCourse() {
   const [isElective, setIsElective] = useState(false);
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
-
+  const [errorTeacherpopupVisible, setErrorTeacherpopupVisible] =
+    useState(false);
   const handleCreate = async () => {
-    const teacherIdArr = [formData.teacher1_id, formData.teacher2_id];
-    const transformedVal = teacherIdArr.map((val) => ({
-      _id: val,
-    }));
+    if (formData.teacher1_id == formData.teacher2_id) {
+      setErrorTeacherpopupVisible(true);
+      setTimeout(() => {
+        setErrorTeacherpopupVisible(false);
+      }, 3000);
+    } else {
+      const teacherIdArr = [formData.teacher1_id, formData.teacher2_id];
+      const transformedVal = teacherIdArr.map((val) => ({
+        _id: val,
+      }));
 
-    const requestData = {
-      teachers: transformedVal,
-      course_id: data[selectedRow]._id,
-    };
-    // data["teachers"] = inputValue;
-    // const selectedRowData = data[selectedRow]._id;
-    // data["course_id"] = selectedRowData;
-    try {
-      console.log("request data:" + JSON.stringify(requestData));
-      const response = await axios.post("/api/assign/teacher", requestData);
-      console.log("서버 응답:");
-      console.log(response.data);
-      // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
-      if (response.data.code == "200") {
-        setPopupVisible(true);
-        setTimeout(() => {
-          setPopupVisible(false);
-        }, 3000);
-        showNonAssignCourseList();
-        showAssignedCourseList();
-      } else if (response.data.code == "400") {
-        setErrPopupVisible(true);
-        setTimeout(() => {
-          setErrPopupVisible(false);
-        }, 3000);
+      const requestData = {
+        teachers: transformedVal,
+        course_id: courseInfo[selectedRow]._id,
+      };
+      // setFormData({
+      //   teacher1_id: "",
+      //   teacher2_id: "",
+      // });
+      setSelectedRow();
+      // data["teachers"] = inputValue;
+      // const selectedRowData = data[selectedRow]._id;
+      // data["course_id"] = selectedRowData;
+      try {
+        console.log("request data:" + JSON.stringify(requestData));
+        const response = await axios.post("/api/assign/teacher", requestData);
+        console.log("create이후 서버 응답:");
+        console.log(JSON.stringify(response.data));
+        // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
+        if (response.data.code == "200") {
+          console.log("??enter?");
+          showNonAssignCourseList();
+          showAssignedCourseList();
+
+          setPopupVisible(true);
+          setTimeout(() => {
+            setPopupVisible(false);
+          }, 3000);
+        } else if (response.data.code == "400") {
+          setErrPopupVisible(true);
+          setTimeout(() => {
+            setErrPopupVisible(false);
+          }, 3000);
+          setFormData({
+            teacher1_id: "",
+            teacher2_id: "",
+          });
+        }
+      } catch (error) {
+        console.error("Error sending new Subject data to server:", error);
       }
-    } catch (error) {
-      console.error("Error sending new Subject data to server:", error);
     }
   };
   const handleDelete = async () => {
-    console.log("rowIndex" + JSON.stringify(data[selectedRow]));
-    if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
-      console.log("rowIndex" + data[selectedRow]._id);
+    console.log(
+      "rowIndex" +
+        selectedSecondRow +
+        " ?" +
+        JSON.stringify(registerCourseInfo[selectedSecondRow])
+    );
+    if (
+      registerCourseInfo.length > 0 &&
+      selectedSecondRow >= 0 &&
+      selectedSecondRow < registerCourseInfo.length
+    ) {
+      console.log("rowIndex" + registerCourseInfo[selectedSecondRow]);
       try {
-        const url = `/api/assign/teacher/${data[selectedRow]._id}`;
-        // const res = await axios.delete(url);
-        alert("res.data" + url);
-        showNonAssignCourseList();
+        const url = `/api/assign/teacher/${registerCourseInfo[selectedSecondRow]._id}`;
+        const res = await axios.delete(url);
+
         showAssignedCourseList();
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
@@ -242,6 +255,12 @@ function AssignTeacherInCourse() {
   };
   const API_DELAY_MS = 1000;
   useEffect(() => {
+    const handleDocumentClick = (event) => {
+      handleOuterDivClick(event);
+    };
+
+    document.addEventListener("mousedown", handleDocumentClick);
+
     const fetchData = async () => {
       try {
         const [registerCourseRes, courseRes, teachersRes] = await Promise.all([
@@ -257,7 +276,7 @@ function AssignTeacherInCourse() {
         ]);
 
         if (registerCourseRes.data && Array.isArray(registerCourseRes.data)) {
-          console.log("first table:" + JSON.stringify(registerCourseRes.data));
+          console.log("second table:" + JSON.stringify(registerCourseRes.data));
           setRegisterCourseInfo(registerCourseRes.data);
         } else {
           console.log("데이터가 배열이 아닙니다.");
@@ -265,7 +284,7 @@ function AssignTeacherInCourse() {
         }
 
         if (courseRes.data && Array.isArray(courseRes.data)) {
-          console.log("second?" + JSON.stringify(courseRes));
+          console.log("first table?" + JSON.stringify(courseRes));
           setCourseInfo(courseRes.data);
         } else {
           console.log("데이터가 배열이 아닙니다.");
@@ -282,6 +301,9 @@ function AssignTeacherInCourse() {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+      return () => {
+        document.removeEventListener("mousedown", handleDocumentClick);
+      };
     };
 
     fetchData();
@@ -351,25 +373,44 @@ function AssignTeacherInCourse() {
       {/* <div style={{ fontWeight: "bold", fontSize: "30px" }}>
         Assign Teacher in Course
       </div> */}
-      <div id="table">
+      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <b>Failed!</b> Same course exists.
+        <button className="close" onClick={() => setErrPopupVisible(false)}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </UncontrolledAlert>
+      <UncontrolledAlert color="info" isOpen={popupVisible}>
+        <b>Success!</b> New course created successfully!
+        <button className="close" onClick={() => setPopupVisible(false)}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </UncontrolledAlert>
+      <UncontrolledAlert color="info" isOpen={errorTeacherpopupVisible}>
+        <b>Failed!</b> You assigned the same teacher. Please check.
+        <button
+          className="close"
+          onClick={() => errorTeacherpopupVisible(false)}
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </UncontrolledAlert>
+      <div id="table" ref={outerDivRef}>
         <h4 id="subListTitle">Assign Teacher</h4>
         <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
         <div>
-          <table {...getTableProps()} id="courseListTable">
-            {" "}
-            <tbody {...getTableBodyProps()} id="tbody">
-              {headerGroups.map((header) => (
-                <tr {...header.getHeaderGroupProps()} id="headerRow">
-                  {header.headers.map((col) => (
-                    <th {...col.getHeaderProps()} id="headerCell">
-                      {col.render("Header")}
-                    </th>
-                  ))}
-                </tr>
+          {headerGroups.map((header) => (
+            <tr {...header.getHeaderGroupProps()} id="headerRow">
+              {header.headers.map((col) => (
+                <th {...col.getHeaderProps()} id="headerCell">
+                  {col.render("Header")}
+                </th>
               ))}
-
+            </tr>
+          ))}
+          <table {...getTableProps()} id="courseListTable">
+            <tbody {...getTableBodyProps()} id="tbody">
               {rows.map((row, rowIndex) => {
                 prepareRow(row);
                 const isRowSelected = rowIndex === selectedRow;
@@ -381,7 +422,7 @@ function AssignTeacherInCourse() {
                     style={{
                       background: isRowSelected ? "skyblue" : "none",
                     }}
-                    onClick={() => handleRadioChange(rowIndex)}
+                    onClick={() => handleRowClick(rowIndex)}
                   >
                     {row.cells.map((cell) => (
                       <td {...cell.getCellProps()} id="dataCell">
@@ -411,7 +452,9 @@ function AssignTeacherInCourse() {
                           type="select"
                           name="teacher2_id" // 두 번째 드롭다운 상자의 이름
                           id={`inputTeacher2-${row.index}`}
-                          value={isRowSelected ? row.original.teache2_id : ""}
+                          value={
+                            isRowSelected ? row.original.teache2_id : "null"
+                          }
                           onChange={(event) =>
                             handleTeacherChange(event, row, true)
                           } // 두 번째 드롭다운 상자에 대한 핸들러
@@ -438,19 +481,18 @@ function AssignTeacherInCourse() {
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
         <div>
+          {secondTableHeaderGroups.map((header) => (
+            <tr {...header.getHeaderGroupProps()} id="headerRow">
+              {header.headers.map((col) => (
+                <th {...col.getHeaderProps()} id="headerCell">
+                  {col.render("Header")}
+                </th>
+              ))}
+            </tr>
+          ))}
           <table {...getSecondTableProps()}>
             {" "}
             <tbody {...getSecondTableBodyProps()} id="tbody">
-              {secondTableHeaderGroups.map((header) => (
-                <tr {...header.getHeaderGroupProps()} id="headerRow">
-                  {header.headers.map((col) => (
-                    <th {...col.getHeaderProps()} id="headerCell">
-                      {col.render("Header")}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-
               {secondTableRows.map((row, rowIndex) => {
                 prepareSecondTableRow(row);
                 const isRowSelected = rowIndex === selectedSecondRow;

@@ -1,3 +1,7 @@
 #inputState {
   display: inline;
 }
+#std_course_body {
+  overflow-y: auto;
+  height: 100%;
+}

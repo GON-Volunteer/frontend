@@ -17,6 +17,14 @@ export default function CourseRegister() {
     batch: "",
     subject_idx: "",
   });
+  function resetFormData() {
+    setFormData({
+      grade: "",
+      section: "",
+      batch: "",
+      subject_idx: "",
+    });
+  }
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -82,9 +90,14 @@ export default function CourseRegister() {
         setTimeout(() => {
           setPopupVisible(false);
         }, 3000);
+        resetFormData();
       } else if (response.data.code === "400") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
+        setTimeout(() => {
+          setErrPopupVisible(false);
+        }, 3000);
+        resetFormData();
       } else {
         console.log("어케할까");
       }
