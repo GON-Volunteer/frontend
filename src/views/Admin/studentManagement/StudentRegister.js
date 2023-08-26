@@ -15,6 +15,10 @@ function Register() {
   const formItemStyle = {
     margin: "5px",
   };
+  const redBorderStyle = {
+    margin: "10px",
+    border: "2px solid orange",
+  };
 
   const {
     register, //input 요소를 react hook form과 연결해서 검증 규칙 적용 메소드
@@ -33,7 +37,7 @@ function Register() {
   const handleBackButtonClick = () => {
     navigate("/studentManagement");
   };
-
+  const [isIdError, setIsIdError] = useState(false);
   const onSubmit = async (data) => {
     try {
       data["account"] = 2;
@@ -53,16 +57,17 @@ function Register() {
         setTimeout(() => {
           setPopupVisible(false);
         }, 3000);
+        reset();
       } else if (response.data.code == "400") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
         }, 3000);
+        setIsIdError(true); // ID 에러 상태 설정
       } else {
         console.log("어케할까");
       }
-      reset();
     } catch (error) {
       console.error("Error sending data to server:", error);
       // 요청이 실패했을 경우, 예외 처리를 하거나 에러 메시지를 표시하도록 처리합니다.
@@ -178,7 +183,7 @@ function Register() {
             id="id"
             type="text"
             placeholder="ID"
-            style={formItemStyle}
+            style={isIdError ? redBorderStyle : formItemStyle}
             // input의 기본 config를 작성
             {...register("id", {
               required: "ID is required.",

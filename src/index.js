@@ -50,6 +50,7 @@ import CourseRegister from "views/Admin/courseManagementFolder/subjectManagement
 import AssignTeacherInCourse from "views/Admin/AssignTeacherInCourse/AssignTeacherInCourse";
 import AssignStdInCourse from "views/Admin/AssignStdInCourse/AssignStdInCourse";
 import CourseDelete from "views/Admin/courseManagementFolder/CourseDelete";
+import AssignStudents from "views/Admin/AssignStdInCourse/AssignStudents";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -154,6 +155,10 @@ root.render(
           ></Route>
           <Route path="/changePassword" element={<ChangePassword />}></Route>
           <Route path="/courseDelete" element={<CourseDelete />}></Route>
+          <Route
+            path="/assignStdInCourse/students"
+            element={<AssignStudents />}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </CookiesProvider>

@@ -46,7 +46,7 @@ export default function SubjectManagement() {
         console.log("res.data??" + res.data);
         if (Array.isArray(res.data)) {
           //map 사용시 새로운 배열 생성해서
-          console.log(res.data);
+          console.log(JSON.stringify(res.data));
           const resultObj = res.data.map((item) => item);
           setSubjectInfo(resultObj);
         } else {
@@ -118,7 +118,7 @@ export default function SubjectManagement() {
       .then((res) => {
         console.log(res.data);
         if (Array.isArray(res.data)) {
-          console.log("res.data??" + res.data);
+          console.log("res.data??" + JSON.stringify(res.data));
           const resultObj = res.data.map((item) => item);
           setSubjectInfo(res.data);
         } else if (typeof res.data === "string") {
@@ -218,6 +218,10 @@ export default function SubjectManagement() {
               {rows.map((row, rowIndex) => {
                 prepareRow(row);
                 const isRowSelected = rowIndex === selectedRow;
+                const subjectData = row.original;
+                const displayName = subjectData.is_elective_subject
+                  ? `* ${subjectData.name}`
+                  : subjectData.name;
                 return (
                   <tr
                     key={rowIndex}
@@ -242,8 +246,10 @@ export default function SubjectManagement() {
                       /> */}
                     </td>
 
-                    {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    {row.cells.map((cell, cellIndex) => (
+                      <td key={cellIndex} {...cell.getCellProps()}>
+                        {cellIndex === 0 ? displayName : cell.render("Cell")}
+                      </td>
                     ))}
                   </tr>
                 );
