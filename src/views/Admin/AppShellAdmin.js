@@ -4,6 +4,7 @@ import Drawer from "@material-ui/core/Drawer";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import BookIcon from "@material-ui/icons/Book";
 import HomeIcon from "@material-ui/icons/Home";
 import StarIcon from "@material-ui/icons/Star";
 import EditIcon from "@material-ui/icons/Edit";
@@ -31,6 +32,9 @@ export default function ButtonAppBar() {
   };
   const goAnnouncement = () => {
     navigate("/Announcement-page");
+  };
+  const goDashboard = () => {
+    navigate("/Course_List");
   };
   const goTeacherManagement = () => {
     navigate("/TeacherManagement");
@@ -95,8 +99,15 @@ export default function ButtonAppBar() {
           <StarIcon />
           Announcement
         </MenuItem>
-
+        <MenuItem
+          onClick={goDashboard}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <BookIcon />
+          Dashboard of courses
+        </MenuItem>
         <Divider />
+
         <MenuItem
           onClick={goTeacherManagement}
           sx={{ textAlign: "center", padding: "10px 10px" }}

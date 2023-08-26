@@ -5,6 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
+import BookIcon from "@material-ui/icons/Book";
 import StarIcon from "@material-ui/icons/Star";
 import CloseIcon from "@material-ui/icons/Close";
 import Box from "@material-ui/core/Box";
@@ -30,6 +31,10 @@ export default function ButtonAppBar() {
 
   const goAnnouncement = () => {
     navigate("/Announcement-page");
+  };
+
+  const goDashboard = () => {
+    navigate("/Course_List");
   };
   const logout = () => {
     dispatch(searchAction.clearUser(user));
@@ -75,6 +80,13 @@ export default function ButtonAppBar() {
         >
           <StarIcon />
           Announcement
+        </MenuItem>
+        <MenuItem
+          onClick={goDashboard}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <BookIcon />
+          Dashboard of courses
         </MenuItem>
         <MenuItem
           onClick={logout}
