@@ -246,6 +246,7 @@ function AssignTeacherInCourse() {
         const res = await axios.delete(url);
 
         showAssignedCourseList();
+        showNonAssignCourseList();
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
       }
@@ -253,7 +254,7 @@ function AssignTeacherInCourse() {
       console.log("Invalid rowIndex or data is empty.");
     }
   };
-  const API_DELAY_MS = 1000;
+
   useEffect(() => {
     const handleDocumentClick = (event) => {
       handleOuterDivClick(event);
@@ -279,14 +280,15 @@ function AssignTeacherInCourse() {
           console.log("second table:" + JSON.stringify(registerCourseRes.data));
           setRegisterCourseInfo(registerCourseRes.data);
         } else {
-          console.log("데이터가 배열이 아닙니다.");
-          console.log(registerCourseRes.data);
+          console.log("assigned 티쳐 완료 data:데이터가 배열이 아닙니다.");
+          console.log(JSON.stringify(registerCourseRes.data));
         }
 
         if (courseRes.data && Array.isArray(courseRes.data)) {
           console.log("first table?" + JSON.stringify(courseRes));
           setCourseInfo(courseRes.data);
         } else {
+          console.log("first table?" + JSON.stringify(courseRes));
           console.log("데이터가 배열이 아닙니다.");
         }
 
@@ -295,6 +297,7 @@ function AssignTeacherInCourse() {
           setTeachers(teachers);
           console.log("teacherinfo" + JSON.stringify(teachers));
         } else {
+          console.log("teacherinfo" + JSON.stringify(teachers));
           console.log("데이터가 배열이 아닙니다.");
         }
         // await new Promise((resolve) => setTimeout(resolve, API_DELAY_MS));
