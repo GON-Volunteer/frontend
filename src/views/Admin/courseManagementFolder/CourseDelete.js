@@ -48,8 +48,9 @@ function CourseDelete() {
       Header: "subject",
     },
     {
-      accessor: "is_elective_subject",
-      Header: "Elective",
+      accessor: "is_elective_subject", // is_elective_subject 열 정의
+      Header: "Is Elective",
+      Cell: ({ value }) => (value ? "✓" : "𐄂"), // 값에 따라 다른 문자열 출력
     },
   ];
   const columns = useMemo(() => columnData, []);
@@ -177,7 +178,7 @@ function CourseDelete() {
               <ArrowBackIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Delete Teacher
+              Delete Course
             </Typography>
           </Toolbar>
         </AppBar>
