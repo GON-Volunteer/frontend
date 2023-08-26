@@ -69,12 +69,8 @@ const Course_Posting = ({}) => {
     await axios
       .get(url + "/api/courses/" + id + "/articles/" + idx)
       .then((res) => {
-        console.log("[READ] 게시글 내용 Reloading");
-        console.log("Response data type:", typeof res.data);
-        console.log(
-          "Response data content:",
-          JSON.stringify(res.data, null, 2)
-        );
+        console.log("[READ] Article Reloading");
+        //console.log("Response data type:", typeof res.data);
 
         if (res.data && Array.isArray(res.data) && res.data.length > 0) {
           const article = res.data[0];
@@ -118,7 +114,7 @@ const Course_Posting = ({}) => {
           }),
         })
         .then(() => {
-          console.log("[UPDATE] 게시글 수정");
+          console.log("[UPDATE] Article Update");
           onReadComment();
           onReadBoard();
         })
@@ -144,7 +140,7 @@ const Course_Posting = ({}) => {
       await axios
         .delete(url + "/api/courses/" + id + "/articles/" + idx + "/delete")
         .then(() => {
-          console.log("[DELETE] 게시글 삭제");
+          console.log("[DELETE] Article Delete");
           navigate("/courses/" + id + "/articles");
         })
         .catch(() => {
@@ -258,7 +254,7 @@ const Course_Posting = ({}) => {
         }
       )
       .then(() => {
-        console.log("[CREATE] 새 댓글 생성");
+        console.log("[CREATE] New Comment");
         setCommentCount(commentCount + 1);
         setNewComment(comment);
       })
@@ -286,7 +282,7 @@ const Course_Posting = ({}) => {
 
   // [DELETE] 댓글
   const onDeleteComment = async (comment_id) => {
-    const ok = await swal("삭제하시겠습니까?", {
+    const ok = await swal("Delete?", {
       buttons: ["Cancel", "OK"],
     });
     if (ok) {
@@ -307,8 +303,8 @@ const Course_Posting = ({}) => {
         })
         .catch(() => {
           alert("[DELETE] comment response (x)");
-          console.log(comment_id);
-          console.log(idx);
+          //console.log(comment_id);
+          //console.log(idx);
         });
     }
   };
@@ -343,7 +339,7 @@ const Course_Posting = ({}) => {
                         type="text"
                         value={newTitle}
                         onChange={onTitle}
-                        placeholder="제목을 입력하세요."
+                        placeholder="Title"
                         maxLength={100}
                         style={{
                           padding: "16px",
@@ -358,7 +354,7 @@ const Course_Posting = ({}) => {
                         type="text"
                         value={newPosting}
                         onChange={onChange}
-                        placeholder="내용을 입력하세요."
+                        placeholder="Content"
                         maxLength={1000}
                         style={{
                           padding: "20px",
@@ -593,7 +589,7 @@ const Course_Posting = ({}) => {
                     type="text"
                     value={comment}
                     onChange={onComment}
-                    placeholder="댓글 입력하기"
+                    placeholder="Comment"
                   />
                 </Col>
                 <Col item xs={1}>
@@ -602,7 +598,7 @@ const Course_Posting = ({}) => {
                     style={{
                       color: "#ff8a4e",
                     }}
-                    aria-label="create"
+                    aria-label="Create"
                     onClick={onCreateComment}
                   >
                     <SendIcon />

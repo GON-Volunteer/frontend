@@ -60,19 +60,19 @@ function LoginPage() {
 
       axios.post(url + "/api/login/", body).then((res) => {
         if (res.data.code == 200) {
-          console.log(res.data);
-          console.log("로그인");
+          //console.log(res.data);
+          //console.log("Login");
           goHome();
           setCookie("token", res.data.access_token); //cookie에 토큰저장
           dispatch(searchAction.loginUser(res.data));
         } else if (res.data.code === 401) {
-          setMsg("존재하지 않는 ID입니다.");
+          setMsg("The ID does not exist");
         } else if (res.data.code === 402) {
-          setMsg("Password가 틀립니다.");
+          setMsg("Password is incorrect");
         } else {
-          alert("계정정보가 틀렸습니다");
+          alert("Account information is incorrect");
           console.log(res.data);
-          setMsg("ID, Password가 비어있습니다.");
+          setMsg("ID, Password is empty");
         }
       });
     }
@@ -117,12 +117,12 @@ function LoginPage() {
             </Button>
           </Form>
         </div>
-      </div>
-      <div className="footer register-footer text-center">
-        <h6>
-          © {new Date().getFullYear()}, made with{" "}
-          <i className="fa fa-heart heart" /> by GON
-        </h6>
+        <div className="footer register-footer text-center">
+          <h6>
+            © {new Date().getFullYear()}, made with{" "}
+            <i className="fa fa-heart heart" /> by GON
+          </h6>
+        </div>
       </div>
     </>
   );
