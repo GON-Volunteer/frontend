@@ -180,7 +180,7 @@ const ArticleCreate = () => {
                       type="text"
                       value={title}
                       onChange={onTitle}
-                      placeholder="제목을 입력하세요."
+                      placeholder="Title"
                       maxLength={100}
                       style={{
                         padding: "16px",
@@ -195,7 +195,7 @@ const ArticleCreate = () => {
                       type="text"
                       value={posting}
                       onChange={onPosting}
-                      placeholder="내용을 입력하세요."
+                      placeholder="Content"
                       maxLength={1000}
                       style={{
                         padding: "16px",

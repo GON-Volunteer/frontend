@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
@@ -10,8 +11,6 @@ import "assets/scss/paper-kit.scss?v=1.3.0";
 import "assets/demo/demo.css?v=1.3.0";
 // pages
 import NucleoIcons from "views/NucleoIcons.js";
-import LandingPage from "views/examples/LandingPage.js";
-import ProfilePage from "views/examples/ProfilePage.js";
 import LoginPage from "views/Common/LoginPage.js";
 import AnnouncementPage from "views/Common/AnnouncementPage";
 import AnnouncementList from "views/Common/AnnouncementList";
@@ -29,7 +28,6 @@ import TeacherEdit from "views/Admin/teacherManagementFolder/TeacherEdit";
 import TeacherDelete from "views/Admin/teacherManagementFolder/TeacherDelete";
 import TeacherInfo from "views/Admin/teacherManagementFolder/TeacherInfo";
 import Home from "views/Common/Home";
-import AnnounceContents from "components/AnnounceContent";
 import Posting from "views/Common/Posting";
 import Course_List from "views/Common/Course_List";
 import Course_Posting from "views/Common/Course_Posting";

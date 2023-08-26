@@ -58,3 +58,13 @@
   background-color: #0343cb;
   border-color: #0343cb;
 }
+
+.register-footer {
+  bottom: 20px;
+  position: relative;
+  transform: translateY(-100%);
+  z-index: 1;
+  width: 100%;
+  background: transparent;
+  color: black;
+}
