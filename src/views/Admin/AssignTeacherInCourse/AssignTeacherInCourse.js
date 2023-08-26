@@ -1,19 +1,13 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import { useTable, usePagination } from "react-table";
-import { FormGroup, Label, Input, Button, UncontrolledAlert } from "reactstrap";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { Input, Button, UncontrolledAlert } from "reactstrap";
+
 import axios from "axios"; // Axios 사용 예시
-import AppBar from "@material-ui/core/AppBar";
-import Typography from "@material-ui/core/Typography";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import { useNavigate } from "react-router-dom";
 import "../../../assets/css/AssignTeacher.css";
 import AppShellAdmin from "../AppShellAdmin";
 function AssignTeacherInCourse() {
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     teacher1_id: "",
     teacher2_id: "",
@@ -448,7 +442,7 @@ function AssignTeacherInCourse() {
                           value={isRowSelected ? row.original.teache1_id : ""}
                           onChange={(event) => handleTeacherChange(event, row)}
                         >
-                          <option value="">-- 선생님 선택 --</option>
+                          <option value="">-- Select Teacher --</option>
                           {renderTeacher1Options()}
                         </Input>
                         <Input
@@ -462,7 +456,7 @@ function AssignTeacherInCourse() {
                             handleTeacherChange(event, row, true)
                           } // 두 번째 드롭다운 상자에 대한 핸들러
                         >
-                          <option value="">-- 선생님 선택 --</option>
+                          <option value="">-- Select Teacher --</option>
                           {renderTeacher1Options()}
                         </Input>
                       </div>
