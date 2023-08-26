@@ -140,7 +140,7 @@ function TeacherRegister() {
             {...register("id", {
               required: "ID is required.",
               pattern: {
-                message: "아이디 형식에 맞지 않습니다.",
+                message: "It does not fit the ID format.",
               },
             })}
           />
@@ -158,7 +158,7 @@ function TeacherRegister() {
               required: "Password is required.",
               minLength: {
                 value: 7,
-                message: "7자리 이상 비밀번호를 입력하세요.",
+                message: "Please enter a password of at least 7 digits.",
               },
             })}
           />
@@ -174,15 +174,15 @@ function TeacherRegister() {
             type="password"
             placeholder="password"
             {...register("passwordConfirm", {
-              required: "비밀번호 확인 필수.",
+              required: "Password confirmation required.",
               minLength: {
                 value: 7,
-                message: "7자리 이상 비밀번호를 사용하세요.",
+                message: "Please enter a password of at least 7 digits.",
               },
               validate: {
                 check: (val) => {
                   if (getValues("pw") !== val) {
-                    return "비밀번호가 일치하지 않습니다.";
+                    return "Password do not match.";
                   }
                 },
               },
