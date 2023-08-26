@@ -170,34 +170,28 @@ function AssignStudents() {
     fetchData();
   };
   const deleteHandler = async () => {
-    const body = {
-      student_id: deleteStd,
-    };
+    // const body = {
+    //   student_id: deleteStd,
+    // };
+    const queryString = deleteStd.map((id) => `student-id=${id}`).join("&");
+    const url = `/api/assign/student?course-id=${rowData._id}&${queryString}`;
+    await axios.delete(url).then((response) => {
+      if (response.data.code === "200") {
+        // 성공적으로 추가된 경우
+        setDelStdpopupVisible(true);
+        setTimeout(() => {
+          setDelStdpopupVisible(false);
+        }, 3000);
+      } else {
+        // 실패한 경우 처리
+        setErrorDelStdpopupVisible(true);
+        setTimeout(() => {
+          setErrorDelStdpopupVisible(false);
+        }, 3000);
+      }
+    });
 
-    await axios
-      .delete(`/api/assign/students/${rowData._id}`, body)
-      .then((response) => {
-        if (response.data.code === "200") {
-          // 성공적으로 추가된 경우
-          setDelStdpopupVisible(true);
-          setTimeout(() => {
-            setDelStdpopupVisible(false);
-          }, 3000);
-        } else {
-          // 실패한 경우 처리
-          setErrorDelStdpopupVisible(true);
-          setTimeout(() => {
-            setErrorDelStdpopupVisible(false);
-          }, 3000);
-        }
-      });
-
-    console.log(
-      "request api============\n" +
-        `/api/assign/students/${rowData._id}` +
-        "\nrequest body==============\n" +
-        JSON.stringify(body)
-    );
+    console.log(url);
   };
 
   const data = useMemo(() => regiStdInfo, [regiStdInfo]);
