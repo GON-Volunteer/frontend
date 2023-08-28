@@ -139,6 +139,11 @@ function TeacherEdit() {
                   message: "It does not fit the ID format.",
                 },
               })}
+              onChange={() => {
+                if (isIdError) {
+                  setIsIdError(false); // Clear the error state when the input value changes
+                }
+              }}
             />
             {errors.id && <small role="alert">{errors.id.message}</small>}
           </div>

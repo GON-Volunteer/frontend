@@ -58,6 +58,8 @@ function Register() {
         setTimeout(() => {
           setPopupVisible(false);
         }, 3000);
+        setIsIdError(false);
+        setIsSNError(false);
         reset();
       } else if (response.data.code == "408") {
         // 실패한 경우 처리
@@ -135,6 +137,11 @@ function Register() {
                 message: "아이디 형식에 맞지 않습니다.",
               },
             })}
+            onChange={() => {
+              if (isSNError) {
+                setIsSNError(false); // Clear the error state when the input value changes
+              }
+            }}
           />
         </div>
         <div className="form-control__items" style={formItemStyle}>
@@ -205,6 +212,11 @@ function Register() {
                 message: "아이디 형식에 맞지 않습니다.",
               },
             })}
+            onChange={() => {
+              if (isIdError) {
+                setIsIdError(false); // Clear the error state when the input value changes
+              }
+            }}
           />
           {errors.id && <small role="alert">{errors.id.message}</small>}
         </div>
