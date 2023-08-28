@@ -131,7 +131,7 @@ function AssignTeacherInCourse() {
     sectionOptions.push(i);
   }
   async function showNonAssignCourseList() {
-    axios
+    await axios
       .get(
         // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AssignCourse"
         "/api/courses/not-assigned"
@@ -140,13 +140,14 @@ function AssignTeacherInCourse() {
         console.log("non assign response" + JSON.stringify(courseRes.data));
         if (courseRes.data && Array.isArray(courseRes.data)) {
           setCourseInfo(courseRes.data);
+          return courseRes.data;
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
       });
   }
   async function showAssignedCourseList() {
-    axios
+    await axios
       .get("/api/courses/assigned")
       .then((res) => {
         console.log("assigned res.data??" + JSON.stringify(res.data));
@@ -155,6 +156,7 @@ function AssignTeacherInCourse() {
 
           const resultObj = res.data.map((item) => item);
           setRegisterCourseInfo(resultObj);
+          return resultObj;
         } else {
           console.log("SubManagement::데이터가 배열이 아닙니다.");
         }
@@ -200,8 +202,9 @@ function AssignTeacherInCourse() {
         // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
         if (response.data.code == "200") {
           console.log("??enter?");
-          showNonAssignCourseList();
-          showAssignedCourseList();
+
+          await showNonAssignCourseList();
+          await showAssignedCourseList();
 
           setPopupVisible(true);
           setTimeout(() => {
