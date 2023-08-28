@@ -47,6 +47,7 @@ function AssignStudents() {
   const handleCheckboxChange = (rowIndex) => {
     // 기존에 선택된 행인지 확인
     const selectedStudentId = unregiStdInfo[rowIndex]._id.$oid;
+    setDeleteSelectIdx([]);
     setSelectedRowIndices((prevIndices) =>
       prevIndices.filter((index) => index !== rowIndex)
     );
@@ -69,6 +70,7 @@ function AssignStudents() {
   };
   const handleDeleteCheckbox = (rowIndex) => {
     const selectedStudentId = regiStdInfo[rowIndex]._id.$oid;
+    setSelectedRowIndices([]);
     setDeleteSelectIdx((prevIndices) =>
       prevIndices.filter((index) => index !== rowIndex)
     );
@@ -158,6 +160,8 @@ function AssignStudents() {
         setTimeout(() => {
           setDelStdpopupVisible(false);
         }, 3000);
+        setSelectedRowIndices([]);
+        fetchData();
       } else {
         // 실패한 경우 처리
         setErrorDelStdpopupVisible(true);
@@ -166,8 +170,6 @@ function AssignStudents() {
         }, 3000);
       }
     });
-
-    fetchData();
   };
   const deleteHandler = async () => {
     // const body = {
@@ -182,6 +184,8 @@ function AssignStudents() {
         setTimeout(() => {
           setDelStdpopupVisible(false);
         }, 3000);
+        setDeleteSelectIdx([]);
+        fetchData();
       } else {
         // 실패한 경우 처리
         setErrorDelStdpopupVisible(true);
