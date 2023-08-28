@@ -21,37 +21,32 @@ export default function StudentManagement() {
         StudentManagement
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Paper sx={{ width: "100%", maxWidth: "100%" }}>
-          <MenuList>
-            <MenuItem component={Link} to="/studentManagement/register">
+        <div className="management-menu-bar">
+          <div className="management-menu-items">
+            <a href="/studentManagement/register">
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
-              <ListItemText>Add</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘Admin
-              </Typography>
-            </MenuItem>
-            <MenuItem component={Link} to="/studentManagement/delete">
+              Add
+            </a>
+
+            <a href="/studentManagement/delete">
+              {" "}
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>
-              <ListItemText>Delete</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘Admin
-              </Typography>
-            </MenuItem>
-            <MenuItem component={Link} to="/studentManagement/StudentInfo">
+              Delete
+            </a>
+
+            <a href="/studentManagement/StudentInfo">
+              {" "}
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
-              <ListItemText>Edit</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘Admin
-              </Typography>
-            </MenuItem>
-          </MenuList>
-        </Paper>
+              Edit
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

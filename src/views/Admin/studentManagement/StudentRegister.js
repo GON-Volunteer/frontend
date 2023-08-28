@@ -38,6 +38,7 @@ function Register() {
     navigate("/studentManagement");
   };
   const [isIdError, setIsIdError] = useState(false);
+  const [isSNError, setIsSNError] = useState(false);
   const onSubmit = async (data) => {
     try {
       data["account"] = 2;
@@ -58,13 +59,26 @@ function Register() {
           setPopupVisible(false);
         }, 3000);
         reset();
-      } else if (response.data.code == "400") {
+      } else if (response.data.code == "408") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
         }, 3000);
         setIsIdError(true); // ID 에러 상태 설정
+      } else if (response.data.code == "409") {
+        setErrPopupVisible(true);
+        setTimeout(() => {
+          setErrPopupVisible(false);
+        }, 3000);
+        setIsSNError(true);
+      } else if (response.data.code == "410") {
+        setErrPopupVisible(true);
+        setTimeout(() => {
+          setErrPopupVisible(false);
+        }, 3000);
+        setIsSNError(true);
+        setIsIdError(true);
       } else {
         console.log("어케할까");
       }
@@ -111,10 +125,10 @@ function Register() {
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="s_n">S.N : </label>
           <input
-            style={formItemStyle}
             id="s_n"
             type="text"
             placeholder="Serial Number"
+            style={isSNError ? redBorderStyle : formItemStyle}
             {...register("s_n", {
               required: "Serial number is required.",
               pattern: {
