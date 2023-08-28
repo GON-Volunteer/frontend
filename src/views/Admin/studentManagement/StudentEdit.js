@@ -26,11 +26,19 @@ function StudentEdit() {
     formState: { errors }, //form state에 관한 정보를 담고 있는 객체
   } = useForm({ mode: "onSubmit" });
   const [errpopupVisible, setErrPopupVisible] = useState(false);
-
+  const formItemStyle = {
+    margin: "5px",
+  };
+  const redBorderStyle = {
+    margin: "10px",
+    border: "2px solid orange",
+  };
   //server에 form data 전송 코드 작성하기
   const [value, setValue] = useState("");
   const [resultClass, setResultClass] = useState([]);
   const navigate = useNavigate();
+  const [isIdError, setIsIdError] = useState(false);
+  const [isSNError, setIsSNError] = useState(false);
   if (!rowData) {
     return <div>data loading error </div>;
   } else {
@@ -53,13 +61,32 @@ function StudentEdit() {
           if (response.data.code == "200") {
             // 성공적으로 추가된 경우
             navigate("/studentManagement/StudentInfo");
+            setIsIdError(false);
+            setIsSNError(false);
+            reset();
             //setPopupVisible(true);
-          } else if (response.data.code == "400") {
+          } else if (response.data.code == "408") {
             // 실패한 경우 처리
             setErrPopupVisible(true);
             setTimeout(() => {
               setErrPopupVisible(false);
             }, 3000);
+            setIsIdError(true); // ID 에러 상태 설정
+            setIsSNError(false);
+          } else if (response.data.code == "409") {
+            setIsIdError(false);
+            setErrPopupVisible(true);
+            setTimeout(() => {
+              setErrPopupVisible(false);
+            }, 3000);
+            setIsSNError(true);
+          } else if (response.data.code == "410") {
+            setErrPopupVisible(true);
+            setTimeout(() => {
+              setErrPopupVisible(false);
+            }, 3000);
+            setIsSNError(true);
+            setIsIdError(true);
           } else {
             console.log("어케할까");
           }
@@ -104,11 +131,11 @@ function StudentEdit() {
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="s_n">S.N : </label>
             <input
-              style={formItemStyle}
               id="s_n"
               type="text"
               placeholder="Serial Number"
               defaultValue={rowData.s_n}
+              style={isIdError ? redBorderStyle : formItemStyle}
               {...register("s_n", {
                 required: "Serial number is required.",
 
@@ -183,7 +210,7 @@ function StudentEdit() {
               id="id"
               type="text"
               placeholder="ID"
-              style={formItemStyle}
+              style={isIdError ? redBorderStyle : formItemStyle}
               defaultValue={rowData.id}
               // input의 기본 config를 작성
               {...register("id", {
