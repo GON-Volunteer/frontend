@@ -21,28 +21,24 @@ export default function courseManagement() {
         CourseManagement
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Paper sx={{ width: "100%", maxWidth: "100%" }}>
-          <MenuList>
-            <MenuItem component={Link} to="/courseManagement/subjectManagement">
+        <div className="management-menu-bar">
+          <div className="management-menu-items">
+            <a href="/courseManagement/subjectManagement">
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
-              <ListItemText>Add</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘Admin
-              </Typography>
-            </MenuItem>
-            <MenuItem component={Link} to="/courseDelete">
+              Add
+            </a>
+
+            <a href="/courseDelete">
+              {" "}
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>
-              <ListItemText>Delete</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘Admin
-              </Typography>
-            </MenuItem>
-          </MenuList>
-        </Paper>
+              Delete
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

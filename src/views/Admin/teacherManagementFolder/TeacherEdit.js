@@ -22,12 +22,19 @@ function TeacherEdit() {
     getValues, //input 값을 가져올 수 있는 함수
     formState: { errors }, //form state에 관한 정보를 담고 있는 객체
   } = useForm({ mode: "onSubmit" });
-
+  const formItemStyle = {
+    margin: "5px",
+  };
+  const redBorderStyle = {
+    margin: "10px",
+    border: "2px solid orange",
+  };
   //server에 form data 전송 코드 작성하기
   const [value, setValue] = useState("");
   const [resultClass, setResultClass] = useState([]);
   const navigate = useNavigate();
   const [errpopupVisible, setErrPopupVisible] = useState(false);
+  const [isIdError, setIsIdError] = useState(false);
   if (!rowData) {
     return <div>data loading error </div>;
   } else {
@@ -46,12 +53,13 @@ function TeacherEdit() {
           // 성공적으로 추가된 경우
           navigate("/teacherManagement/TeacherInfo");
           //setPopupVisible(true);
-        } else if (res.data.code == "400") {
+        } else if (res.data.code == "408") {
           // 실패한 경우 처리
           setErrPopupVisible(true);
           setTimeout(() => {
             setErrPopupVisible(false);
           }, 3000);
+          setIsIdError(true); // ID 에러 상태 설정
         } else {
           console.log("어케할까");
         }
