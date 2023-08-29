@@ -105,9 +105,10 @@ const Home = () => {
           }}
         />
       </div>
+
       <div id="simple_announce_div">
         <p id="title">Announcement</p>
-        <Button color="info" onClick={goAncList}>
+        <Button size="sm" id="moreBtn" color="info" onClick={goAncList}>
           More
         </Button>
       </div>

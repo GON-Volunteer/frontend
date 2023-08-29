@@ -12,7 +12,7 @@ export default function TeacherManagement() {
     <div>
       <AppShellAdmin />
       <div style={{ fontWeight: "bold", fontSize: "30px" }}>
-        TeacherManagement
+        Teacher Management
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="management-menu-bar">
