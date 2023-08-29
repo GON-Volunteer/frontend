@@ -4,7 +4,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
 import ListItemIcon from "@mui/material/ListItemIcon";
-
+import EditIcon from "@material-ui/icons/Edit";
 import * as React from "react";
 import "../../../assets/css/MenuBar.css";
 export default function TeacherManagement() {
@@ -30,6 +30,13 @@ export default function TeacherManagement() {
                 <DeleteIcon />
               </ListItemIcon>
               Delete
+            </a>
+            <a href="/teacherManagement/TeacherInfo">
+              {" "}
+              <ListItemIcon>
+                <EditIcon />
+              </ListItemIcon>
+              Edit
             </a>
           </div>
         </div>
