@@ -67,6 +67,7 @@ function StudentEdit() {
             //setPopupVisible(true);
           } else if (response.data.code == "408") {
             // 실패한 경우 처리
+            console.log("?", response.data.code);
             setErrPopupVisible(true);
             setTimeout(() => {
               setErrPopupVisible(false);
@@ -74,11 +75,12 @@ function StudentEdit() {
             setIsIdError(true); // ID 에러 상태 설정
             setIsSNError(false);
           } else if (response.data.code == "409") {
-            setIsIdError(false);
+            console.log(response.data.code, "?");
             setErrPopupVisible(true);
             setTimeout(() => {
               setErrPopupVisible(false);
             }, 3000);
+            setIsIdError(false);
             setIsSNError(true);
           } else if (response.data.code == "410") {
             setErrPopupVisible(true);
@@ -135,7 +137,7 @@ function StudentEdit() {
               type="text"
               placeholder="Serial Number"
               defaultValue={rowData.s_n}
-              style={isIdError ? redBorderStyle : formItemStyle}
+              style={isSNError ? redBorderStyle : formItemStyle}
               {...register("s_n", {
                 required: "Serial number is required.",
 
@@ -143,6 +145,11 @@ function StudentEdit() {
                   message: "It does not fit the SN format.",
                 },
               })}
+              onChange={() => {
+                if (isSNError) {
+                  setIsSNError(false); // Clear the error state when the input value changes
+                }
+              }}
             />
           </div>
           <div className="form-control__items" style={formItemStyle}>
@@ -219,6 +226,11 @@ function StudentEdit() {
                   message: "It does not fit the ID format.",
                 },
               })}
+              onChange={() => {
+                if (isIdError) {
+                  setIsIdError(false); // Clear the error state when the input value changes
+                }
+              }}
             />
             {errors.id && <small role="alert">{errors.id.message}</small>}
           </div>

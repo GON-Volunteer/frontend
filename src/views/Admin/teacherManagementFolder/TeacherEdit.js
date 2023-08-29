@@ -91,7 +91,7 @@ function TeacherEdit() {
           </AppBar>
         </div>
         <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-          <b>Failed!</b> SerialNum or ID is already exists.
+          <b>Failed!</b> ID is already exists.
           <button className="close" onClick={() => setErrPopupVisible(false)}>
             <span aria-hidden="true">&times;</span>
           </button>
@@ -139,6 +139,11 @@ function TeacherEdit() {
                   message: "It does not fit the ID format.",
                 },
               })}
+              onChange={() => {
+                if (isIdError) {
+                  setIsIdError(false); // Clear the error state when the input value changes
+                }
+              }}
             />
             {errors.id && <small role="alert">{errors.id.message}</small>}
           </div>

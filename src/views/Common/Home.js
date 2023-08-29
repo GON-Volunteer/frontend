@@ -94,7 +94,7 @@ const Home = () => {
           headerToolbar={{
             left: "prev,next", // Display today, prev, and next buttons
             center: "title", // Display the title in the center of the header
-            right: "addButton", // Display the custom "Add" button on the right side
+            right: user.account === 0 ? "addButton" : "", // Display the custom "Add" button on the right side for account === 1
           }}
           customButtons={{
             // Define the custom "Add" button
@@ -105,9 +105,10 @@ const Home = () => {
           }}
         />
       </div>
+
       <div id="simple_announce_div">
         <p id="title">Announcement</p>
-        <Button color="info" onClick={goAncList}>
+        <Button size="sm" id="moreBtn" color="info" onClick={goAncList}>
           More
         </Button>
       </div>
