@@ -11,8 +11,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-import Icon from "@material-ui/core/Icon";
-import IconButton from "@material-ui/core/IconButton";
 import CommentIcon from "@material-ui/icons/Comment";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import swal from "sweetalert";
@@ -26,6 +24,11 @@ import profileImg from "../../assets/img/announcement.png";
 import { Button } from "reactstrap";
 import { storageService } from "../../fBase";
 import { ref, deleteObject } from "firebase/storage";
+import AppBar from "@material-ui/core/AppBar";
+import Typography from "@material-ui/core/Typography";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 //게시글 내용
 const useStyles = makeStyles((theme) => ({
   commentInput: {
@@ -311,9 +314,29 @@ const Course_Posting = ({}) => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
+  const handleBackButtonClick = () => {
+    navigate("/courses/" + id + "/articles");
+  };
   return (
     <>
+      <div>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="back"
+              onClick={handleBackButtonClick}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              {board.title}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
       {editing ? (
         <>
           {isOwner && (

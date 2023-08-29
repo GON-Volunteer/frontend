@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid, Paper, useTheme, useMediaQuery } from "@material-ui/core";
 import { Col, Row } from "react-bootstrap";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";

@@ -33,9 +33,6 @@ export default function ButtonAppBar() {
   const goAnnouncement = () => {
     navigate("/Announcement-page");
   };
-  const goDashboard = () => {
-    navigate("/Course_List");
-  };
   const goTeacherManagement = () => {
     navigate("/TeacherManagement");
   };
@@ -99,13 +96,7 @@ export default function ButtonAppBar() {
           <StarIcon />
           Announcement
         </MenuItem>
-        <MenuItem
-          onClick={goDashboard}
-          sx={{ textAlign: "center", padding: "10px 10px" }}
-        >
-          <BookIcon />
-          Dashboard of courses
-        </MenuItem>
+
         <Divider />
 
         <MenuItem
