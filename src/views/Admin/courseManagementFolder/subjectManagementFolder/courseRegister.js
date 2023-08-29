@@ -34,8 +34,8 @@ export default function CourseRegister() {
     console.log(formData);
   };
   const batchOptions = [];
-  for (var i = 0; i < 40; i++) {
-    batchOptions[i] = i + 2070;
+  for (var i = 0; i < 10; i++) {
+    batchOptions[i] = i + 2078;
   }
   const sectionOptions = [];
   for (
@@ -181,7 +181,7 @@ export default function CourseRegister() {
             onChange={handleInputChange}
           >
             <option value="">-- Select Section --</option>
-            <option value="NoneSection">NoneSection</option>
+
             {sectionOptions.map((option, index) => (
               <option key={index}>{option}</option>
             ))}
