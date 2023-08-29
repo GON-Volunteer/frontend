@@ -216,6 +216,7 @@ const Course_ArticleCreate = () => {
                           width: "100%",
                           height: "50%",
                           border: "1px solid lightgrey",
+                          overflowWrap: "break-word",
                         }}
                       ></input>
                       <textarea
@@ -231,6 +232,7 @@ const Course_ArticleCreate = () => {
                           width: "100%",
                           height: "100%",
                           border: "none",
+                          overflowWrap: "break-word",
                         }}
                       ></textarea>
                     </Grid>

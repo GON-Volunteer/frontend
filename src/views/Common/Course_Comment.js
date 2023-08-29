@@ -120,7 +120,7 @@ const Course_Comment = ({
               {/* [댓글] 작성 날짜 */}
               {/* {commentObj.date} */}
             </Col>
-            <Col item xs={2} style={{ paddingTop: 10 }}>
+            <Col item xs={2} style={{ display: "flex", alignItems: "center" }}>
               {/* [댓글] 좋아요 버튼 */}
               <FormControlLabel
                 style={{ margin: 0, paddingTop: 0 }}
@@ -135,20 +135,17 @@ const Course_Comment = ({
                 }
               />
               <span>{likeCount}</span>
+
+              {/* [댓글] 작성자일 경우 삭제 버튼 표기 */}
+              {isOwner ? (
+                <ClearIcon
+                  onClick={onDeleteComment}
+                  style={{ marginLeft: "10px", color: "lightgray" }}
+                />
+              ) : (
+                <Col item xs={1}></Col>
+              )}
             </Col>
-            {/* [댓글] 작성자일 경우 삭제 버튼 표기 */}
-            {isOwner ? (
-              <Col
-                item
-                xs={1}
-                style={{ margin: 0, paddingTop: 20, color: "lightgray" }}
-              >
-                {/* [댓글] 삭제 버튼 */}
-                <ClearIcon onClick={onDeleteComment} />
-              </Col>
-            ) : (
-              <Col item xs={1}></Col>
-            )}
           </Row>
         </Grid>
       </Paper>

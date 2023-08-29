@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
 import axios from "axios";
 //import { storageService } from "fBase";
 import Course_Comment from "./Course_Comment";
@@ -19,6 +20,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Divider from "@mui/material/Divider";
 import SendIcon from "@mui/icons-material/Send";
 import ListIcon from "@mui/icons-material/List";
+import TimeIcon from "@mui/icons-material/Timer";
 import "../../assets/css/Posting.css";
 import profileImg from "../../assets/img/announcement.png";
 import { Button } from "reactstrap";
@@ -29,6 +31,7 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Box from "@material-ui/core/Box";
 //게시글 내용
 const useStyles = makeStyles((theme) => ({
   commentInput: {
@@ -67,6 +70,7 @@ const Course_Posting = ({}) => {
   const [isOwner, setIsOwner] = useState(false);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   // [READ] 게시글 DB에서 불러오기 핸들러
   const onReadBoard = async () => {
     await axios
@@ -346,7 +350,7 @@ const Course_Posting = ({}) => {
                   border: "1px solid lightgray ",
                   marginBottom: "15px",
                   borderRadius: "1rem",
-                  padding: "110px",
+                  padding: isMobile ? "20px" : "110px",
                 }}
               >
                 <Grid item xs={12}>
@@ -369,6 +373,7 @@ const Course_Posting = ({}) => {
                           width: "100%",
                           height: "50%",
                           border: "1px solid lightgrey",
+                          overflowWrap: "break-word",
                         }}
                       ></input>
                       <textarea
@@ -384,11 +389,12 @@ const Course_Posting = ({}) => {
                           width: "100%",
                           height: "100%",
                           border: "1px solid lightgrey",
+                          overflowWrap: "break-word",
                         }}
                       ></textarea>
                       {/* 게시글 수정 모드 시 취소, 완료 버튼 */}
                       <Button color="info" onClick={onUpdatePosting}>
-                        Done
+                        submit
                       </Button>
                       <Button color="info" onClick={toggleEditing}>
                         Cancel
@@ -404,230 +410,222 @@ const Course_Posting = ({}) => {
         <>
           <Paper
             style={{
-              border: "1px solid lightgray ",
+              border: "1px solid lightgray",
               marginBottom: "15px",
               borderRadius: "1rem",
             }}
           >
-            <Grid item xs={12}>
-              <Row
-                itme
-                xs={12}
-                style={{
-                  margin: 0,
-                  padding: 5,
-                  borderBottom: "1px solid lightgray ",
-                }}
-              >
-                <Col
-                  item
-                  xs={4}
-                  style={{
-                    fontWeight: "bold",
-                    marginTop: "0.5rem",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  {/* 게시글 작성자 프로필 사진 */}
-                  <img
-                    id="profileImg"
-                    src={profileImg}
-                    width="60vw"
-                    height="60vh"
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Grid container direction="row">
+                  <Grid
+                    item
+                    xs={12}
+                    sm={4}
                     style={{
-                      marginTop: 5,
-                      marginBottom: 5,
-                      marginleft: 5,
-                      marginRight: 20,
-                    }}
-                  />
-                  <Link
-                    style={{ color: "black" }}
-                    to={{
-                      pathname: "/courses/" + id + "/articles",
-                      state: { targetUser: board?.posting_id },
+                      fontWeight: "bold",
+                      marginTop: "0.5rem",
+                      marginBottom: "0.5rem",
                     }}
                   >
-                    {board?.full_name}
-                  </Link>
-                  {board?.user_id && (
-                    <>
-                      <LocalHospitalIcon
-                        style={{ marginLeft: 5, color: "green" }}
-                      />
-                    </>
-                  )}
-                </Col>
-                <Col item xs={4}></Col>
-                <Col
-                  item
-                  xs={2}
-                  style={{
-                    paddingTop: 15,
-                    color: "lightgray",
-                    fontSize: "1rem",
-                  }}
-                >
-                  {board?.createdate}
-                </Col>
-                <Col item xs={2}>
-                  {isOwner && (
-                    <>
-                      <Row>
-                        <Col item xs={1}>
+                    <img
+                      id="profileImg"
+                      src={profileImg}
+                      width="60vw"
+                      height="60vh"
+                      style={{
+                        marginTop: 5,
+                        marginBottom: 5,
+                        marginLeft: 5,
+                        marginRight: 20,
+                      }}
+                    />
+                    <Link
+                      style={{ color: "black" }}
+                      to={{
+                        pathname: "/courses/" + id + "/articles",
+                        state: { targetUser: board?.posting_id },
+                      }}
+                    >
+                      {board?.full_name}
+                    </Link>
+                    {board?.user_id && (
+                      <>
+                        <LocalHospitalIcon
+                          style={{ marginLeft: 5, color: "green" }}
+                        />
+                      </>
+                    )}
+                  </Grid>
+
+                  <Grid item xs={12} sm={4} />
+
+                  <Grid
+                    item
+                    xs={6}
+                    sm={2}
+                    style={{
+                      paddingTop: 15,
+                      color: "lightgray",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    <TimeIcon
+                      style={{ marginLeft: "10px", color: "lightgray" }}
+                    />
+                    {board?.createdate}
+                  </Grid>
+
+                  <Grid item xs={6} sm={2}>
+                    {isOwner && (
+                      <>
+                        <Box display="flex" justifyContent="space-between">
                           {/* 게시글 목록 버튼 */}
                           <IconButton
-                            style={{
-                              display: "flex",
-                              color: "gray",
-                            }}
                             aria-label="list"
                             onClick={toggleListing}
+                            style={{ color: "gray" }}
                           >
                             <ListIcon />
                           </IconButton>
-                        </Col>
-                        <Col item xs={1}></Col>
-                        <Col item xs={1}>
                           {/* 게시글 수정 버튼 */}
                           <IconButton
-                            style={{
-                              display: "flex",
-                              color: "gray",
-                            }}
                             aria-label="edit"
                             onClick={toggleEditing}
+                            style={{ color: "gray" }}
                           >
                             <EditIcon />
                           </IconButton>
-                        </Col>
-                        <Col item xs={1}></Col>
-                        <Col item xs={1}>
                           {/* 게시글 삭제 버튼 */}
                           <IconButton
-                            style={{
-                              display: "flex",
-                              color: "gray",
-                            }}
                             aria-label="delete"
                             onClick={onDeletePosting}
+                            style={{ color: "gray" }}
                           >
                             <DeleteIcon />
                           </IconButton>
+                        </Box>
+                      </>
+                    )}
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Container>
+                    {/* 게시글 제목 */}
+                    <Box padding={2}>
+                      <Typography variant="h5">{board.title}</Typography>
+                    </Box>
+
+                    <Divider />
+                    {/* 게시글 내용 */}
+                    <Box padding={2}>
+                      <Typography variant="body1">{board.content}</Typography>
+                    </Box>
+                    {/* 게시글 첨부파일 포함 시 이미지 출력 */}
+                    {attachment && (
+                      <Box padding={2}>
+                        <img src={attachment} width="100%" height="auto" />
+                      </Box>
+                    )}
+
+                    <Grid container spacing={2} alignItems="center">
+                      <Grid item xs={8} sm={10} />
+
+                      <Grid item xs={2} sm={1}>
+                        <Box display="flex" alignItems="center">
+                          <CommentIcon />
+                          <Box ml={1}>{commentCount}</Box>
+                        </Box>
+                      </Grid>
+
+                      <Grid item xs={2} sm={1}>
+                        <Col
+                          item
+                          xs={2}
+                          style={{
+                            margin: 0,
+                            padding: 0,
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          {/* 좋아요 */}
+                          <FormControlLabel
+                            style={{ margin: 0 }}
+                            control={
+                              <Checkbox
+                                icon={<FavoriteBorder />}
+                                checkedIcon={<Favorite />}
+                                onChange={onLikeHandle}
+                                checked={likeState}
+                                name="likeState"
+                              />
+                            }
+                          />
+                          {/* 좋아요 수 */}
+                          <span>{likeCount}</span>
                         </Col>
-                      </Row>
-                    </>
-                  )}
-                </Col>
-              </Row>
-              <Row itme xs={12} style={{ margin: 0 }}>
-                <Container>
-                  {/* 게시글 제목 */}
-                  <Row style={{ padding: 20 }}>
-                    {" "}
-                    <span style={{ fontWeight: "bold" }}>{board.title}</span>
-                  </Row>
-                  <Divider />
-                  {/* 게시글 내용 */}
-                  <Row style={{ padding: 20 }}>{board.content}</Row>
-                  <br />
-                  {/* 게시글 첨부파일 포함 시 이미지 출력 */}
-                  {attachment && (
-                    <Row style={{ padding: 15 }}>
-                      <img src={attachment} width="500px" height="500px" />
-                    </Row>
-                  )}
-                </Container>
-              </Row>
-              <Row item xs={12} style={{ margin: 0 }}>
-                <Col item xs={8}></Col>
-                <Col item xs={2} style={{ margin: 0, paddingTop: "8px" }}>
-                  <span style={{ marginRight: 10 }}>
-                    <CommentIcon />
-                  </span>
-                  <span>{commentCount}</span>
-                </Col>
-                <Col item xs={2} style={{ margin: 0, padding: 0 }}>
-                  {/* 좋아요 */}
-                  <FormControlLabel
-                    style={{ margin: 0 }}
-                    control={
-                      <Checkbox
-                        icon={<FavoriteBorder />}
-                        checkedIcon={<Favorite />}
-                        onChange={onLikeHandle}
-                        checked={likeState}
-                        name="likeState"
-                      />
-                    }
-                  />
-                  <span>
-                    {/* 좋아요 수 */}
-                    {likeCount}
-                  </span>
-                </Col>
-              </Row>
-              <Row
-                item
-                xs={12}
-                style={{
-                  margin: 0,
-                  borderTop: "1px solid lightgray ",
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                }}
-              >
-                <Container style={{ margin: 2 }}>
-                  {/* 댓글 목록 */}
-                  {comments.map((comment) => (
-                    <Course_Comment
-                      key={comment.comment_id}
-                      posting_id={comment.posting_id}
-                      commentObj={comment}
-                      content={comment.content}
-                      isOwner={comment.user_id === user._id}
-                      onReadComment={onReadComment}
-                      commentCount={commentCount}
-                      setCommentCount={setCommentCount}
-                      onDeleteComment={() =>
-                        onDeleteComment(comment.comment_id)
-                      }
-                    />
-                  ))}
-                </Container>
-              </Row>
-              <Row
-                item
-                xs={12}
-                style={{ marginTop: 5, marginBottom: "1.2rem" }}
-              >
-                <Col
-                  item
-                  xs={10}
-                  style={{ marginLeft: "2rem", marginRight: "2rem" }}
-                >
-                  {/* 댓글 입력란 */}
-                  <input
-                    className={classes.commentInput}
-                    type="text"
-                    value={comment}
-                    onChange={onComment}
-                    placeholder="Comment"
-                  />
-                </Col>
-                <Col item xs={1}>
-                  {/* 댓글 등록 버튼 */}
-                  <IconButton
-                    style={{
-                      color: "#ff8a4e",
-                    }}
-                    aria-label="Create"
-                    onClick={onCreateComment}
-                  >
-                    <SendIcon />
-                  </IconButton>
-                </Col>
-              </Row>
+                      </Grid>
+                    </Grid>
+
+                    <Box
+                      mt={2}
+                      mb={2}
+                      borderTop="1px solid lightgray"
+                      pt={2}
+                      pb={2}
+                    >
+                      {/* 댓글 목록 */}
+                      {comments.map((comment) => (
+                        <>
+                          <Course_Comment
+                            key={comment.comment_id}
+                            posting_id={comment.posting_id}
+                            commentObj={comment}
+                            content={comment.content}
+                            isOwner={comment.user_id === user._id}
+                            onReadComment={onReadComment}
+                            commentCount={commentCount}
+                            setCommentCount={setCommentCount}
+                            onDeleteComment={() =>
+                              onDeleteComment(comment.comment_id)
+                            }
+                          />
+                          <Divider />
+                        </>
+                      ))}
+                    </Box>
+
+                    <Grid
+                      container
+                      spacing={2}
+                      style={{ marginTop: 5, marginBottom: "1.2rem" }}
+                    >
+                      <Grid item xs={10} sm={11}>
+                        {/* 댓글 입력란 */}
+                        <input
+                          type="text"
+                          value={comment}
+                          onChange={onComment}
+                          placeholder="Comment"
+                          style={{ width: "100%", overflowWrap: "break-word" }}
+                        />
+                      </Grid>
+                      <Grid item xs={2} sm={1}>
+                        {/* 댓글 등록 버튼 */}
+                        <IconButton
+                          color="secondary"
+                          aria-label="Create"
+                          onClick={onCreateComment}
+                        >
+                          <SendIcon />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
+                  </Container>
+                </Grid>
+              </Grid>
             </Grid>
           </Paper>
         </>

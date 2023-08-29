@@ -213,6 +213,7 @@ const ArticleCreate = () => {
                           width: "100%",
                           height: "50%",
                           border: "1px solid lightgrey",
+                          overflowWrap: "break-word", // 줄바꿈 속성 추가
                         }}
                       ></input>
                       <textarea
@@ -228,6 +229,7 @@ const ArticleCreate = () => {
                           width: "100%",
                           height: "100%",
                           border: "none",
+                          overflowWrap: "break-word", // 줄바꿈 속성 추가
                         }}
                       ></textarea>
                     </Grid>
