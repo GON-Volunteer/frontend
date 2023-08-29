@@ -53,7 +53,7 @@ function TeacherEdit() {
           // 성공적으로 추가된 경우
           navigate("/teacherManagement/TeacherInfo");
           //setPopupVisible(true);
-        } else if (res.data.code == "408") {
+        } else if (res.data.code == "400") {
           // 실패한 경우 처리
           setErrPopupVisible(true);
           setTimeout(() => {
