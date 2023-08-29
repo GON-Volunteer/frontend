@@ -22,14 +22,28 @@
   display: inline-block;
 }
 #simple_announce_div {
-  display: flex;
+  position: relative;
 }
 
+#moreBtn {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
+
+#simple_announce {
+  width: 90%;
+  margin: 0 auto; /* 수평 중앙 정렬 */
+}
+.custom-table th,
+.custom-table td {
+  font-size: 12px !important; /* 강제로 스타일 적용 */
+  /* 다른 스타일 속성들 */
+}
+.custom-table {
+  margin-bottom: 5px;
+}
 @media (max-width: 768px) {
-  #simple_announce {
-    margin-top: 10px; /* 모바일 뷰에서는 더 작은 간격으로 설정합니다. */
-    margin-left: 20px;
-  }
   #title {
     margin-right: 30vw;
   }
@@ -37,10 +51,6 @@
 
 /* 화면 크기가 768px보다 크고 1200px 이하일 때 (타블렛 뷰) */
 @media (min-width: 769px) and (max-width: 1200px) {
-  #simple_announce {
-    margin-top: 20px; /* 타블렛 뷰에서는 중간 크기의 간격으로 설정합니다. */
-    margin-left: 40px;
-  }
   #title {
     margin-right: 60vw;
   }
@@ -48,10 +58,6 @@
 
 /* 화면 크기가 1201px 이상일 때 (데스크탑 뷰) */
 @media (min-width: 1201px) {
-  #simple_announce {
-    margin-top: 30px; /* 데스크탑 뷰에서는 더 큰 간격으로 설정합니다. */
-    margin-left: 40px;
-  }
   #title {
     margin-right: 80vw; /* 데스크탑 뷰에서는 더 큰 간격으로 설정합니다. */
   }

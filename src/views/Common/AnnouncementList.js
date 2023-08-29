@@ -9,7 +9,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, Link } from "react-router-dom";
-
+import "../../assets/css/Home.css";
 function AnnouncementList({ article1 }) {
   const today = new Date();
   console.log(today);
@@ -136,7 +136,14 @@ function AnnouncementList({ article1 }) {
     <div>
       <div>
         <div id="table">
-          <table {...getTableProps()}>
+          <table
+            style={{
+              fontSize: "14px", // 원하는 글자 크기로 설정
+              // 다른 필요한 스타일 속성도 추가 가능
+            }}
+            className="custom-table" // 클래스명 추가
+            {...getTableProps()}
+          >
             {" "}
             <thead>
               {headerGroups.map((header) => (
