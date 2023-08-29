@@ -98,7 +98,7 @@ function TeacherRegister() {
         </utton>
       </UncontrolledAlert>
       <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b> Teacher info edited successfully!
+        <b>Success!</b> Teacher registered successfully!
         <button className="close" onClick={() => setPopupVisible(false)}>
           <span aria-hidden="true">&times;</span>
         </button>
