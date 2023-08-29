@@ -154,6 +154,7 @@ export default function CourseRegister() {
             onChange={handleInputChange}
           >
             <option value="">-- Select Grade --</option>
+
             <option value="PlayGroup">PlayGroup</option>
             <option value="Nursery">Nursery</option>
             <option value="LowerKG">LowerKG</option>
@@ -180,6 +181,7 @@ export default function CourseRegister() {
             onChange={handleInputChange}
           >
             <option value="">-- Select Section --</option>
+            <option value="NoneSection">NoneSection</option>
             {sectionOptions.map((option, index) => (
               <option key={index}>{option}</option>
             ))}
@@ -218,7 +220,17 @@ export default function CourseRegister() {
           </Input>
         </FormGroup>
       </form>
-      <Button color="info" onClick={handleAdd} id="deleteBtn">
+      <Button
+        color="info"
+        onClick={handleAdd}
+        id="deleteBtn"
+        disabled={
+          !formData.grade ||
+          !formData.section ||
+          !formData.batch ||
+          formData.subject_idx === ""
+        }
+      >
         Add
       </Button>
     </div>
