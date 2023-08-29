@@ -55,24 +55,22 @@ function Course_List({ article1 }) {
         <AppShell />
       )}
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Paper sx={{ width: "100%", maxWidth: "100%" }}>
-          <MenuList>
+        <div className="management-menu-bar">
+          <div className="management-menu-items">
             {Object.values(menuList).map((menuItem) => (
-              <MenuItem
-                component={Link}
-                to={`/courses/:${menuItem.course_id}/articles`}
-              >
+              <Link to={`/courses/${menuItem.course_id}/articles`}>
                 <ListItemIcon>
                   <MenuBookIcon />
                 </ListItemIcon>
-                <ListItemText>{menuItem.subject_name}</ListItemText>
-                <Typography variant="body2" color="text.secondary">
-                  {"⌘Section-" + menuItem.section}
-                </Typography>
-              </MenuItem>
+                <ListItemText>
+                  {menuItem.batch}&nbsp;
+                  {menuItem.grade}&nbsp; section&nbsp;
+                  {menuItem.section + " " + menuItem.subject_name}
+                </ListItemText>
+              </Link>
             ))}
-          </MenuList>
-        </Paper>
+          </div>
+        </div>
       </div>
     </div>
   );
