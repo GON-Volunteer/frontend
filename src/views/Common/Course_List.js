@@ -37,10 +37,16 @@ function Course_List({ article1 }) {
         },
       })
       .then((response) => {
-        if (response.data && response.status === 200) {
+        if (response.data.status === 200) {
+          console.log(JSON.stringify(response));
+          console.log("Error: Response data 200.");
           setMenuList(response.data.list);
+        } else if (response.data.status === 400) {
+          console.log("Error: Response data is undefined.");
+          setMenuList([]);
         } else {
-          console.error("Failed to load menu list.");
+          console.log("Error: Response data is undefined.");
+          setMenuList([]);
         }
       })
       .catch((error) => console.error(error));
@@ -57,18 +63,25 @@ function Course_List({ article1 }) {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="management-menu-bar">
           <div className="management-menu-items">
-            {Object.values(menuList).map((menuItem) => (
-              <Link to={`/courses/${menuItem.course_id}/articles`}>
-                <ListItemIcon>
-                  <MenuBookIcon />
-                </ListItemIcon>
-                <ListItemText>
-                  {menuItem.batch}&nbsp;
-                  {menuItem.grade}&nbsp; section&nbsp;
-                  {menuItem.section + " " + menuItem.subject_name}
-                </ListItemText>
-              </Link>
-            ))}
+            {menuList.length === 0 ? (
+              <Typography variant="body1">배정된 강의가 없습니다.</Typography>
+            ) : (
+              Object.values(menuList).map((menuItem) => (
+                <Link
+                  to={`/courses/${menuItem.course_id}/articles`}
+                  key={menuItem.course_id}
+                >
+                  <ListItemIcon>
+                    <MenuBookIcon />
+                  </ListItemIcon>
+                  <ListItemText>
+                    {menuItem.batch}&nbsp;
+                    {menuItem.grade}&nbsp; section&nbsp;
+                    {menuItem.section + " " + menuItem.subject_name}
+                  </ListItemText>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </div>
