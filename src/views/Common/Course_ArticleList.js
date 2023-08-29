@@ -92,7 +92,7 @@ function Course_ArticleList({ article1 }) {
       .get(url + "/api/courses/" + id + "/articles")
       .then((res) => {
         console.log("[READ] 게시글 목록 Reloading");
-        console.log(typeof res.data);
+        //console.log(typeof res.data);
         if (res.data && Array.isArray(res.data.list)) {
           //map 사용시 새로운 배열 생성해서
           const resultObj = res.data.list.map((item) => item);
@@ -212,7 +212,7 @@ function Course_ArticleList({ article1 }) {
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        {user.account === 0 && (
+        {user.account === 1 && (
           <Button color="info" onClick={goArticleCreate}>
             Create
           </Button>

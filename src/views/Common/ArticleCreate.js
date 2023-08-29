@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid, Paper } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import SendIcon from "@mui/icons-material/Send";
-import IconButton from "@material-ui/core/IconButton";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import { Row, Col } from "react-bootstrap";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -14,6 +13,11 @@ import "../../assets/css/Community.css";
 import { storageService } from "../../fBase";
 import { v4 as uuidv4 } from "uuid";
 import { ref, getDownloadURL, uploadString } from "firebase/storage";
+import AppBar from "@material-ui/core/AppBar";
+import Typography from "@material-ui/core/Typography";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 // 글 작성
 // [커뮤니티] 컴포넌트
 const ArticleCreate = () => {
@@ -113,156 +117,183 @@ const ArticleCreate = () => {
   // [첨부파일] Clear 핸들러
   const onClearAttachment = () => setAttachment(null);
 
+  const handleBackButtonClick = () => {
+    navigate("/Announcement-page");
+  };
   return (
-    <Paper
-      elevation={0}
-      style={{ width: "100%", border: "none", backgroundColor: "#f8f8f8" }}
-    >
-      <Grid container spacing={0}>
-        <Grid item xs={12}>
-          <Grid container spacing={0}>
-            <Paper
-              style={{
-                border: "1px solid lightgray ",
-                marginBottom: "15px",
-                borderRadius: "1rem",
-                width: "100%",
-                height: "100%",
-              }}
+    <div>
+      <div>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="back"
+              onClick={handleBackButtonClick}
             >
-              <Grid item xs={12}>
-                <Grid container spacing={0}>
-                  <Grid item xs={12}></Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    style={{ borderBottom: "1px solid lightgray" }}
-                  >
-                    {/* 새글쓰기 타이틀 */}
-                    <Row item xs={12}>
-                      <Col item xs={11}>
-                        <p
-                          style={{
-                            float: "left",
-                            paddingTop: "12px",
-                            paddingBottom: "5px",
-                            paddingLeft: "20px",
-                            margin: "0",
-                          }}
-                        >
-                          New Announcement
-                        </p>
-                      </Col>
-                      <Col
-                        item
-                        xs={1}
-                        style={{
-                          float: "right",
-                          paddingRight: "3rem",
-                        }}
-                      >
-                        <IconButton
-                          style={{
-                            color: "#ff8a4e",
-                          }}
-                          aria-label="create"
-                          onClick={onCreatePosting}
-                          disabled={isDisabled}
-                        >
-                          <SendIcon />
-                        </IconButton>
-                      </Col>
-                    </Row>
-                  </Grid>
-                  <Grid item xs={12}>
-                    {/* 새글쓰기 입력란 */}
-                    <input
-                      type="text"
-                      value={title}
-                      onChange={onTitle}
-                      placeholder="Title"
-                      maxLength={100}
-                      style={{
-                        padding: "16px",
-                        width: "100%",
-                        height: "50%",
-                        border: "1px solid lightgrey",
-                      }}
-                    ></input>
-                    <textarea
-                      cols="40"
-                      rows="5"
-                      type="text"
-                      value={posting}
-                      onChange={onPosting}
-                      placeholder="Content"
-                      maxLength={1000}
-                      style={{
-                        padding: "16px",
-                        width: "100%",
-                        height: "100%",
-                        border: "none",
-                      }}
-                    ></textarea>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Row
+              <ArrowBackIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Announcement Create
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
+      <Paper
+        elevation={0}
+        style={{ width: "100%", border: "none", backgroundColor: "#f8f8f8" }}
+      >
+        <Grid container spacing={0}>
+          <Grid item xs={12}>
+            <Grid container spacing={0}>
+              <Paper
+                style={{
+                  border: "1px solid lightgray ",
+                  marginBottom: "15px",
+                  borderRadius: "1rem",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <Grid item xs={12}>
+                  <Grid container spacing={0}>
+                    <Grid item xs={12}></Grid>
+                    <Grid
                       item
                       xs={12}
-                      style={{
-                        margin: "0",
-                        paddingBottom: "1rem",
-                        paddingRight: "3rem",
-                        float: "right",
-                      }}
+                      style={{ borderBottom: "1px solid lightgray" }}
                     >
-                      {/* 파일 첨부 */}
-                      <div class="image-upload">
-                        <label for="file-input">
-                          <input
-                            id="file-input"
-                            type="file"
-                            accept="image/*"
-                            onChange={onFileChange}
-                            display="none"
-                            style={{ visibility: "hidden" }}
-                          />
-                          <PhotoCameraIcon color="disabled" />
-                        </label>
-                      </div>
-                      {/* 파일 첨부 이미지 미리보기 */}
-                      {attachment && (
-                        <>
-                          <Row
-                            item
-                            xs={12}
-                            style={{ margin: "0", width: "100%" }}
+                      {/* 새글쓰기 타이틀 */}
+                      <Row item xs={12}>
+                        <Col item xs={11}>
+                          <p
+                            style={{
+                              float: "left",
+                              paddingTop: "12px",
+                              paddingBottom: "5px",
+                              paddingLeft: "20px",
+                              margin: "0",
+                            }}
                           >
-                            <img src={attachment} width="100%" height="100%" />
-                          </Row>
-                          <Row item xs={12} style={{ margin: "0" }}>
-                            <IconButton
-                              style={{
-                                color: "gray",
-                              }}
-                              aria-label="delete"
-                              onClick={onClearAttachment}
+                            New Announcement
+                          </p>
+                        </Col>
+                        <Col
+                          item
+                          xs={1}
+                          style={{
+                            float: "right",
+                            paddingRight: "3rem",
+                          }}
+                        >
+                          <IconButton
+                            style={{
+                              color: "#ff8a4e",
+                            }}
+                            aria-label="create"
+                            onClick={onCreatePosting}
+                            disabled={isDisabled}
+                          >
+                            <SendIcon />
+                          </IconButton>
+                        </Col>
+                      </Row>
+                    </Grid>
+                    <Grid item xs={12}>
+                      {/* 새글쓰기 입력란 */}
+                      <input
+                        type="text"
+                        value={title}
+                        onChange={onTitle}
+                        placeholder="Title"
+                        maxLength={100}
+                        style={{
+                          padding: "16px",
+                          width: "100%",
+                          height: "50%",
+                          border: "1px solid lightgrey",
+                        }}
+                      ></input>
+                      <textarea
+                        cols="40"
+                        rows="5"
+                        type="text"
+                        value={posting}
+                        onChange={onPosting}
+                        placeholder="Content"
+                        maxLength={1000}
+                        style={{
+                          padding: "16px",
+                          width: "100%",
+                          height: "100%",
+                          border: "none",
+                        }}
+                      ></textarea>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Row
+                        item
+                        xs={12}
+                        style={{
+                          margin: "0",
+                          paddingBottom: "1rem",
+                          paddingRight: "3rem",
+                          float: "right",
+                        }}
+                      >
+                        {/* 파일 첨부 */}
+                        <div class="image-upload">
+                          <label for="file-input">
+                            <input
+                              id="file-input"
+                              type="file"
+                              accept="image/*"
+                              onChange={onFileChange}
+                              display="none"
+                              style={{ visibility: "hidden" }}
+                            />
+                            <PhotoCameraIcon color="disabled" />
+                          </label>
+                        </div>
+                        {/* 파일 첨부 이미지 미리보기 */}
+                        {attachment && (
+                          <>
+                            <Row
+                              item
+                              xs={12}
+                              style={{ margin: "0", width: "100%" }}
                             >
-                              <DeleteIcon />
-                            </IconButton>
-                          </Row>
-                        </>
-                      )}
-                    </Row>
+                              <img
+                                src={attachment}
+                                width="100%"
+                                height="100%"
+                              />
+                            </Row>
+                            <Row item xs={12} style={{ margin: "0" }}>
+                              <IconButton
+                                style={{
+                                  color: "gray",
+                                }}
+                                aria-label="delete"
+                                onClick={onClearAttachment}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </Row>
+                          </>
+                        )}
+                      </Row>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Paper>
-            <Grid item xs={12}></Grid>
+              </Paper>
+              <Grid item xs={12}></Grid>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </div>
   );
 };
 
