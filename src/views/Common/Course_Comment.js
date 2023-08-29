@@ -137,7 +137,7 @@ const Course_Comment = ({
               <span>{likeCount}</span>
 
               {/* [댓글] 작성자일 경우 삭제 버튼 표기 */}
-              {isOwner ? (
+              {isOwner || user.acount === 0 ? (
                 <ClearIcon
                   onClick={onDeleteComment}
                   style={{ marginLeft: "10px", color: "lightgray" }}
