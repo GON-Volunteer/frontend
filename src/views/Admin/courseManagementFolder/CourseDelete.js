@@ -50,7 +50,7 @@ function CourseDelete() {
     {
       accessor: "is_elective_subject", // is_elective_subject 열 정의
       Header: "Is Elective",
-      Cell: ({ value }) => (value ? "✓" : "𐄂"), // 값에 따라 다른 문자열 출력
+      Cell: ({ value }) => (value ? "✔" : "✗"), // 값에 따라 다른 문자열 출력
     },
   ];
   const columns = useMemo(() => columnData, []);
