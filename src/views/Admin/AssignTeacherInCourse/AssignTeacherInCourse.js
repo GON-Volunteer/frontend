@@ -209,11 +209,13 @@ function AssignTeacherInCourse() {
         console.log("create이후 서버 응답:");
         console.log(JSON.stringify(response.data));
         // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
+        showNonAssignCourseList();
+        showAssignedCourseList();
         if (response.data.code == "200") {
           console.log("??enter?");
 
-          await showNonAssignCourseList();
-          await showAssignedCourseList();
+          showNonAssignCourseList();
+          showAssignedCourseList();
 
           setPopupVisible(true);
           setTimeout(() => {
@@ -477,7 +479,12 @@ function AssignTeacherInCourse() {
           </table>
         </div>
       </div>
-      <Button color="info" onClick={handleCreate} id="createBtn">
+      <Button
+        disabled={!(selectedRow >= 0) | (selectedRow === null)}
+        color="info"
+        onClick={handleCreate}
+        id="createBtn"
+      >
         Create
       </Button>
 
@@ -534,7 +541,7 @@ function AssignTeacherInCourse() {
         </div>
       </div>
       <Button
-        disabled={!(selectedSecondRow >= 0)}
+        disabled={!(selectedSecondRow >= 0) | (selectedSecondRow === null)}
         color="info"
         onClick={handleDelete}
         id="AssignDeleteBtn"

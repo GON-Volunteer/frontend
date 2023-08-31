@@ -40,7 +40,7 @@ function StudentEdit() {
   const [isIdError, setIsIdError] = useState(false);
   const [isSNError, setIsSNError] = useState(false);
   if (!rowData) {
-    return <div>data loading error </div>;
+    return <div>Select the data row you want to edit </div>;
   } else {
     const formItemStyle = {
       margin: "5px",
@@ -263,7 +263,7 @@ function StudentEdit() {
               placeholder="password"
               defaultValue={rowData.pw}
               {...register("passwordConfirm", {
-                required: "Password is required.",
+                required: "Password is required..",
                 minLength: {
                   value: 7,
                   message: "Enter at least 7 digits.",
