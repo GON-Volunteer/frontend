@@ -32,19 +32,16 @@ function AnnouncementPage() {
       <div>
         <AnnouncementList />
       </div>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        {user.account === 0 && (
-          <Button color="info" onClick={goArticleCreate}>
-            Create
-          </Button>
-        )}
-      </div>
-
-      <div className="footer register-footer text-center">
-        <h6>
-          © {new Date().getFullYear()}, made by{" GON"}
-          <i className="fa fa-heart heart" />
-        </h6>
+      <div className="pagination-container">
+        <div className="pagination-wrapper">
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            {user.account === 0 && (
+              <Button color="info" onClick={goArticleCreate} id="deleteBtn">
+                Create
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );
