@@ -131,21 +131,19 @@ export default function CourseRegister() {
           </Toolbar>
         </AppBar>
       </div>
-      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-        <b>Failed!</b> Same course exists.
-        <button className="close" onClick={() => setErrPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b> New course created successfully!
-        <button className="close" onClick={() => setPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
+      <div className="popup-container">
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b> Same course exists.
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={popupVisible}>
+          <b>Success!</b> New course created successfully!
+        </UncontrolledAlert>
+      </div>
       <form>
         <FormGroup className="col-md-4">
-          <Label for="inputState">grade</Label>
+          <Label id="courseRegiInput" for="inputState">
+            grade
+          </Label>
           <Input
             type="select"
             name="grade"
@@ -223,7 +221,7 @@ export default function CourseRegister() {
       <Button
         color="info"
         onClick={handleAdd}
-        id="deleteBtn"
+        id="CourseRegideleteBtn"
         disabled={
           !formData.grade ||
           !formData.section ||

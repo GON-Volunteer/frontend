@@ -34,6 +34,7 @@ export default function SubjectManagement() {
 
   const handleRadioChange = (rowIndex) => {
     setSelectedRow(rowIndex);
+    console.log(rowIndex);
   };
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -113,6 +114,7 @@ export default function SubjectManagement() {
   };
 
   useEffect(() => {
+    console.log("?", selectedRow);
     axios
       .get("/api/subjects/")
       .then((res) => {
@@ -132,21 +134,6 @@ export default function SubjectManagement() {
       .catch((Err) => {
         console.log(Err);
       });
-    // async function fetchData() {
-    //   try {
-    //     const response = await axios.get("/api/subjects/");
-    //     const subjects = response.data.subject;
-    //     console.log(subjects);
-    //     setSubjectInfo(subjects);
-    //     setData(subjects); // 데이터를 받아온 후 data 배열 업데이트
-    //   } catch (error) {
-    //     console.log("API 요청에 실패하였습니다.", error);
-    //   }
-    // }
-
-    // fetchData(); // 데이터 가져오기
-    // SetSubList();
-    // 데이터를 받아온 후 data 배열 업데이트
   }, []);
   const data = useMemo(() => subjectInfo, [subjectInfo]);
   //data = useMemo(() => subjectInfo, [subjectInfo]);
@@ -189,27 +176,23 @@ export default function SubjectManagement() {
               <ArrowBackIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Subject Management
+              &nbsp;Subject Management
             </Typography>
           </Toolbar>
         </AppBar>
       </div>
-      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-        <b>Failed!</b> Same subject exists.
-        <button className="close" onClick={() => setErrPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b> New subject created successfully!
-        <button className="close" onClick={() => setPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
+      <div className="popup-container">
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b> Same subject exists. X
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={popupVisible}>
+          <b>Success!</b> New subject created successfully! X
+        </UncontrolledAlert>
+      </div>
       <div id="table">
         <table {...getTableProps()}>
           {" "}
-          <h4 id="subListTitle">Subject List</h4>
+          <h4 id="newSubTitle">&nbsp;Subject List</h4>
           <div>
             <hr style={{ width: "100%", borderTop: "1px solid black" }} />
           </div>
@@ -258,16 +241,21 @@ export default function SubjectManagement() {
           </div>
         </table>
       </div>
-      <Button color="info" onClick={handleDelete} id="deleteBtn">
+      <Button
+        disabled={!(selectedRow >= 0) | (selectedRow === null)}
+        color="info"
+        onClick={handleDelete}
+        id="AssignDeleteBtn"
+      >
         Delete
       </Button>
-      <h4 id="newSubTitle">Create a new subject</h4>
+      <h4 id="newSubTitle">&nbsp;Create a new subject</h4>
       <div>
         <hr style={{ width: "100%", borderTop: "1px solid black" }} />
       </div>
-      <div id="secondaryContainer" style={{ display: "flex" }}>
-        <div id="newSubDiv" style={{ flex: 1, marginRight: "10px" }}>
-          <p>subject name</p>
+      <div id="SubSecondaryContainer">
+        <div id="newSubDiv">
+          <h4>subject name</h4>
           <input
             id="subjectInput"
             type="text"
@@ -277,9 +265,10 @@ export default function SubjectManagement() {
           />
         </div>
 
-        <div id="isElectiveDiv" style={{ flex: 0.6 }}>
-          <p>Is elective subject?</p>
+        <div id="isElectiveDiv">
+          <h4>Is elective subject?</h4>
           <Button
+            id="subElectiveBtn"
             value="true"
             className={isElective === true ? "btnSelect" : "btnDefault"}
             onClick={() => handleElectiveButtonClick(true)}
@@ -287,6 +276,7 @@ export default function SubjectManagement() {
             Y
           </Button>
           <Button
+            id="subElectiveBtn"
             value="false"
             className={isElective === false ? "btnSelect" : "btnDefault"}
             onClick={() => handleElectiveButtonClick(false)}
@@ -304,11 +294,16 @@ export default function SubjectManagement() {
             marginRight: "20px",
           }}
         >
-          <Button color="info" onClick={handleCreate} id="createBtn">
+          <Button
+            disabled={inputValue === ""}
+            color="info"
+            onClick={handleCreate}
+            id="subManageCreateBtn"
+          >
             Create
           </Button>
         </div>
-        <div
+        <h5
           style={{
             display: "flex",
             justifyContent: "flex-end",
@@ -318,7 +313,7 @@ export default function SubjectManagement() {
           <Button color="info" onClick={handleNext} id="nextBtn">
             Next
           </Button>
-        </div>
+        </h5>
       </div>
     </div>
   );

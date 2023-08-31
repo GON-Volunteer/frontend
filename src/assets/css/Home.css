@@ -1,3 +1,16 @@
+@font-face {
+  font-family: "Copperplate";
+  src: url("../../Copperplate.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  font-family: "Copperplate", sans-serif;
+}
+
+h4 {
+  font-family: "Copperplate", sans-serif;
+}
 .fc-day a {
   font-weight: bold;
   color: black;
