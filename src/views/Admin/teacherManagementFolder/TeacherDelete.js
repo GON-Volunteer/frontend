@@ -247,7 +247,7 @@ function TeacherDelete() {
           <div className="pagination-container">
             <div className="pagination-wrapper">
               <Button
-                disabled={!selectedRow}
+                disabled={!(selectedRow >= 0) | (selectedRow === null)}
                 onClick={handleDelete}
                 id="deleteBtn"
               >

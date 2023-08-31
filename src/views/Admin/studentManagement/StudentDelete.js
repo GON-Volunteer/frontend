@@ -263,7 +263,11 @@ function StudentDelete() {
         <div>
           <div className="pagination-container">
             <div className="pagination-wrapper">
-              <Button onClick={handleDelete} id="deleteBtn">
+              <Button
+                disabled={!(selectedRow >= 0) | (selectedRow === null)}
+                onClick={handleDelete}
+                id="deleteBtn"
+              >
                 Delete
               </Button>
               <Pagination

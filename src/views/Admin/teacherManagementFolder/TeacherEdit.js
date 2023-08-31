@@ -36,7 +36,11 @@ function TeacherEdit() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [isIdError, setIsIdError] = useState(false);
   if (!rowData) {
-    return <div>data loading error </div>;
+    return (
+      <div>
+        return <div>Select the data row you want to edit </div>;{" "}
+      </div>
+    );
   } else {
     const formItemStyle = {
       margin: "5px",
