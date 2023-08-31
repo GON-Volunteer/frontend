@@ -389,7 +389,7 @@ function AssignTeacherInCourse() {
           <b>Failed!</b> Same course exists. X
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={popupVisible}>
-          <b>Success!</b> New course created successfully! X
+          <b>Success!</b> Teacher assigned in course successfully! X
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={errorTeacherpopupVisible}>
           <b>Failed!</b> Please check the teacher select box. X
@@ -489,7 +489,7 @@ function AssignTeacherInCourse() {
       </Button>
 
       <div>
-        <h4 id="subListTitle">&nbsp;Assign Teacher in Course</h4>
+        <h4 id="subListTitle">&nbsp; Assigned Teacher List</h4>
         <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
