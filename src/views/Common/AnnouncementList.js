@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable, usePagination } from "react-table";
-
+import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
 import AppBar from "@material-ui/core/AppBar";
@@ -114,7 +114,7 @@ function AnnouncementList({ article1 }) {
     () => getCurrentPageData(),
     [data, currentPage]
   );
-
+  const pageCount = Math.ceil(data.length / pageSize);
   const {
     getTableProps,
     getTableBodyProps,
@@ -122,7 +122,6 @@ function AnnouncementList({ article1 }) {
     rows,
     prepareRow,
     page,
-    state: { pageIndex, pageCount },
   } = useTable(
     {
       columns,
@@ -176,20 +175,38 @@ function AnnouncementList({ article1 }) {
           </table>
         </div>
         <div>
-          <button
-            onClick={goToPrevPage}
-            id="tableLeftBtn"
-            disabled={currentPage === 1}
-          >
-            {" << "}prev
-          </button>
-          <button
-            id="tableRightBtn"
-            onClick={goToNextPage}
-            disabled={currentPage === Math.ceil(data.length / pageSize)}
-          >
-            next{" >> "}
-          </button>
+          <div className="pagination-container">
+            <div className="pagination-wrapper">
+              <Pagination
+                className="pagination justify-content-center"
+                listClassName="justify-content-center"
+                aria-label="Page navigation example"
+              >
+                <PaginationItem disabled={currentPage === 1}>
+                  <PaginationLink previous href="#" onClick={goToPrevPage} />
+                </PaginationItem>
+                {Array.from({ length: pageCount }, (_, index) => (
+                  <PaginationItem
+                    key={index}
+                    active={index + 1 === currentPage}
+                  >
+                    <PaginationLink
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage(index + 1);
+                      }}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem disabled={currentPage === pageCount}>
+                  <PaginationLink next onClick={goToNextPage} />
+                </PaginationItem>
+              </Pagination>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,8 +1,13 @@
 @font-face {
   font-family: "Copperplate";
-  src: url("../../Copperplate.ttf") format("ttf");
+  src: url("../../OPTICopperplate.otf") format("ttf"),
+    url("../../OPTICopperplate.otf") format("woff2"),
+    url("../../OPTICopperplate.otf") format("woff"),
+    url("../../OPTICopperplate.otf") format("truetype");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
+  font-size: 1rem;
 }
 * {
   font-family: "Copperplate", sans-serif;
