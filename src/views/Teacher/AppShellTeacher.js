@@ -13,6 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import { searchAction } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import EditIcon from "@material-ui/icons/Edit";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -38,6 +40,9 @@ export default function ButtonAppBar() {
   const logout = () => {
     dispatch(searchAction.clearUser(user));
     navigate("/login");
+  };
+  const changePassword = () => {
+    navigate("/changePassword");
   };
 
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -87,6 +92,14 @@ export default function ButtonAppBar() {
           <BookIcon />
           Dashboard of courses
         </MenuItem>
+        <MenuItem
+          onClick={changePassword}
+          sx={{ textAlign: "center", padding: "10px 10px" }}
+        >
+          <EditIcon />
+          Change Password
+        </MenuItem>
+
         <MenuItem
           onClick={logout}
           sx={{ textAlign: "center", padding: "10px 10px" }}
