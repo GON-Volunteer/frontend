@@ -90,12 +90,14 @@ function TeacherEdit() {
             </Toolbar>
           </AppBar>
         </div>
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-          <b>Failed!</b> ID is already exists.
-          <button className="close" onClick={() => setErrPopupVisible(false)}>
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </UncontrolledAlert>
+        <div className="popup-container">
+          <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+            <b>Failed!</b> ID is already exists.
+            <button className="close" onClick={() => setErrPopupVisible(false)}>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </UncontrolledAlert>
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control__items" style={formItemStyle}>
             <label htmlFor="full_name">Full Name : </label>
@@ -136,7 +138,7 @@ function TeacherEdit() {
               {...register("id", {
                 required: "ID is required.",
                 pattern: {
-                  message: "It does not fit the ID format.",
+                  message: "It doesn't fit the ID format.",
                 },
               })}
               onChange={() => {
@@ -159,7 +161,7 @@ function TeacherEdit() {
                 required: "Password is required.",
                 minLength: {
                   value: 7,
-                  message: "Please enter a password of at least 7 digits.",
+                  message: "Enter at least 7 digits.",
                 },
               })}
             />
@@ -179,7 +181,7 @@ function TeacherEdit() {
                 required: "Password confirmation required.",
                 minLength: {
                   value: 7,
-                  message: "Please enter a password of at least 7 digits.",
+                  message: "Enter at least 7 digits.",
                 },
                 validate: {
                   check: (val) => {
@@ -195,13 +197,6 @@ function TeacherEdit() {
             )}
           </div>
           <Button type="submit">Edit</Button>
-          {/* <RadioGroup label="연락 방법" value={value} onChange={setValue}>
-                  {resultClass.map((item, idx) => {
-                    <Radio key={idx} value={item}>
-                      {item}
-                    </Radio>;
-                  })}
-                </RadioGroup> */}
         </form>
       </div>
     );

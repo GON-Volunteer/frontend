@@ -9,12 +9,35 @@
 #radioBtn {
   margin: 0 10px 0 20px;
 }
+#CourseRegideleteBtn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  width: 80px;
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 #deleteBtn {
   width: 80px;
   height: 40px;
   /* margin-top: 10px; */
   margin-bottom: 10px;
   margin-left: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#subManageCreateBtn {
+  margin-bottom: 10px;
+  margin-left: 20px;
+  width: 80px;
+  height: 40px;
 
   display: inline-flex;
   align-items: center;
@@ -33,12 +56,13 @@
   justify-content: center;
   flex-direction: column;
 }
+
 #subjectInput {
   display: inline;
   width: 280px;
   height: 40px;
-
-  font-size: 20px;
+  margin-top: 10px;
+  font-size: 18px;
 }
 #subListTitle {
   font-weight: bold;
@@ -47,8 +71,8 @@
 }
 #newSubTitle {
   font-weight: bold;
-  margin-left: 20px;
-  font-size: 22px;
+
+  font-size: 25px;
   margin-top: 20px;
 }
 #newSubDiv {
@@ -56,8 +80,12 @@
   margin-left: 22px;
 }
 #isElectiveDiv {
+  display: block;
+  margin-left: 20px;
+
   margin-top: 18px;
 }
+
 #nextBtn {
   display: inline-flex;
   align-items: center;
@@ -68,35 +96,32 @@
   height: 40px;
 }
 #table {
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 #tbody {
   display: block;
   width: 100%;
   overflow-y: auto;
 
-  max-height: 200px;
+  max-height: 145px;
   border-collapse: collapse;
 }
 #tbody > tr {
   display: block;
   width: 100%;
-  border: 1px solid rgb(100, 99, 102);
+  border: none; /* 라인 제거 */
+  border-bottom: 1px solid rgb(100, 99, 102); /* 밑줄만 보이게 설정 */
 }
 
-#newSubDiv {
-  display: inline;
+#subElectiveBtn {
+  margin-top: 10px;
 }
-#isElectiveDiv {
-  display: inline;
-}
-@media (max-width: 768px) {
-}
-/* .btnSelect {
-  background-color: rgb(228, 10, 10);
-  color: white;
-} */
+
 .btnDefault {
   background-color: rgb(255, 255, 255);
   color: black;
+}
+
+Label {
+  font-size: 17px;
 }

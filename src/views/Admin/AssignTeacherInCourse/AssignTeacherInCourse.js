@@ -18,7 +18,10 @@ function AssignTeacherInCourse() {
   const handleTeacherChange = (event, row, isSecondTeacher) => {
     const { name, value } = event.target;
 
-    console.log("teacherid?" + event.target.value);
+    console.log(
+      "=============================\n",
+      "teacherid?" + event.target.value
+    );
     // console.log("teacher?" + teachers);
     setFormData((prevData) => ({
       ...prevData,
@@ -55,7 +58,10 @@ function AssignTeacherInCourse() {
     },
     {
       accessor: "teacher_name",
-      Header: "teacher",
+      Header: "Teacher1", // "Teacher1" 헤더를 추가
+    },
+    {
+      Header: "Teacher2", // "Teacher2" 헤더를 추가
     },
   ];
   const firstTableColumns = [
@@ -77,7 +83,10 @@ function AssignTeacherInCourse() {
     },
     {
       accessor: "teachers", // 현재 "teacher" 컬럼
-      Header: "teacher",
+      Header: "teacher1",
+    },
+    {
+      Header: "teacher2",
     },
   ];
   const renderTeacher1Options = () => {
@@ -373,44 +382,36 @@ function AssignTeacherInCourse() {
       {/* <div style={{ fontWeight: "bold", fontSize: "30px" }}>
         Assign Teacher in Course
       </div> */}
-      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-        <b>Failed!</b> Same course exists.
-        <button className="close" onClick={() => setErrPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b> New course created successfully!
-        <button className="close" onClick={() => setPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={errorTeacherpopupVisible}>
-        <b>Failed!</b> You assigned the same teacher. Please check.
-        <button
-          className="close"
-          onClick={() => errorTeacherpopupVisible(false)}
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <div id="table" ref={outerDivRef}>
-        <h4 id="subListTitle">Assign Teacher</h4>
+      <div className="popup-container">
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b> Same course exists. X
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={popupVisible}>
+          <b>Success!</b> New course created successfully! X
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={errorTeacherpopupVisible}>
+          <b>Failed!</b> Please check the teacher select box. X
+        </UncontrolledAlert>
+      </div>
+
+      <div ref={outerDivRef}>
+        <h4 id="subListTitle">&nbsp;Assign Teacher</h4>
         <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
-        <div>
-          {headerGroups.map((header) => (
-            <tr {...header.getHeaderGroupProps()} id="headerRow">
-              {header.headers.map((col) => (
-                <th {...col.getHeaderProps()} id="headerCell">
-                  {col.render("Header")}
-                </th>
+
+        <div id="table">
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map((header) => (
+                <tr {...header.getHeaderGroupProps()}>
+                  {header.headers.map((col) => (
+                    <th {...col.getHeaderProps()}>{col.render("Header")}</th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-          <table {...getTableProps()} id="courseListTable">
-            <tbody {...getTableBodyProps()} id="tbody">
+            </thead>
+            <tbody {...getTableBodyProps()}>
               {rows.map((row, rowIndex) => {
                 prepareRow(row);
                 const isRowSelected = rowIndex === selectedRow;
@@ -424,46 +425,51 @@ function AssignTeacherInCourse() {
                     }}
                     onClick={() => handleRowClick(rowIndex)}
                   >
-                    {row.cells.map((cell) => (
+                    {row.cells.map((cell, idx) => (
                       <td {...cell.getCellProps()} id="dataCell">
-                        {cell.render("Cell")}
+                        {idx === 4 ? ( // "teacher" 컬럼을 나타내는 인덱스가 4인 경우
+                          <td>
+                            <Input
+                              type="select"
+                              name="teacher1_id"
+                              id={`inputTeacher-${row.index}`}
+                              value={
+                                isRowSelected ? row.original.teache1_id : ""
+                              }
+                              onChange={(event) =>
+                                handleTeacherChange(event, row)
+                              }
+                            >
+                              <option value="">-- Select Teacher --</option>
+                              {renderTeacher1Options()}
+                            </Input>
+                          </td>
+                        ) : idx === 5 ? (
+                          <td>
+                            <Input
+                              type="select"
+                              name="teacher2_id" // 두 번째 드롭다운 상자의 이름
+                              id={`inputTeacher2-${row.index}`}
+                              value={
+                                isRowSelected ? row.original.teache2_id : "null"
+                              }
+                              onChange={(event) =>
+                                handleTeacherChange(event, row, true)
+                              } // 두 번째 드롭다운 상자에 대한 핸들러
+                            >
+                              <option value="">-- Select Teacher --</option>
+                              {renderTeacher1Options()}
+                            </Input>
+                          </td>
+                        ) : (
+                          cell.render("Cell")
+                        )}{" "}
+                        {/* 그 외의 경우에는 셀 콘텐츠를 그대로 표시 */}
                       </td>
+                      // <td {...cell.getCellProps()} id="dataCell">
+                      //   {cell.render("Cell")}
+                      // </td>
                     ))}
-                    <td>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "10px", // 드롭다운 박스 사이의 간격
-                          alignItems: "center", // 세로 중앙 정렬
-                          // 기타 스타일 속성
-                        }}
-                      >
-                        <Input
-                          type="select"
-                          name="teacher1_id"
-                          id={`inputTeacher-${row.index}`}
-                          value={isRowSelected ? row.original.teache1_id : ""}
-                          onChange={(event) => handleTeacherChange(event, row)}
-                        >
-                          <option value="">-- Select Teacher --</option>
-                          {renderTeacher1Options()}
-                        </Input>
-                        <Input
-                          type="select"
-                          name="teacher2_id" // 두 번째 드롭다운 상자의 이름
-                          id={`inputTeacher2-${row.index}`}
-                          value={
-                            isRowSelected ? row.original.teache2_id : "null"
-                          }
-                          onChange={(event) =>
-                            handleTeacherChange(event, row, true)
-                          } // 두 번째 드롭다운 상자에 대한 핸들러
-                        >
-                          <option value="">-- Select Teacher --</option>
-                          {renderTeacher1Options()}
-                        </Input>
-                      </div>
-                    </td>
                   </tr>
                 );
               })}
@@ -475,24 +481,26 @@ function AssignTeacherInCourse() {
         Create
       </Button>
 
-      <div id="table">
-        <h4 id="subListTitle">Assign Teacher in Course</h4>
+      <div>
+        <h4 id="subListTitle">&nbsp;Assign Teacher in Course</h4>
         <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
-        <div>
-          {secondTableHeaderGroups.map((header) => (
-            <tr {...header.getHeaderGroupProps()} id="headerRow">
-              {header.headers.map((col) => (
-                <th {...col.getHeaderProps()} id="headerCell">
-                  {col.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
+        <div id="table">
           <table {...getSecondTableProps()}>
             {" "}
-            <tbody {...getSecondTableBodyProps()} id="tbody">
+            <thead>
+              {secondTableHeaderGroups.map((header) => (
+                <tr {...header.getHeaderGroupProps()} id="headerRow">
+                  {header.headers.map((col) => (
+                    <th {...col.getHeaderProps()} id="headerCell">
+                      {col.render("Header")}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getSecondTableBodyProps()}>
               {secondTableRows.map((row, rowIndex) => {
                 prepareSecondTableRow(row);
                 const isRowSelected = rowIndex === selectedSecondRow;
@@ -503,12 +511,19 @@ function AssignTeacherInCourse() {
                     {...row.getRowProps()}
                     style={{
                       background: isRowSelected ? "skyblue" : "none",
+                      width: "500px",
                     }}
                     onClick={() => handleSecondSelectRow(rowIndex)}
                   >
                     {row.cells.map((cell) => (
                       <td {...cell.getCellProps()} id="dataCell">
-                        {cell.render("Cell")}
+                        {cell.column.Header === "Teacher1"
+                          ? // "Teacher1" 헤더의 경우 teacher_name을 출력
+                            row.original.teacher_name[0]
+                          : cell.column.Header === "Teacher2"
+                          ? // "Teacher2" 헤더의 경우 teacher2_name을 출력
+                            row.original.teacher_name[1]
+                          : cell.render("Cell")}
                       </td>
                     ))}
                   </tr>
@@ -518,20 +533,14 @@ function AssignTeacherInCourse() {
           </table>
         </div>
       </div>
-
-      <div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginRight: "20px",
-          }}
-        >
-          <Button color="info" onClick={handleDelete} id="deleteBtn">
-            Delete
-          </Button>
-        </div>
-      </div>
+      <Button
+        disabled={!(selectedSecondRow >= 0)}
+        color="info"
+        onClick={handleDelete}
+        id="AssignDeleteBtn"
+      >
+        Delete
+      </Button>
     </div>
   );
 }

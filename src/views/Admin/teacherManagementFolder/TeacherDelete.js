@@ -29,6 +29,24 @@ function TeacherDelete() {
     setSelectedRow(rowIndex);
   };
 
+  async function showTchList() {
+    axios
+      .get(
+        // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/teacherlist"
+        "/api/teachers/"
+      )
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          //map 사용시 새로운 배열 생성해서
+
+          console.log(res.data);
+          const teachers = res.data;
+          setTeacherInfo(teachers);
+        } else {
+          console.log("데이터가 배열이 아닙니다.");
+        }
+      });
+  }
   //accessor와 받아오는 data keyname이 같아야함
   const columnData = [
     {
@@ -50,28 +68,8 @@ function TeacherDelete() {
 
   const [teacherInfo, setTeacherInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
-  const [errpopupVisible, setErrPopupVisible] = useState(false);
-  const [popupVisible, setPopupVisible] = useState(false);
-  async function showTchList() {
-    axios
-      .get(
-        // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/teacherlist"
-        "/api/teachers/"
-      )
-      .then((res) => {
-        if (Array.isArray(res.data) && res.data.length > 0) {
-          //map 사용시 새로운 배열 생성해서
-          // const resultObj = res.data.map((item) => item);
-          // setTeacherInfo(resultObj);
-          // const teachers = res.data[0].teacher;
-          const teachers = res.data;
-          setTeacherInfo(teachers);
-        } else {
-          console.log("데이터가 배열이 아닙니다.");
-        }
-      });
-  }
+  const [pageSize, setPageSize] = useState(9); //한페이지에 보여줄 페이지개수
+
   useEffect(() => {
     axios
       .get(
@@ -79,60 +77,50 @@ function TeacherDelete() {
         "/api/teachers/"
       )
       .then((res) => {
-        if (Array.isArray(res.data) && res.data.length > 0) {
-          //map 사용시 새로운 배열 생성해서
-          // const resultObj = res.data.map((item) => item);
-          // setTeacherInfo(resultObj);
-          const teachers = res.data;
+        if (Array.isArray(res.data)) {
+          console.log(res.data);
+          const teachers = res.data.map((item) => item);
           setTeacherInfo(teachers);
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
       });
   }, []);
+  //teacherInfo 변경이 있을 때만 업데이트
+  const data = useMemo(() => teacherInfo, [teacherInfo]);
+  const [errpopupVisible, setErrPopupVisible] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
   const handleDelete = async () => {
-    console.log("rowIndex" + JSON.stringify(data[selectedRow]));
     if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
-      // console.log("rowIndex" + data[selectedRow]._id);
+      const url = `/api/teachers/${data[selectedRow]._id}`;
       try {
-        const url = `/api/teachers/${data[selectedRow]._id}`;
-        await axios
-          .delete(url)
-          .then((res) => {
-            console.log("삭제 성공", JSON.stringify(res.data));
-            if (res.data.code === "200") {
-              // 성공적으로 추가된 경우
-              setPopupVisible(true);
-
-              setTimeout(() => {
-                setPopupVisible(false);
-              }, 3000);
-            } else if (res.data.code == "400") {
-              // 실패한 경우 처리
-              setErrPopupVisible(true);
-              setTimeout(() => {
-                setErrPopupVisible(false);
-              }, 3000);
-            } else {
-              //유효하지않은 요청입니다.
-              console.log("어케할까");
-            }
-            showTchList();
-          })
-          .catch((err) => {
-            console.error("delete 실패. 에러발생:" + err);
-          });
-      } catch (error) {
-        console.error("delete 실패. 에러발생:" + error);
+        const res = await axios.delete(url);
+        if (res.data.code === "200") {
+          // 성공적으로 추가된 경우
+          setPopupVisible(true);
+          setTimeout(() => {
+            setPopupVisible(false);
+          }, 3000);
+          // 삭제가 성공하면 서버에서 새로운 데이터를 가져옴
+          setSelectedRow(null); // 삭제 후 선택된 row 초기화
+          showTchList();
+        } else if (res.data.code === "400") {
+          // 실패한 경우 처리
+          setErrPopupVisible(true);
+          setTimeout(() => {
+            setErrPopupVisible(false);
+          }, 3000);
+        } else {
+          //유효하지않은 요청입니다.
+          console.log("어케할까");
+        }
+      } catch (err) {
+        console.error("delete 실패. 에러발생:" + err);
       }
     } else {
       console.log("Invalid rowIndex or data is empty.");
     }
   };
-
-  //studentInfo에 변경이 있을 때만 업데이트
-  const data = useMemo(() => teacherInfo, [teacherInfo]);
-  //student delete
 
   // 현재 페이지에 해당하는 데이터를 가져오는 함수
   const getCurrentPageData = () => {
@@ -156,6 +144,7 @@ function TeacherDelete() {
     () => getCurrentPageData(),
     [data, currentPage]
   );
+  const pageCount = Math.ceil(data.length / pageSize);
 
   const {
     getTableProps,
@@ -173,7 +162,7 @@ function TeacherDelete() {
     },
     usePagination
   );
-  const pageCount = Math.ceil(data.length / pageSize);
+
   return (
     <div>
       <div>
@@ -194,19 +183,23 @@ function TeacherDelete() {
           </Toolbar>
         </AppBar>
       </div>
-      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-        <b>Failed!</b> Failed to delete student information.
-        <button className="close" onClick={() => setErrPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b>
-        Successful deletion of student information
-        <button className="close" onClick={() => setPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
+
+      <div className="popup-container">
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b> Failed to delete teacher information. X
+          <button className="close" onClick={() => setErrPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={popupVisible}>
+          <b>Success!</b>
+          <br /> Successful deletion of teacher information! X
+          <button className="close" onClick={() => setPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+      </div>
+
       <div>
         <div id="table">
           <table {...getTableProps()}>
@@ -214,7 +207,6 @@ function TeacherDelete() {
             <thead>
               {headerGroups.map((header) => (
                 <tr {...header.getHeaderGroupProps()}>
-                  <th>Check</th>
                   {header.headers.map((col) => (
                     <th
                       {...col.getHeaderProps()}
@@ -242,58 +234,55 @@ function TeacherDelete() {
                     }}
                     onClick={() => handleRadioChange(rowIndex)}
                   >
-                    <td>
-                      <input
-                        id="radioBtn"
-                        type="radio"
-                        checked={isRowSelected}
-                        onClick={() => handleRadioChange(rowIndex)}
-                      />
-                      {/* <input
-                        type="checkbox"
-                        checked={isRowChecked}
-                        onChange={() => handleCheckboxChange(rowIndex)}
-                      /> */}
-                    </td>
-
                     {row.cells.map((cell) => (
                       <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                     ))}
                   </tr>
                 );
               })}
-              <Button onClick={handleDelete} id="deleteBtn">
-                Delete
-              </Button>
             </tbody>
           </table>
         </div>
         <div>
-          <Pagination
-            className="pagination justify-content-center"
-            listClassName="justify-content-center"
-            aria-label="Page navigation example"
-          >
-            <PaginationItem disabled={currentPage === 1}>
-              <PaginationLink previous href="#" onClick={goToPrevPage} />
-            </PaginationItem>
-            {Array.from({ length: pageCount }, (_, index) => (
-              <PaginationItem key={index} active={index + 1 === currentPage}>
-                <PaginationLink
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentPage(index + 1);
-                  }}
-                >
-                  {index + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            <PaginationItem disabled={currentPage === pageCount}>
-              <PaginationLink next onClick={goToNextPage} />
-            </PaginationItem>
-          </Pagination>
+          <div className="pagination-container">
+            <div className="pagination-wrapper">
+              <Button
+                disabled={!selectedRow}
+                onClick={handleDelete}
+                id="deleteBtn"
+              >
+                Delete
+              </Button>
+              <Pagination
+                className="pagination justify-content-center"
+                listClassName="justify-content-center"
+                aria-label="Page navigation example"
+              >
+                <PaginationItem disabled={currentPage === 1}>
+                  <PaginationLink previous href="#" onClick={goToPrevPage} />
+                </PaginationItem>
+                {Array.from({ length: pageCount }, (_, index) => (
+                  <PaginationItem
+                    key={index}
+                    active={index + 1 === currentPage}
+                  >
+                    <PaginationLink
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage(index + 1);
+                      }}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem disabled={currentPage === pageCount}>
+                  <PaginationLink next onClick={goToNextPage} />
+                </PaginationItem>
+              </Pagination>
+            </div>
+          </div>
         </div>
       </div>
     </div>

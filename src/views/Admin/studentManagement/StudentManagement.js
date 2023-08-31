@@ -18,7 +18,7 @@ export default function StudentManagement() {
     <div>
       <AppShellAdmin />
       <div style={{ fontWeight: "bold", fontSize: "30px" }}>
-        Student Management
+        &nbsp;Student Management
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="management-menu-bar">

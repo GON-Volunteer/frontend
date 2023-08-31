@@ -108,8 +108,6 @@ function StudentDelete() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const handleDelete = async () => {
-    // Check if the data array is not empty and the rowIndex is within the valid range
-
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
     if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
       // console.log("rowIndex" + data[selectedRow]._id);
@@ -204,27 +202,28 @@ function StudentDelete() {
           </Toolbar>
         </AppBar>
       </div>
-      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-        <b>Failed!</b> Failed to delete student information.
-        <button className="close" onClick={() => setErrPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b>
-        Successful deletion of student information
-        <button className="close" onClick={() => setPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
+      <div className="popup-container">
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b> Failed to delete student information. X
+          <button className="close" onClick={() => setErrPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={popupVisible}>
+          <b>Success!</b>
+          Successful deletion of student information! X
+          <button className="close" onClick={() => setPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+      </div>
       <div>
-        <div id="Stdtable">
+        <div id="table">
           <table {...getTableProps()}>
             {" "}
             <thead>
               {headerGroups.map((header) => (
                 <tr {...header.getHeaderGroupProps()}>
-                  <th>Check</th>
                   {header.headers.map((col) => (
                     <th
                       {...col.getHeaderProps()}
@@ -252,15 +251,6 @@ function StudentDelete() {
                     }}
                     onClick={() => handleRadioChange(rowIndex)}
                   >
-                    <td>
-                      <Input
-                        id="radioBtn"
-                        type="radio"
-                        checked={isRowSelected}
-                        onClick={() => handleRadioChange(rowIndex)}
-                      />
-                    </td>
-
                     {row.cells.map((cell) => (
                       <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                     ))}
@@ -271,35 +261,42 @@ function StudentDelete() {
           </table>
         </div>
         <div>
-          <Pagination
-            className="pagination justify-content-center"
-            listClassName="justify-content-center"
-            aria-label="Page navigation example"
-          >
-            <PaginationItem disabled={currentPage === 1}>
-              <PaginationLink previous href="#" onClick={goToPrevPage} />
-            </PaginationItem>
-            {Array.from({ length: pageCount }, (_, index) => (
-              <PaginationItem key={index} active={index + 1 === currentPage}>
-                <PaginationLink
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentPage(index + 1);
-                  }}
-                >
-                  {index + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            <PaginationItem disabled={currentPage === pageCount}>
-              <PaginationLink next href="#" onClick={goToNextPage} />
-            </PaginationItem>
-          </Pagination>
+          <div className="pagination-container">
+            <div className="pagination-wrapper">
+              <Button onClick={handleDelete} id="deleteBtn">
+                Delete
+              </Button>
+              <Pagination
+                className="pagination justify-content-center"
+                listClassName="justify-content-center"
+                aria-label="Page navigation example"
+              >
+                <PaginationItem disabled={currentPage === 1}>
+                  <PaginationLink previous href="#" onClick={goToPrevPage} />
+                </PaginationItem>
+                {Array.from({ length: pageCount }, (_, index) => (
+                  <PaginationItem
+                    key={index}
+                    active={index + 1 === currentPage}
+                  >
+                    <PaginationLink
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage(index + 1);
+                      }}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem disabled={currentPage === pageCount}>
+                  <PaginationLink next href="#" onClick={goToNextPage} />
+                </PaginationItem>
+              </Pagination>
+            </div>
+          </div>
         </div>
-        <Button onClick={handleDelete} id="deleteBtn">
-          Delete
-        </Button>
       </div>
     </div>
   );

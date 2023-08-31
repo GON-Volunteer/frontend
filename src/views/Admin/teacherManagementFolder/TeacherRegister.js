@@ -1,7 +1,6 @@
-import React, { Component, useEffect, useRef, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
-
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -91,18 +90,23 @@ function TeacherRegister() {
           </Toolbar>
         </AppBar>
       </div>
-      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-        <b>Failed!</b> ID is already exists.
-        <utton className="close" onClick={() => setErrPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </utton>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b> Teacher registered successfully!
-        <button className="close" onClick={() => setPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
+      <div className="popup-container">
+        <UncontrolledAlert
+          color="info"
+          onClick={() => setErrPopupVisible(false)}
+          isOpen={errpopupVisible}
+        >
+          <b>Failed!</b> ID is already exists. X
+        </UncontrolledAlert>
+
+        <UncontrolledAlert
+          onClick={() => setPopupVisible(false)}
+          color="info"
+          isOpen={popupVisible}
+        >
+          <b>Success!</b> Teacher registered successfully! X
+        </UncontrolledAlert>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="full_name">Full Name : </label>
@@ -140,9 +144,14 @@ function TeacherRegister() {
             {...register("id", {
               required: "ID is required.",
               pattern: {
-                message: "It does not fit the ID format.",
+                message: "It doesn't fit the ID format.",
               },
             })}
+            onChange={() => {
+              if (isIdError) {
+                setIsIdError(false); // Clear the error state when the input value changes
+              }
+            }}
           />
           {errors.id && <small role="alert">{errors.id.message}</small>}
         </div>
@@ -158,13 +167,10 @@ function TeacherRegister() {
               required: "Password is required.",
               minLength: {
                 value: 7,
-                message: "Please enter a password of at least 7 digits.",
+                message: "Enter at least 7 digits.",
               },
             })}
           />
-          {/* {errors.password && (
-            <small role="alert">{errors.password.message}</small>
-          )} */}
         </div>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="passwordConfirm">Re-type PW:</label>
@@ -174,10 +180,10 @@ function TeacherRegister() {
             type="password"
             placeholder="password"
             {...register("passwordConfirm", {
-              required: "Password confirmation required.",
+              required: "Fill in the blanks.",
               minLength: {
                 value: 7,
-                message: "Please enter a password of at least 7 digits.",
+                message: "Enter at least 7 digits.",
               },
               validate: {
                 check: (val) => {
@@ -193,18 +199,9 @@ function TeacherRegister() {
           )}
         </div>
         <Button type="submit">create</Button>
-        {/* <RadioGroup label="연락 방법" value={value} onChange={setValue}>
-          {resultClass.map((item, idx) => {
-            <Radio key={idx} value={item}>
-              {item}
-            </Radio>;
-          })}
-        </RadioGroup> */}
       </form>
     </div>
   );
 }
 
 export default TeacherRegister;
-//아이디 5~8
-//비밀번호 5~12
