@@ -166,13 +166,12 @@ function StudentInfo() {
         </AppBar>
       </div>
       <div>
-        <div id="Stdtable">
-          <table {...getTableProps()}>
+        <div id="table">
+          <table id="Stdtable" {...getTableProps()}>
             {" "}
             <thead>
               {headerGroups.map((header) => (
                 <tr {...header.getHeaderGroupProps()}>
-                  <th>Check</th>
                   {header.headers.map((col) => (
                     <th
                       {...col.getHeaderProps()}
@@ -200,15 +199,6 @@ function StudentInfo() {
                     }}
                     onClick={() => handleRadioChange(rowIndex)}
                   >
-                    <td>
-                      <input
-                        id="radioBtn"
-                        type="radio"
-                        checked={isRowSelected}
-                        onClick={() => handleRadioChange(rowIndex)}
-                      />
-                    </td>
-
                     {row.cells.map((cell) => (
                       <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                     ))}
@@ -219,35 +209,42 @@ function StudentInfo() {
           </table>
         </div>
         <div>
-          <Pagination
-            className="pagination justify-content-center"
-            listClassName="justify-content-center"
-            aria-label="Page navigation example"
-          >
-            <PaginationItem disabled={currentPage === 1}>
-              <PaginationLink previous href="#" onClick={goToPrevPage} />
-            </PaginationItem>
-            {Array.from({ length: pageCount }, (_, index) => (
-              <PaginationItem key={index} active={index + 1 === currentPage}>
-                <PaginationLink
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentPage(index + 1);
-                  }}
-                >
-                  {index + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            <PaginationItem disabled={currentPage === pageCount}>
-              <PaginationLink next href="#" onClick={goToNextPage} />
-            </PaginationItem>
-          </Pagination>
+          <div className="pagination-container">
+            <div className="pagination-wrapper">
+              <Button onClick={handleEdit} id="EditBtn">
+                Edit
+              </Button>
+              <Pagination
+                className="pagination justify-content-center"
+                listClassName="justify-content-center"
+                aria-label="Page navigation example"
+              >
+                <PaginationItem disabled={currentPage === 1}>
+                  <PaginationLink previous href="#" onClick={goToPrevPage} />
+                </PaginationItem>
+                {Array.from({ length: pageCount }, (_, index) => (
+                  <PaginationItem
+                    key={index}
+                    active={index + 1 === currentPage}
+                  >
+                    <PaginationLink
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage(index + 1);
+                      }}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem disabled={currentPage === pageCount}>
+                  <PaginationLink next href="#" onClick={goToNextPage} />
+                </PaginationItem>
+              </Pagination>
+            </div>
+          </div>
         </div>
-        <Button onClick={handleEdit} id="EditBtn">
-          Edit
-        </Button>
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ function StudentEdit() {
   const [isIdError, setIsIdError] = useState(false);
   const [isSNError, setIsSNError] = useState(false);
   if (!rowData) {
-    return <div>data loading error </div>;
+    return <div>Select the data row you want to edit </div>;
   } else {
     const formItemStyle = {
       margin: "5px",
@@ -122,12 +122,14 @@ function StudentEdit() {
             </Toolbar>
           </AppBar>
         </div>
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-          <b>Failed!</b> SerialNum or ID is already exists.
-          <button className="close" onClick={() => setErrPopupVisible(false)}>
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </UncontrolledAlert>
+        <div className="popup-container">
+          <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+            <b>Failed!</b> SerialNum or ID is already exists. X
+            <button className="close" onClick={() => setErrPopupVisible(false)}>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </UncontrolledAlert>
+        </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control__items" style={formItemStyle}>
@@ -140,16 +142,14 @@ function StudentEdit() {
               style={isSNError ? redBorderStyle : formItemStyle}
               {...register("s_n", {
                 required: "Serial number is required.",
-
-                pattern: {
-                  message: "It does not fit the SN format.",
-                },
               })}
               onChange={() => {
                 if (isSNError) {
                   setIsSNError(false); // Clear the error state when the input value changes
                 }
               }}
+              pattern="[0-9]*"
+              title="Please enter only numbers."
             />
           </div>
           <div className="form-control__items" style={formItemStyle}>
@@ -223,7 +223,7 @@ function StudentEdit() {
               {...register("id", {
                 required: "ID is required.",
                 pattern: {
-                  message: "It does not fit the ID format.",
+                  message: "It doesn't fit the ID format.",
                 },
               })}
               onChange={() => {
@@ -246,7 +246,7 @@ function StudentEdit() {
                 required: "Password is required.",
                 minLength: {
                   value: 7,
-                  message: "Please enter a password of at least 7 digits.",
+                  message: "Enter at least 7 digits.",
                 },
               })}
             />
@@ -263,10 +263,10 @@ function StudentEdit() {
               placeholder="password"
               defaultValue={rowData.pw}
               {...register("passwordConfirm", {
-                required: "Password confirmation required.",
+                required: "Password is required..",
                 minLength: {
                   value: 7,
-                  message: "Please enter a password of at least 7 digits.",
+                  message: "Enter at least 7 digits.",
                 },
                 validate: {
                   check: (val) => {
@@ -282,13 +282,6 @@ function StudentEdit() {
             )}
           </div>
           <Button type="submit">Edit</Button>
-          {/* <RadioGroup label="연락 방법" value={value} onChange={setValue}>
-                  {resultClass.map((item, idx) => {
-                    <Radio key={idx} value={item}>
-                      {item}
-                    </Radio>;
-                  })}
-                </RadioGroup> */}
         </form>
       </div>
     );
