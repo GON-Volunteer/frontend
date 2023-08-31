@@ -32,7 +32,7 @@ function CourseDelete() {
   const columnData = [
     {
       accessor: "batch",
-      Header: "",
+      Header: "batch",
       headerClassName: fullNameHeaderClass,
     },
     {
@@ -183,19 +183,15 @@ function CourseDelete() {
           </Toolbar>
         </AppBar>
       </div>
-      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-        <b>Failed!</b> Failed to delete student information.
-        <button className="close" onClick={() => setErrPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b>
-        Successful deletion of student information
-        <button className="close" onClick={() => setPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
+      <div className="popup-container">
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b> Failed to delete course information. X
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={popupVisible}>
+          <b>Success!</b>
+          Successful deletion of course information! X
+        </UncontrolledAlert>
+      </div>
       <div>
         <div id="table">
           <table {...getTableProps()}>
@@ -203,7 +199,6 @@ function CourseDelete() {
             <thead>
               {headerGroups.map((header) => (
                 <tr {...header.getHeaderGroupProps()}>
-                  <th>Check</th>
                   {header.headers.map((col) => (
                     <th
                       {...col.getHeaderProps()}
@@ -231,20 +226,6 @@ function CourseDelete() {
                     }}
                     onClick={() => handleRadioChange(rowIndex)}
                   >
-                    <td>
-                      <input
-                        id="radioBtn"
-                        type="radio"
-                        checked={isRowSelected}
-                        onClick={() => handleRadioChange(rowIndex)}
-                      />
-                      {/* <input
-                        type="checkbox"
-                        checked={isRowChecked}
-                        onChange={() => handleCheckboxChange(rowIndex)}
-                      /> */}
-                    </td>
-
                     {row.cells.map((cell) => (
                       <td {...cell.getCellProps()}>
                         {cell.column.accessor === "is_elective_subject"
@@ -257,38 +238,50 @@ function CourseDelete() {
                   </tr>
                 );
               })}
-              <Button onClick={handleDelete} id="deleteBtn">
-                Delete
-              </Button>
             </tbody>
           </table>
         </div>
+
         <div>
-          <Pagination
-            className="pagination justify-content-center"
-            listClassName="justify-content-center"
-            aria-label="Page navigation example"
-          >
-            <PaginationItem disabled={currentPage === 1}>
-              <PaginationLink previous href="#" onClick={goToPrevPage} />
-            </PaginationItem>
-            {Array.from({ length: pageCount }, (_, index) => (
-              <PaginationItem key={index} active={index + 1 === currentPage}>
-                <PaginationLink
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentPage(index + 1);
-                  }}
-                >
-                  {index + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            <PaginationItem disabled={currentPage === pageCount}>
-              <PaginationLink next onClick={goToNextPage} />
-            </PaginationItem>
-          </Pagination>
+          <div className="pagination-container">
+            <div className="pagination-wrapper">
+              <Button
+                disabled={!(selectedRow >= 0) | (selectedRow === null)}
+                onClick={handleDelete}
+                id="deleteBtn"
+              >
+                Delete
+              </Button>
+              <Pagination
+                className="pagination justify-content-center"
+                listClassName="justify-content-center"
+                aria-label="Page navigation example"
+              >
+                <PaginationItem disabled={currentPage === 1}>
+                  <PaginationLink previous href="#" onClick={goToPrevPage} />
+                </PaginationItem>
+                {Array.from({ length: pageCount }, (_, index) => (
+                  <PaginationItem
+                    key={index}
+                    active={index + 1 === currentPage}
+                  >
+                    <PaginationLink
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage(index + 1);
+                      }}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem disabled={currentPage === pageCount}>
+                  <PaginationLink next onClick={goToNextPage} />
+                </PaginationItem>
+              </Pagination>
+            </div>
+          </div>
         </div>
       </div>
     </div>

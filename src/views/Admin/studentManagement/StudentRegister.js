@@ -1,14 +1,12 @@
-import React, { Component, useEffect, useRef, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
-// import Radio from "../../components/Radio";
-// import RadioGroup from "../../components/RadioGroup";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Input, Button, UncontrolledAlert } from "reactstrap";
+import { Button, UncontrolledAlert } from "reactstrap";
 
 import { useNavigate } from "react-router-dom";
 function Register() {
@@ -66,19 +64,19 @@ function Register() {
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
-        }, 3000);
+        }, 4000);
         setIsIdError(true); // ID 에러 상태 설정
       } else if (response.data.code == "409") {
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
-        }, 3000);
+        }, 4000);
         setIsSNError(true);
       } else if (response.data.code == "410") {
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
-        }, 3000);
+        }, 4000);
         setIsSNError(true);
         setIsIdError(true);
       } else {
@@ -111,37 +109,39 @@ function Register() {
           </Toolbar>
         </AppBar>
       </div>
-      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-        <b>Failed!</b> SerialNum or ID is already exists.
-        <button className="close" onClick={() => setErrPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b> Student info edited successfully!
-        <button className="close" onClick={() => setPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
+      <div className="popup-container">
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b> SerialNum or ID is already exists. X
+          <button className="close" onClick={() => setErrPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={popupVisible}>
+          <b>Success!</b> Student info edited successfully! X
+          <button className="close" onClick={() => setPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+      </div>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="s_n">S.N : </label>
           <input
             id="s_n"
             type="text"
-            placeholder="Serial Number"
+            placeholder="Serial_Number"
             style={isSNError ? redBorderStyle : formItemStyle}
             {...register("s_n", {
               required: "Serial number is required.",
-              pattern: {
-                message: "아이디 형식에 맞지 않습니다.",
-              },
             })}
             onChange={() => {
               if (isSNError) {
                 setIsSNError(false); // Clear the error state when the input value changes
               }
             }}
+            pattern="[0-9]*"
+            title="Please enter only numbers."
           />
         </div>
         <div className="form-control__items" style={formItemStyle}>
@@ -209,7 +209,7 @@ function Register() {
             {...register("id", {
               required: "ID is required.",
               pattern: {
-                message: "아이디 형식에 맞지 않습니다.",
+                message: "It doesn't fit the ID format.",
               },
             })}
             onChange={() => {
@@ -231,13 +231,10 @@ function Register() {
               required: "Password is required.",
               minLength: {
                 value: 7,
-                message: "Please enter a password of at least 7 digits.",
+                message: "Enter at least 7 digits.",
               },
             })}
           />
-          {/* {errors.password && (
-            <small role="alert">{errors.password.message}</small>
-          )} */}
         </div>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="passwordConfirm">Re-type PW:</label>
@@ -247,10 +244,10 @@ function Register() {
             type="password"
             placeholder="password"
             {...register("passwordConfirm", {
-              required: "Password confirmation required.",
+              required: "Fill in the blanks.",
               minLength: {
                 value: 7,
-                message: "Please enter a password of at least 7 digits.",
+                message: "Enter at least 7 digits.",
               },
               validate: {
                 check: (val) => {
@@ -266,18 +263,9 @@ function Register() {
           )}
         </div>
         <Button type="submit">create</Button>
-        {/* <RadioGroup label="연락 방법" value={value} onChange={setValue}>
-          {resultClass.map((item, idx) => {
-            <Radio key={idx} value={item}>
-              {item}
-            </Radio>;
-          })}
-        </RadioGroup> */}
       </form>
     </div>
   );
 }
 
 export default Register;
-//아이디 5~8
-//비밀번호 5~12

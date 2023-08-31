@@ -156,17 +156,17 @@ function AssignStudents() {
     await axios.post("/api/assign/student", body).then((res) => {
       if (res.data.code === "200") {
         // 성공적으로 추가된 경우
-        setDelStdpopupVisible(true);
+        setPopupVisible(true);
         setTimeout(() => {
-          setDelStdpopupVisible(false);
+          setPopupVisible(false);
         }, 3000);
         setSelectedRowIndices([]);
         fetchData();
       } else {
         // 실패한 경우 처리
-        setErrorDelStdpopupVisible(true);
+        setErrPopupVisible(true);
         setTimeout(() => {
-          setErrorDelStdpopupVisible(false);
+          setErrPopupVisible(false);
         }, 3000);
       }
     });
@@ -277,33 +277,39 @@ function AssignStudents() {
           </Toolbar>
         </AppBar>
       </div>
-      <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-        <b>Failed!</b>
-        <button className="close" onClick={() => setErrPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={popupVisible}>
-        <b>Success!</b> New student assigned successfully!
-        <button className="close" onClick={() => setPopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={errorDelStdpopupVisible}>
-        <b>Failed!</b>
-        <button
-          className="close"
-          onClick={() => setErrorDelStdpopupVisible(false)}
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
-      <UncontrolledAlert color="info" isOpen={delStdpopupVisible}>
-        <b>Success!</b> New student disassigned successfully!
-        <button className="close" onClick={() => setDelStdpopupVisible(false)}>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </UncontrolledAlert>
+      <div className="popup-container">
+        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <b>Failed!</b>
+          <button className="close" onClick={() => setErrPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={popupVisible}>
+          <b>Success!</b> New student assigned successfully!
+          <button className="close" onClick={() => setPopupVisible(false)}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={errorDelStdpopupVisible}>
+          <b>Failed!</b>
+          <button
+            className="close"
+            onClick={() => setErrorDelStdpopupVisible(false)}
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={delStdpopupVisible}>
+          <b>Success!</b> Student disassigned successfully!
+          <button
+            className="close"
+            onClick={() => setDelStdpopupVisible(false)}
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </UncontrolledAlert>
+      </div>
+
       <div id="table">
         <h4 id="subListTitle">
           {" "}
@@ -313,20 +319,20 @@ function AssignStudents() {
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
         <div>
-          <div id="Stdtable">
-            {headerGroups.map((header) => (
-              <tr {...header.getHeaderGroupProps()} id="headerRow">
-                {header.headers.map((col) => (
-                  <th {...col.getHeaderProps()} id="headerCell">
-                    {col.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-
+          <div id="table">
             <table {...getTableProps()} id="courseListTable">
               {" "}
-              <tbody {...getTableBodyProps()} id="tbody">
+              <thead>
+                {headerGroups.map((header) => (
+                  <tr {...header.getHeaderGroupProps()}>
+                    <th>check</th>
+                    {header.headers.map((col) => (
+                      <th {...col.getHeaderProps()}>{col.render("Header")}</th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
                 {rows.map((row, rowIndex) => {
                   prepareRow(row);
                   const isRowSelected = rowIndex === selectedRow;
@@ -379,7 +385,13 @@ function AssignStudents() {
               marginTop: "10px",
             }}
           >
-            <Button onClick={deleteHandler}>Delete</Button>
+            <Button
+              disabled={!(selectedRow >= 0) | (selectedRow === null)}
+              id="createBtn"
+              onClick={deleteHandler}
+            >
+              Delete
+            </Button>
           </div>
         </div>
       </div>
@@ -389,20 +401,21 @@ function AssignStudents() {
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
         <div>
-          <div id="Stdtable">
-            {secondTableHeaderGroups.map((header) => (
-              <tr {...header.getHeaderGroupProps()} id="headerRow">
-                {header.headers.map((col) => (
-                  <th {...col.getHeaderProps()} id="headerCell">
-                    {col.render("Header")}
-                  </th>
-                ))}
-                <th></th> {/* 추가: 체크박스 컬럼 */}
-              </tr>
-            ))}
+          <div id="table">
             <table {...getSecondTableProps()}>
               {" "}
-              <tbody {...getSecondTableBodyProps()} id="tbody">
+              <thead>
+                {secondTableHeaderGroups.map((header) => (
+                  <tr {...header.getHeaderGroupProps()}>
+                    <th>check</th>
+                    {header.headers.map((col) => (
+                      <th {...col.getHeaderProps()}>{col.render("Header")}</th>
+                    ))}
+                    <th></th> {/* 추가: 체크박스 컬럼 */}
+                  </tr>
+                ))}
+              </thead>
+              <tbody {...getSecondTableBodyProps()}>
                 {secondTableRows.map((row, rowIndex) => {
                   prepareSecondTableRow(row);
                   const isRowSelected = rowIndex === selectedSecondRow;
@@ -447,7 +460,13 @@ function AssignStudents() {
             marginTop: "10px",
           }}
         >
-          <Button onClick={addHandler}>Add</Button>
+          <Button
+            disabled={!(selectedSecondRow >= 0) | (selectedSecondRow === null)}
+            id="createBtn"
+            onClick={addHandler}
+          >
+            Add
+          </Button>
         </div>
       </div>
     </div>

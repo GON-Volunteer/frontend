@@ -18,7 +18,7 @@ export default function courseManagement() {
     <div>
       <AppShellAdmin />
       <div style={{ fontWeight: "bold", fontSize: "30px" }}>
-        Course Management
+        &nbsp;Course Management
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="management-menu-bar">
