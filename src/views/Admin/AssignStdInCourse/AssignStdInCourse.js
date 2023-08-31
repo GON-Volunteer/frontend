@@ -149,10 +149,12 @@ function AssignStdInCourse() {
         </div> */}
 
       <div id="table">
-        <h4 id="subListTitle">Assign Student in Course - Course List</h4>
+        <h4 id="subListTitle">&nbsp;Assigned Student in Course </h4>
+
         <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
+        <h4 id="subListTitle">&nbsp;Course List</h4>
 
         <div>
           {secondTableHeaderGroups.map((header) => (
