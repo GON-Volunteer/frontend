@@ -168,7 +168,7 @@ function AssignStdInCourse() {
           ))}
           <table {...getSecondTableProps()}>
             {" "}
-            <tbody {...getSecondTableBodyProps()} id="std_course_body">
+            <tbody {...getSecondTableBodyProps()}>
               {secondTableRows.map((row, rowIndex) => {
                 prepareSecondTableRow(row);
 

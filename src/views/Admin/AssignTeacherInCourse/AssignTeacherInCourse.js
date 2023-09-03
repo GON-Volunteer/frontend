@@ -102,7 +102,7 @@ function AssignTeacherInCourse() {
   const [courseInfo, setCourseInfo] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(100);
   const [registerCourseInfo, setRegisterCourseInfo] = useState([]);
   const [selectedRow, setSelectedRow] = useState();
   const [selectedSecondRow, setSelectedSecondRow] = useState();
@@ -147,7 +147,7 @@ function AssignTeacherInCourse() {
       )
       .then((courseRes) => {
         console.log("non assign response" + JSON.stringify(courseRes.data));
-        if (courseRes.data && Array.isArray(courseRes.data)) {
+        if (Array.isArray(courseRes.data)) {
           setCourseInfo(courseRes.data);
           return courseRes.data;
         } else {
@@ -243,11 +243,7 @@ function AssignTeacherInCourse() {
         " ?" +
         JSON.stringify(registerCourseInfo[selectedSecondRow])
     );
-    if (
-      registerCourseInfo.length > 0 &&
-      selectedSecondRow >= 0 &&
-      selectedSecondRow < registerCourseInfo.length
-    ) {
+    if (selectedSecondRow >= 0) {
       console.log("rowIndex" + registerCourseInfo[selectedSecondRow]);
       try {
         const url = `/api/assign/teacher/${registerCourseInfo[selectedSecondRow]._id}`;
@@ -261,6 +257,8 @@ function AssignTeacherInCourse() {
     } else {
       console.log("Invalid rowIndex or data is empty.");
     }
+    showAssignedCourseList();
+    showNonAssignCourseList();
   };
 
   useEffect(() => {
@@ -284,7 +282,7 @@ function AssignTeacherInCourse() {
           axios.get("/api/teachers/"),
         ]);
 
-        if (registerCourseRes.data && Array.isArray(registerCourseRes.data)) {
+        if (Array.isArray(registerCourseRes.data)) {
           console.log("second table:" + JSON.stringify(registerCourseRes.data));
           setRegisterCourseInfo(registerCourseRes.data);
         } else {
@@ -292,7 +290,7 @@ function AssignTeacherInCourse() {
           console.log(JSON.stringify(registerCourseRes.data));
         }
 
-        if (courseRes.data && Array.isArray(courseRes.data)) {
+        if (Array.isArray(courseRes.data)) {
           console.log("first table?" + JSON.stringify(courseRes));
           setCourseInfo(courseRes.data);
         } else {
@@ -300,7 +298,7 @@ function AssignTeacherInCourse() {
           console.log("데이터가 배열이 아닙니다.");
         }
 
-        if (Array.isArray(teachersRes.data) && teachersRes.data.length > 0) {
+        if (Array.isArray(teachersRes.data)) {
           const teachers = teachersRes.data;
           setTeachers(teachers);
           console.log("teacherinfo" + JSON.stringify(teachers));
@@ -386,7 +384,7 @@ function AssignTeacherInCourse() {
       </div> */}
       <div className="popup-container">
         <UncontrolledAlert color="info" isOpen={errpopupVisible}>
-          <b>Failed!</b> Same course exists. X
+          <b>Failed!</b> This course has already been assigned. X
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={popupVisible}>
           <b>Success!</b> Teacher assigned in course successfully! X
@@ -402,7 +400,7 @@ function AssignTeacherInCourse() {
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
 
-        <div id="table">
+        <div id="table" className="AssignTeacherTable">
           <table {...getTableProps()}>
             <thead>
               {headerGroups.map((header) => (
@@ -413,6 +411,7 @@ function AssignTeacherInCourse() {
                 </tr>
               ))}
             </thead>
+
             <tbody {...getTableBodyProps()}>
               {rows.map((row, rowIndex) => {
                 prepareRow(row);
@@ -493,12 +492,12 @@ function AssignTeacherInCourse() {
         <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
-        <div id="table">
+        <div id="table" className="AssignTeacherTable">
           <table {...getSecondTableProps()}>
             {" "}
             <thead>
               {secondTableHeaderGroups.map((header) => (
-                <tr {...header.getHeaderGroupProps()} id="headerRow">
+                <tr {...header.getHeaderGroupProps()}>
                   {header.headers.map((col) => (
                     <th {...col.getHeaderProps()} id="headerCell">
                       {col.render("Header")}

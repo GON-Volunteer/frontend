@@ -109,7 +109,7 @@ function StudentDelete() {
   const [popupVisible, setPopupVisible] = useState(false);
   const handleDelete = async () => {
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
-    if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    if (selectedRow >= 0) {
       // console.log("rowIndex" + data[selectedRow]._id);
       const url = `/api/students/${data[selectedRow]._id.$oid}`;
       axios
