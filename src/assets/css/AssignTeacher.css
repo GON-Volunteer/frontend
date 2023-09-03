@@ -5,6 +5,16 @@
   overflow-y: auto;
   height: 100%;
 }
+.AssignTeacherTable {
+  overflow-y: scroll;
+  height: 100%;
+  max-height: 250px;
+}
+.AssignStdTable {
+  overflow-y: scroll;
+  height: 100%;
+  max-height: 500px;
+}
 #AssignDeleteBtn {
   margin-top: 10px;
   margin-bottom: 10px;

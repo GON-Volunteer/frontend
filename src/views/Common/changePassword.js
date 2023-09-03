@@ -5,7 +5,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
 import { useSelector } from "react-redux";
 import AppShellAdmin from "../Admin/AppShellAdmin";
-import "../../assets/css/ChangePassword.css";
 function ChangePassword() {
   const {
     register, //input 요소를 react hook form과 연결해서 검증 규칙 적용 메소드
