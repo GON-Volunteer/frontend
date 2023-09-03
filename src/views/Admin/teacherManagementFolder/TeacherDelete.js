@@ -91,7 +91,8 @@ function TeacherDelete() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const handleDelete = async () => {
-    if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    // if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    if (selectedRow >= 0) {
       const url = `/api/teachers/${data[selectedRow]._id}`;
       try {
         const res = await axios.delete(url);
