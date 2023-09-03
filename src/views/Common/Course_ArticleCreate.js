@@ -41,7 +41,7 @@ const Course_ArticleCreate = () => {
   );
 
   // [게시글 제목] 작성 핸들러
-  const onTitle = (event) => {
+  const onTitleChange = (event) => {
     const {
       target: { value },
     } = event;
@@ -49,7 +49,7 @@ const Course_ArticleCreate = () => {
   };
 
   // [게시글 내용] 작성 핸들러
-  const onPosting = (event) => {
+  const onPostingChange = (event) => {
     const {
       target: { value },
     } = event;
@@ -147,154 +147,113 @@ const Course_ArticleCreate = () => {
         elevation={0}
         style={{ width: "100%", border: "none", backgroundColor: "#f8f8f8" }}
       >
-        <Grid container spacing={0}>
+        <Grid container>
           <Grid item xs={12}>
-            <Grid container spacing={0}>
-              <Paper
-                style={{
-                  border: "1px solid lightgray ",
-                  marginBottom: "15px",
-                  borderRadius: "1rem",
-                  width: "100%",
-                  height: "100%",
-                }}
+            <Paper
+              style={{
+                border: "1px solid lightgray ",
+                marginBottom: "15px",
+                borderRadius: "1rem",
+                padding: "16px",
+              }}
+            >
+              {/* New Announcement Title */}
+              <Grid
+                container
+                justify="space-between"
+                alignItems="center"
+                style={{ marginBottom: "16px" }}
               >
-                <Grid item xs={12}>
-                  <Grid container spacing={0}>
-                    <Grid item xs={12}></Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      style={{ borderBottom: "1px solid lightgray" }}
-                    >
-                      {/* 새글쓰기 타이틀 */}
-                      <Row item xs={12}>
-                        <Col item xs={11}>
-                          <p
-                            style={{
-                              float: "left",
-                              paddingTop: "12px",
-                              paddingBottom: "5px",
-                              paddingLeft: "20px",
-                              margin: "0",
-                            }}
-                          >
-                            New Announcement
-                          </p>
-                        </Col>
-                        <Col
-                          item
-                          xs={1}
-                          style={{
-                            float: "right",
-                            paddingRight: "3rem",
-                          }}
-                        >
-                          <IconButton
-                            style={{
-                              color: "#ff8a4e",
-                            }}
-                            aria-label="create"
-                            onClick={onCreatePosting}
-                            disabled={isDisabled}
-                          >
-                            <SendIcon />
-                          </IconButton>
-                        </Col>
-                      </Row>
-                    </Grid>
-                    <Grid item xs={12}>
-                      {/* 새글쓰기 입력란 */}
-                      <input
-                        type="text"
-                        value={title}
-                        onChange={onTitle}
-                        placeholder="Title"
-                        maxLength={100}
-                        style={{
-                          padding: "16px",
-                          width: "100%",
-                          height: "50%",
-                          border: "1px solid lightgrey",
-                          overflowWrap: "break-word",
-                        }}
-                      ></input>
-                      <textarea
-                        cols="40"
-                        rows="5"
-                        type="text"
-                        value={posting}
-                        onChange={onPosting}
-                        placeholder="Content"
-                        maxLength={1000}
-                        style={{
-                          padding: "16px",
-                          width: "100%",
-                          height: "100%",
-                          border: "none",
-                          overflowWrap: "break-word",
-                        }}
-                      ></textarea>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Row
-                        item
-                        xs={12}
-                        style={{
-                          margin: "0",
-                          paddingBottom: "1rem",
-                          paddingRight: "3rem",
-                          float: "right",
-                        }}
-                      >
-                        {/* 파일 첨부 */}
-                        <div class="image-upload">
-                          <label for="file-input">
-                            <input
-                              id="file-input"
-                              type="file"
-                              accept="image/*"
-                              onChange={onFileChange}
-                              display="none"
-                              style={{ visibility: "hidden" }}
-                            />
-                            <PhotoCameraIcon color="disabled" />
-                          </label>
-                        </div>
-                        {/* 파일 첨부 이미지 미리보기 */}
-                        {attachment && (
-                          <>
-                            <Row
-                              item
-                              xs={12}
-                              style={{ margin: "0", width: "100%" }}
-                            >
-                              <img
-                                src={attachment}
-                                width="100%"
-                                height="100%"
-                              />
-                            </Row>
-                            <Row item xs={12} style={{ margin: "0" }}>
-                              <IconButton
-                                style={{
-                                  color: "gray",
-                                }}
-                                aria-label="delete"
-                                onClick={onClearAttachment}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </Row>
-                          </>
-                        )}
-                      </Row>
-                    </Grid>
-                  </Grid>
+                {/* Title Text */}
+                <p>New Announcement</p>
+
+                {/* Send Button */}
+                <IconButton
+                  style={{ color: "#ff8a4e" }}
+                  aria-label="create"
+                  onClick={onCreatePosting}
+                  disabled={isDisabled}
+                >
+                  <SendIcon />
+                </IconButton>
+              </Grid>
+
+              {/* Input Fields*/}
+
+              <>
+                <Grid item xs={12} style={{ marginBottom: "16px" }}>
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={onTitleChange}
+                    placeholder="Title"
+                    maxLength={100}
+                    style={{
+                      padding: "16px",
+                      width: "calc(100% - 32px)", // subtract padding,
+                      border: "1px solid lightgrey",
+                      overflowWrap: "break-word", // 줄바꿈 속성 추가
+                    }}
+                  ></input>
                 </Grid>
-              </Paper>
-              <Grid item xs={12}></Grid>
-            </Grid>
+              </>
+
+              <>
+                <Grid item xs={12} position="relative">
+                  <textarea
+                    cols="40"
+                    rows="5"
+                    type="text"
+                    value={posting}
+                    onChange={onPostingChange}
+                    placeholder="Content"
+                    maxLength={1000}
+                    style={{
+                      padding: "16px",
+                      width: "calc(100% - 32px)", // subtract padding,
+                      border: "1px solid lightgrey",
+                    }}
+                  ></textarea>
+
+                  {/* 파일 첨부 */}
+                  <div class="image-upload">
+                    <label for="file-input">
+                      <input
+                        id="file-input"
+                        type="file"
+                        accept="image/*"
+                        onChange={onFileChange}
+                        display="none"
+                        style={{ visibility: "hidden" }}
+                      />
+                      <PhotoCameraIcon color="disabled" />
+                    </label>
+                  </div>
+                </Grid>
+              </>
+
+              {attachment && (
+                <>
+                  {/* Preview Image */}
+                  <Grid item xs={12}>
+                    <img src={attachment} width="100%" height="auto" />
+
+                    {/* Delete Button */}
+                    <IconButton
+                      style={{
+                        color: "gray",
+                        top: "0",
+                        right: "0",
+                      }}
+                      aria-label="delete"
+                      onClick={onClearAttachment}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                </>
+              )}
+            </Paper>
           </Grid>
         </Grid>
       </Paper>
