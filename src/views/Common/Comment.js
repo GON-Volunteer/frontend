@@ -101,8 +101,8 @@ const Comment = ({
               <img
                 id="commentProfileImg"
                 src={profileImg}
-                width="40vw"
-                height="40vh"
+                width="30vw"
+                height="30vh"
                 style={{ margin: 15, borderRadius: "20px" }}
               />
               {/* [댓글] 작성자 닉네임 */}

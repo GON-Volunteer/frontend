@@ -298,7 +298,7 @@ const Course_Posting = ({}) => {
           url +
             "/api/courses/" +
             id +
-            "/articles" +
+            "/articles/" +
             idx +
             "/comment/" +
             comment_id
@@ -600,9 +600,10 @@ const Course_Posting = ({}) => {
                     <Grid
                       container
                       spacing={2}
+                      alignItems="center"
                       style={{ marginTop: 5, marginBottom: "1.2rem" }}
                     >
-                      <Grid item xs={10} sm={11}>
+                      <Grid item xs={10} sm={10}>
                         {/* 댓글 입력란 */}
                         <input
                           type="text"
@@ -612,7 +613,7 @@ const Course_Posting = ({}) => {
                           style={{ width: "100%", overflowWrap: "break-word" }}
                         />
                       </Grid>
-                      <Grid item xs={2} sm={1}>
+                      <Grid item xs={2} sm={2}>
                         {/* 댓글 등록 버튼 */}
                         <IconButton
                           color="secondary"
