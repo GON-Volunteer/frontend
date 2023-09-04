@@ -61,6 +61,9 @@ export default function SubjectManagement() {
   const [isElective, setIsElective] = useState(false);
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [deletePopupVisible, setDeletePopupVisible] = useState(false);
+  const [deleteErrPopupVisible, setDeleteErrPopupVisible] = useState(false);
+
   const handleElectiveButtonClick = (value) => {
     setIsElective(value);
     console.log(isElective + "?");
@@ -98,13 +101,27 @@ export default function SubjectManagement() {
   };
   const handleDelete = async () => {
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
-    if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    if (selectedRow >= 0) {
       console.log("rowIndex" + data[selectedRow]._id);
       try {
         const url = `/api/subjects/${data[selectedRow]._id}`;
         const res = await axios.delete(url);
-
         showSubList();
+        setDeleteErrPopupVisible(true);
+        setTimeout(() => {
+          setDeleteErrPopupVisible(false);
+        }, 5000);
+        if (res.data.code == "200") {
+          // setDeletePopupVisible(true);
+          // setTimeout(() => {
+          //   setDeletePopupVisible(false);
+          // }, 3000);
+        } else if (res.data.code == "400") {
+          setDeleteErrPopupVisible(true);
+          setTimeout(() => {
+            setDeleteErrPopupVisible(false);
+          }, 3000);
+        }
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
       }
@@ -191,11 +208,17 @@ export default function SubjectManagement() {
         </AppBar>
       </div>
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b> Same subject exists. X
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={popupVisible}>
           <b>Success!</b> New subject created successfully! X
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={deletePopupVisible}>
+          <b>Success!</b> Subject deleted successfully! X
+        </UncontrolledAlert>
+        <UncontrolledAlert color="danger" isOpen={deleteErrPopupVisible}>
+          <b>Failed!</b> Delete the course assigned to the subject first.
         </UncontrolledAlert>
       </div>
       <div id="table">
