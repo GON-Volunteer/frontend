@@ -383,13 +383,13 @@ function AssignTeacherInCourse() {
         Assign Teacher in Course
       </div> */}
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b> This course has already been assigned. X
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={popupVisible}>
           <b>Success!</b> Teacher assigned in course successfully! X
         </UncontrolledAlert>
-        <UncontrolledAlert color="info" isOpen={errorTeacherpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errorTeacherpopupVisible}>
           <b>Failed!</b> Please check the teacher select box. X
         </UncontrolledAlert>
       </div>

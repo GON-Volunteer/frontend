@@ -101,7 +101,7 @@ function TeacherRegister() {
       </div>
       <div className="popup-container">
         <UncontrolledAlert
-          color="info"
+          color="danger"
           onClick={() => setErrPopupVisible(false)}
           isOpen={errpopupVisible}
         >

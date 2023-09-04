@@ -194,7 +194,7 @@ function CourseDelete() {
         </AppBar>
       </div>
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b> Failed to delete course information. X
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={popupVisible}>

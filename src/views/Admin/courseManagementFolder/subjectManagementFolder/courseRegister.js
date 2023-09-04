@@ -141,7 +141,7 @@ export default function CourseRegister() {
         </AppBar>
       </div>
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b> Same course exists.
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={popupVisible}>
