@@ -74,7 +74,7 @@ function Course_ArticleList({ article1 }) {
 
   const [article, setArticle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(6); //한페이지에 보여줄 페이지개수
   useEffect(() => {
     onReadPosting();
   }, []);

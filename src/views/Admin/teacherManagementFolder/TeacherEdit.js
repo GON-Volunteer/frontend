@@ -209,7 +209,9 @@ function TeacherEdit() {
               <small role="alert">{errors.passwordConfirm.message}</small>
             )}
           </div>
-          <Button type="submit">Edit</Button>
+          <Button id="leftBtn" type="submit">
+            Edit
+          </Button>
         </form>
       </div>
     );

@@ -7,7 +7,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Button, UncontrolledAlert } from "reactstrap";
-
+//ref home.css file
 import { useNavigate } from "react-router-dom";
 function Register() {
   const formItemStyle = {
@@ -271,7 +271,9 @@ function Register() {
             <small role="alert">{errors.passwordConfirm.message}</small>
           )}
         </div>
-        <Button type="submit">create</Button>
+        <Button id="leftBtn" type="submit">
+          create
+        </Button>
       </form>
     </div>
   );
