@@ -29,6 +29,19 @@ function AnnouncementPage() {
       ) : (
         <AppShell />
       )}
+      <div
+        style={{
+          fontWeight: "bold",
+          fontFamily: "Copperplate, sans-serif",
+          fontSize: "19px",
+          marginTop: "10px",
+          marginBottom: "10px",
+          marginLeft: "5px",
+        }}
+        id="subListTitle"
+      >
+        Announcement
+      </div>
       <div>
         <AnnouncementList />
       </div>

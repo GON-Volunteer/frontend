@@ -65,7 +65,15 @@ export default function ButtonAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            style={{
+              fontFamily: "Copperplate, sans-serif",
+              fontSize: "15px",
+            }}
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          >
             Creative Learners' Academy
           </Typography>
         </Toolbar>

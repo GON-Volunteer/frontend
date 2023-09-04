@@ -84,7 +84,16 @@ function TeacherRegister() {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "17px",
+              }}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
               Add Teacher
             </Typography>
           </Toolbar>
@@ -198,7 +207,9 @@ function TeacherRegister() {
             <small role="alert">{errors.passwordConfirm.message}</small>
           )}
         </div>
-        <Button type="submit">create</Button>
+        <Button id="leftBtn" type="submit">
+          create
+        </Button>
       </form>
     </div>
   );
