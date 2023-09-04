@@ -17,20 +17,36 @@ export default function courseManagement() {
   return (
     <div>
       <AppShellAdmin />
-      <div style={{ fontWeight: "bold", fontSize: "30px" }}>
+      <div
+        style={{
+          fontWeight: "bold",
+          fontFamily: "Copperplate, sans-serif",
+          fontSize: "21px",
+        }}
+      >
         &nbsp;Course Management
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="management-menu-bar">
           <div className="management-menu-items">
-            <a href="/courseManagement/subjectManagement">
+            <a
+              style={{
+                fontFamily: "Copperplate, sans-serif",
+              }}
+              href="/courseManagement/subjectManagement"
+            >
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
               Add
             </a>
 
-            <a href="/courseDelete">
+            <a
+              style={{
+                fontFamily: "Copperplate, sans-serif",
+              }}
+              href="/courseDelete"
+            >
               {" "}
               <ListItemIcon>
                 <DeleteIcon />

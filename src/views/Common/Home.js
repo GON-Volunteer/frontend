@@ -107,7 +107,15 @@ const Home = () => {
       </div>
 
       <div id="simple_announce_div">
-        <p id="title">Announcement</p>
+        <p
+          style={{
+            fontFamily: "Copperplate, sans-serif",
+            fontSize: "20px",
+          }}
+          id="title"
+        >
+          Announcement
+        </p>
         <Button size="sm" id="moreBtn" color="info" onClick={goAncList}>
           More
         </Button>

@@ -5,6 +5,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
 import { useSelector } from "react-redux";
 import AppShellAdmin from "../Admin/AppShellAdmin";
+import AppShell from "../Common/AppShell";
+import AppShellTeacher from "../Teacher/AppShellTeacher";
 function ChangePassword() {
   const {
     register, //input 요소를 react hook form과 연결해서 검증 규칙 적용 메소드
@@ -16,6 +18,8 @@ function ChangePassword() {
   const formItemStyle = {
     margin: "5px",
   };
+  const user = useSelector((state) => state.user);
+
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const _id = useSelector((state) => state.user._id);
@@ -56,9 +60,25 @@ function ChangePassword() {
   return (
     <div>
       <div>
-        <AppShellAdmin />
+        {user.account === 1 ? (
+          <AppShellTeacher />
+        ) : user.account === 0 ? (
+          <AppShellAdmin />
+        ) : (
+          <AppShell />
+        )}
       </div>
-      <h4 id="subListTitle">Change Password</h4>
+      <div
+        style={{
+          fontWeight: "bold",
+          fontFamily: "Copperplate, sans-serif",
+          fontSize: "19px",
+          marginTop: "10px",
+        }}
+        id="subListTitle"
+      >
+        Change Password
+      </div>
       <UncontrolledAlert color="info" isOpen={errpopupVisible}>
         <b>Failed! Current password does not match </b>
         <utton className="close" onClick={() => setErrPopupVisible(false)}>

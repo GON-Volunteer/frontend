@@ -153,7 +153,15 @@ function Course_ArticleList({ article1 }) {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              style={{
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "15px",
+              }}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
               Course Board
             </Typography>
           </Toolbar>
