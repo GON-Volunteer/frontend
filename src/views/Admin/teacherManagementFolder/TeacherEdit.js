@@ -104,7 +104,7 @@ function TeacherEdit() {
           </AppBar>
         </div>
         <div className="popup-container">
-          <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
             <b>Failed!</b> ID is already exists.
             <button className="close" onClick={() => setErrPopupVisible(false)}>
               <span aria-hidden="true">&times;</span>
