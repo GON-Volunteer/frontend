@@ -88,7 +88,16 @@ function TeacherEdit() {
               >
                 <ArrowBackIcon />
               </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Typography
+                style={{
+                  fontWeight: "bold",
+                  fontFamily: "Copperplate, sans-serif",
+                  fontSize: "17px",
+                }}
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1 }}
+              >
                 Edit Teacher Info
               </Typography>
             </Toolbar>
@@ -200,7 +209,9 @@ function TeacherEdit() {
               <small role="alert">{errors.passwordConfirm.message}</small>
             )}
           </div>
-          <Button type="submit">Edit</Button>
+          <Button id="leftBtn" type="submit">
+            Edit
+          </Button>
         </form>
       </div>
     );

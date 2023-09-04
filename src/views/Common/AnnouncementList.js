@@ -173,6 +173,7 @@ function AnnouncementList({ article1 }) {
               })}
             </tbody>
           </table>
+
           <Pagination
             className="pagination justify-content-center"
             listClassName="justify-content-center"

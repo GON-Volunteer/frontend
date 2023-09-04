@@ -395,11 +395,31 @@ function AssignTeacherInCourse() {
       </div>
 
       <div ref={outerDivRef}>
-        <h4 id="subListTitle">&nbsp;Assign Teacher</h4>
+        <div
+          style={{
+            fontWeight: "bold",
+            fontFamily: "Copperplate, sans-serif",
+            fontSize: "19px",
+            marginTop: "10px",
+          }}
+          id="subListTitle"
+        >
+          &nbsp;Assign Teacher in course
+        </div>
         <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
+        <h4
+          style={{
+            fontWeight: "bold",
 
+            fontSize: "21px",
+            marginBottom: "10px",
+          }}
+          id="subListTitle"
+        >
+          &nbsp;Assign teacher to the course!
+        </h4>
         <div id="table" className="AssignTeacherTable">
           <table {...getTableProps()}>
             <thead>
@@ -488,10 +508,20 @@ function AssignTeacherInCourse() {
       </Button>
 
       <div>
-        <h4 id="subListTitle">&nbsp; Assigned Teacher List</h4>
-        <div>
+        <h4
+          style={{
+            fontWeight: "bold",
+
+            fontSize: "21px",
+            marginBottom: "10px",
+          }}
+          id="subListTitle"
+        >
+          &nbsp; List of teacher-assigned courses
+        </h4>
+        {/* <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
-        </div>
+        </div> */}
         <div id="table" className="AssignTeacherTable">
           <table {...getSecondTableProps()}>
             {" "}
