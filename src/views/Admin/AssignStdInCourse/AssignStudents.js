@@ -291,7 +291,7 @@ function AssignStudents() {
         </AppBar>
       </div>
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b>
           <button className="close" onClick={() => setErrPopupVisible(false)}>
             <span aria-hidden="true">&times;</span>
@@ -303,7 +303,7 @@ function AssignStudents() {
             <span aria-hidden="true">&times;</span>
           </button>
         </UncontrolledAlert>
-        <UncontrolledAlert color="info" isOpen={errorDelStdpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errorDelStdpopupVisible}>
           <b>Failed!</b>
           <button
             className="close"
