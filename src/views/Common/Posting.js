@@ -55,11 +55,11 @@ const Posting = ({}) => {
   const { idx } = useParams(); // /articles/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
   const [loading, setLoading] = useState(true);
   const [board, setBoard] = useState({});
-
+  const [loadingRequest, setLoadingRequest] = useState(false);
   const classes = useStyles();
   const [editing, setEditing] = useState(false);
   const [newPosting, setNewPosting] = useState();
-  const [newTitle, setNewTitle] = useState();
+  const [newTitle, setNewTitle] = useState("");
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -251,6 +251,7 @@ const Posting = ({}) => {
   // [CREATE] 댓글 생성 핸들러
   const onCreateComment = async (event) => {
     event.preventDefault();
+    setLoadingRequest(true);
     await axios
       .post(url + "/api/articles/" + idx + "/comment/create", {
         method: "POST",
@@ -269,6 +270,7 @@ const Posting = ({}) => {
         alert("[CREATE] response (x)");
       });
     setComment("");
+    setLoadingRequest(false);
   };
 
   // [READ] 댓글 읽기 핸들러
@@ -622,7 +624,7 @@ const Posting = ({}) => {
                           color="secondary"
                           aria-label="Create"
                           onClick={onCreateComment}
-                          disabled={isDisabledcomment}
+                          disabled={isDisabledcomment || loadingRequest}
                         >
                           <SendIcon />
                         </IconButton>

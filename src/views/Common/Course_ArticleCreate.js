@@ -32,6 +32,7 @@ const Course_ArticleCreate = () => {
   const [attachment, setAttachment] = useState("");
   const { id } = useParams(); // /articles/:id와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
   const isDisabled = !title.trim();
+  const [loadingRequest, setLoadingRequest] = useState(false);
   // 새 게시글 작성 후 글 올리기하면 호출
   useEffect(
     () => {},
@@ -59,6 +60,7 @@ const Course_ArticleCreate = () => {
   // [CREATE] 게시글 생성 핸들러
   const onCreatePosting = async (event) => {
     event.preventDefault();
+    setLoadingRequest(true);
     let attachmentUrl = "";
 
     if (attachment !== "") {
@@ -94,6 +96,7 @@ const Course_ArticleCreate = () => {
       });
 
     setPosting("");
+    setLoadingRequest(false);
     //setAttachment("");
   };
 
@@ -181,7 +184,7 @@ const Course_ArticleCreate = () => {
                   style={{ color: "#ff8a4e" }}
                   aria-label="create"
                   onClick={onCreatePosting}
-                  disabled={isDisabled}
+                  disabled={isDisabled || loadingRequest}
                 >
                   <SendIcon />
                 </IconButton>

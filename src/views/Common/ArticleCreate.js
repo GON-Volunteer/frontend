@@ -31,6 +31,7 @@ const ArticleCreate = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [attachment, setAttachment] = useState("");
   const isDisabled = !title.trim();
+  const [loadingRequest, setLoadingRequest] = useState(false);
   // 새 게시글 작성 후 글 올리기하면 호출
   useEffect(
     () => {},
@@ -58,6 +59,7 @@ const ArticleCreate = () => {
   // [CREATE] 게시글 생성 핸들러
   const onCreatePosting = async (event) => {
     event.preventDefault();
+    setLoadingRequest(true);
     let attachmentUrl = "";
 
     if (attachment !== "") {
@@ -178,7 +180,7 @@ const ArticleCreate = () => {
                   style={{ color: "#ff8a4e" }}
                   aria-label="create"
                   onClick={onCreatePosting}
-                  disabled={isDisabled}
+                  disabled={isDisabled || loadingRequest}
                 >
                   <SendIcon />
                 </IconButton>
