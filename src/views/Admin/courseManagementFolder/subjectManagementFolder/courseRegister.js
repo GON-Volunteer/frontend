@@ -125,14 +125,23 @@ export default function CourseRegister() {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "17px",
+              }}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
               Create Course
             </Typography>
           </Toolbar>
         </AppBar>
       </div>
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b> Same course exists.
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={popupVisible}>

@@ -29,7 +29,7 @@ export default function SubjectManagement() {
   const columns = useMemo(() => columnData, []);
   const [subjectInfo, setSubjectInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(100);
+  const [pageSize, setPageSize] = useState(1000);
   const [inputValue, setInputValue] = useState("");
 
   const handleRadioChange = (rowIndex) => {
@@ -61,6 +61,9 @@ export default function SubjectManagement() {
   const [isElective, setIsElective] = useState(false);
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [deletePopupVisible, setDeletePopupVisible] = useState(false);
+  const [deleteErrPopupVisible, setDeleteErrPopupVisible] = useState(false);
+
   const handleElectiveButtonClick = (value) => {
     setIsElective(value);
     console.log(isElective + "?");
@@ -98,13 +101,24 @@ export default function SubjectManagement() {
   };
   const handleDelete = async () => {
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
-    if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    if (selectedRow >= 0) {
       console.log("rowIndex" + data[selectedRow]._id);
       try {
         const url = `/api/subjects/${data[selectedRow]._id}`;
         const res = await axios.delete(url);
-
         showSubList();
+
+        if (res.data.code == "200") {
+          setDeletePopupVisible(true);
+          setTimeout(() => {
+            setDeletePopupVisible(false);
+          }, 3000);
+        } else if (res.data.code == "420") {
+          setDeleteErrPopupVisible(true);
+          setTimeout(() => {
+            setDeleteErrPopupVisible(false);
+          }, 5000);
+        }
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
       }
@@ -175,18 +189,34 @@ export default function SubjectManagement() {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "17px",
+              }}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
               &nbsp;Subject Management
             </Typography>
           </Toolbar>
         </AppBar>
       </div>
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b> Same subject exists. X
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={popupVisible}>
           <b>Success!</b> New subject created successfully! X
+        </UncontrolledAlert>
+        <UncontrolledAlert color="info" isOpen={deletePopupVisible}>
+          <b>Success!</b> Subject deleted successfully! X
+        </UncontrolledAlert>
+        <UncontrolledAlert color="danger" isOpen={deleteErrPopupVisible}>
+          <b>Failed!</b>
+          <br /> First, delete the course to which the subject is assigned.
         </UncontrolledAlert>
       </div>
       <div id="table">

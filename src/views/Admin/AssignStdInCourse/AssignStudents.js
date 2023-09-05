@@ -19,7 +19,7 @@ function AssignStudents() {
   console.log("course info" + JSON.stringify(rowData));
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(1000);
   const [regiStdInfo, setRegiStdInfo] = useState([]);
   const [unregiStdInfo, setUnregiStdInfo] = useState([]);
   const [selectedRow, setSelectedRow] = useState();
@@ -32,10 +32,11 @@ function AssignStudents() {
     setSelectedRow(rowIndex);
     console.log(selectedRow);
     setSelectedSecondRow(null);
+    handleDeleteCheckbox(rowIndex);
   };
   const handleSecondSelectRow = (rowIndex) => {
     console.log(rowIndex);
-
+    handleCheckboxChange(rowIndex);
     setSelectedSecondRow(rowIndex);
     setSelectedRow(null);
     console.log("selectedSecondRow" + selectedSecondRow);
@@ -162,6 +163,7 @@ function AssignStudents() {
         }, 3000);
         setSelectedRowIndices([]);
         fetchData();
+        setRegisterNewStd([]);
       } else {
         // 실패한 경우 처리
         setErrPopupVisible(true);
@@ -177,6 +179,7 @@ function AssignStudents() {
     // };
     const queryString = deleteStd.map((id) => `student-id=${id}`).join("&");
     const url = `/api/assign/student?course-id=${rowData._id}&${queryString}`;
+    console.log("delete : ", url);
     await axios.delete(url).then((response) => {
       if (response.data.code === "200") {
         // 성공적으로 추가된 경우
@@ -186,6 +189,7 @@ function AssignStudents() {
         }, 3000);
         setDeleteSelectIdx([]);
         fetchData();
+        setDeleteStd([]);
       } else {
         // 실패한 경우 처리
         setErrorDelStdpopupVisible(true);
@@ -271,14 +275,23 @@ function AssignStudents() {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "17px",
+              }}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
               Assign Student in Course
             </Typography>
           </Toolbar>
         </AppBar>
       </div>
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b>
           <button className="close" onClick={() => setErrPopupVisible(false)}>
             <span aria-hidden="true">&times;</span>
@@ -290,7 +303,7 @@ function AssignStudents() {
             <span aria-hidden="true">&times;</span>
           </button>
         </UncontrolledAlert>
-        <UncontrolledAlert color="info" isOpen={errorDelStdpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errorDelStdpopupVisible}>
           <b>Failed!</b>
           <button
             className="close"

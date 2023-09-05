@@ -17,20 +17,36 @@ export default function StudentManagement() {
   return (
     <div>
       <AppShellAdmin />
-      <div style={{ fontWeight: "bold", fontSize: "30px" }}>
+      <div
+        style={{
+          fontWeight: "bold",
+          fontFamily: "Copperplate, sans-serif",
+          fontSize: "21px",
+        }}
+      >
         &nbsp;Student Management
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="management-menu-bar">
           <div className="management-menu-items">
-            <a href="/studentManagement/register">
+            <a
+              href="/studentManagement/register"
+              style={{
+                fontFamily: "Copperplate, sans-serif",
+              }}
+            >
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
               Add
             </a>
 
-            <a href="/studentManagement/delete">
+            <a
+              style={{
+                fontFamily: "Copperplate, sans-serif",
+              }}
+              href="/studentManagement/delete"
+            >
               {" "}
               <ListItemIcon>
                 <DeleteIcon />
@@ -38,7 +54,12 @@ export default function StudentManagement() {
               Delete
             </a>
 
-            <a href="/studentManagement/StudentInfo">
+            <a
+              style={{
+                fontFamily: "Copperplate, sans-serif",
+              }}
+              href="/studentManagement/StudentInfo"
+            >
               {" "}
               <ListItemIcon>
                 <EditIcon />

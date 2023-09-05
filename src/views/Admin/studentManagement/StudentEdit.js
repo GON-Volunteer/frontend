@@ -116,14 +116,23 @@ function StudentEdit() {
               >
                 <ArrowBackIcon />
               </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Typography
+                style={{
+                  fontWeight: "bold",
+                  fontFamily: "Copperplate, sans-serif",
+                  fontSize: "17px",
+                }}
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1 }}
+              >
                 Edit Student Info
               </Typography>
             </Toolbar>
           </AppBar>
         </div>
         <div className="popup-container">
-          <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+          <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
             <b>Failed!</b> SerialNum or ID is already exists. X
             <button className="close" onClick={() => setErrPopupVisible(false)}>
               <span aria-hidden="true">&times;</span>
@@ -281,7 +290,9 @@ function StudentEdit() {
               <small role="alert">{errors.passwordConfirm.message}</small>
             )}
           </div>
-          <Button type="submit">Edit</Button>
+          <Button id="leftBtn" type="submit">
+            Edit
+          </Button>
         </form>
       </div>
     );

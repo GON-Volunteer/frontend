@@ -71,7 +71,7 @@ function StudentInfo() {
 
   const [studentInfo, setstudentInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(7); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
   useEffect(() => {
     axios
       .get(
@@ -159,8 +159,17 @@ function StudentInfo() {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Edit Student Info
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "17px",
+              }}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              Student Info
             </Typography>
           </Toolbar>
         </AppBar>

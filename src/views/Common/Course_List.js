@@ -64,7 +64,7 @@ function Course_List({ article1 }) {
         <div className="management-menu-bar">
           <div className="management-menu-items">
             {menuList.length === 0 ? (
-              <Typography variant="body1">배정된 강의가 없습니다.</Typography>
+              <Typography variant="body1">No courses</Typography>
             ) : (
               Object.values(menuList).map((menuItem) => (
                 <Link
