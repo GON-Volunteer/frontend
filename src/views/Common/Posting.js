@@ -71,6 +71,8 @@ const Posting = ({}) => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isDisabled = !newTitle.trim();
+  const isDisabledcomment = !comment.trim();
   // [READ] 게시글 DB에서 불러오기 핸들러
   const onReadBoard = async () => {
     await axios
@@ -390,7 +392,11 @@ const Posting = ({}) => {
                         }}
                       ></textarea>
                       {/* 게시글 수정 모드 시 취소, 완료 버튼 */}
-                      <Button color="info" onClick={onUpdatePosting}>
+                      <Button
+                        color="info"
+                        onClick={onUpdatePosting}
+                        disabled={isDisabled}
+                      >
                         submit
                       </Button>
                       <Button color="info" onClick={toggleEditing}>
@@ -616,6 +622,7 @@ const Posting = ({}) => {
                           color="secondary"
                           aria-label="Create"
                           onClick={onCreateComment}
+                          disabled={isDisabledcomment}
                         >
                           <SendIcon />
                         </IconButton>
