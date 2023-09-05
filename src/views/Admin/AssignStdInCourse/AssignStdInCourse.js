@@ -47,7 +47,7 @@ function AssignStdInCourse() {
   const [courseInfo, setCourseInfo] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(100);
+  const [pageSize, setPageSize] = useState(1000);
   const [registerCourseInfo, setRegisterCourseInfo] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
