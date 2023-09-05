@@ -29,7 +29,7 @@ export default function SubjectManagement() {
   const columns = useMemo(() => columnData, []);
   const [subjectInfo, setSubjectInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(100);
+  const [pageSize, setPageSize] = useState(1000);
   const [inputValue, setInputValue] = useState("");
 
   const handleRadioChange = (rowIndex) => {

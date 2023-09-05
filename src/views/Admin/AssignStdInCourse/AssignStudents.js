@@ -19,7 +19,7 @@ function AssignStudents() {
   console.log("course info" + JSON.stringify(rowData));
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(100);
+  const [pageSize, setPageSize] = useState(1000);
   const [regiStdInfo, setRegiStdInfo] = useState([]);
   const [unregiStdInfo, setUnregiStdInfo] = useState([]);
   const [selectedRow, setSelectedRow] = useState();
