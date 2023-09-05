@@ -63,16 +63,16 @@ root.render(
           <Route path="/nucleo-icons" element={<NucleoIcons />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/AnnouncementList"
-            element={<AnnouncementList />}
-          ></Route>
 
           {/* </Route> */}
           <Route element={<LoginCheck />}>
             <Route path="home" element={<Home />} />
             <Route path="/articles/:idx" element={<Posting />} />
             <Route path="/Announcement-page" element={<AnnouncementPage />} />
+            <Route
+              path="/AnnouncementList"
+              element={<AnnouncementList />}
+            ></Route>
             <Route
               path="/courses/:id/articles/:idx"
               element={<Course_Posting />}
