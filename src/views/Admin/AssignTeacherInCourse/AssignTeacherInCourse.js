@@ -504,7 +504,7 @@ function AssignTeacherInCourse() {
         onClick={handleCreate}
         id="createBtn"
       >
-        Create
+        Assign
       </Button>
 
       <div>
