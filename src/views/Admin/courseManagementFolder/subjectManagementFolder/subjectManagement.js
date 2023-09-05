@@ -29,7 +29,7 @@ export default function SubjectManagement() {
   const columns = useMemo(() => columnData, []);
   const [subjectInfo, setSubjectInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(100);
+  const [pageSize, setPageSize] = useState(1000);
   const [inputValue, setInputValue] = useState("");
 
   const handleRadioChange = (rowIndex) => {
@@ -107,20 +107,17 @@ export default function SubjectManagement() {
         const url = `/api/subjects/${data[selectedRow]._id}`;
         const res = await axios.delete(url);
         showSubList();
-        setDeleteErrPopupVisible(true);
-        setTimeout(() => {
-          setDeleteErrPopupVisible(false);
-        }, 5000);
+
         if (res.data.code == "200") {
-          // setDeletePopupVisible(true);
-          // setTimeout(() => {
-          //   setDeletePopupVisible(false);
-          // }, 3000);
-        } else if (res.data.code == "400") {
+          setDeletePopupVisible(true);
+          setTimeout(() => {
+            setDeletePopupVisible(false);
+          }, 3000);
+        } else if (res.data.code == "420") {
           setDeleteErrPopupVisible(true);
           setTimeout(() => {
             setDeleteErrPopupVisible(false);
-          }, 3000);
+          }, 5000);
         }
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
@@ -218,7 +215,8 @@ export default function SubjectManagement() {
           <b>Success!</b> Subject deleted successfully! X
         </UncontrolledAlert>
         <UncontrolledAlert color="danger" isOpen={deleteErrPopupVisible}>
-          <b>Failed!</b> Delete the course assigned to the subject first.
+          <b>Failed!</b>
+          <br /> First, delete the course to which the subject is assigned.
         </UncontrolledAlert>
       </div>
       <div id="table">

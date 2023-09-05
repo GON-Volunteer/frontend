@@ -68,7 +68,7 @@ function TeacherDelete() {
 
   const [teacherInfo, setTeacherInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(9); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
 
   useEffect(() => {
     axios
