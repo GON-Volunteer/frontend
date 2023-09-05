@@ -81,65 +81,73 @@ function LoginPage() {
   return (
     <>
       <div className="login-page">
-        <h3
-          style={{
-            fontFamily: "Copperplate, sans-serif",
-            fontSize: "17px",
-          }}
-          id="logintitle"
-          className="title mx-auto"
-        >
-          Creative Learners' Academy
-        </h3>
+        <div id="login-title-bar">
+          <h3
+            style={{
+              fontFamily: "Copperplate, sans-serif",
+              fontSize: "23px",
+              fontWeight: "bold",
+              color: "white",
+            }}
+            id="logintitle"
+            className="title mx-auto"
+          >
+            Creative Learners'
+            <br /> Academy
+          </h3>
+        </div>
 
         <div id="bottom">
           <img
             id="logoid"
-            width="180px"
+            width="220px"
             className="centered-img"
             src={require("assets/img/logo.png")}
             alt="logo"
           />
-          <Form className="register-form">
-            <label
-              style={{
-                fontFamily: "Copperplate, sans-serif",
-                fontSize: "13px",
-              }}
-              id="login-text"
-            >
-              ID
-            </label>
-            <Input
-              placeholder="ID"
-              type="text"
-              onChange={(e) => setId(e.target.value)}
-            />
-            <label
-              style={{
-                fontFamily: "Copperplate, sans-serif",
-                fontSize: "13px",
-              }}
-              id="login-text"
-            >
-              Password
-            </label>
-            <Input
-              placeholder="Password"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button
-              block
-              className="btn-round"
-              color="info"
-              disabled={loading}
-              onClick={LoginFunc}
-            >
-              Login
-            </Button>
-          </Form>
         </div>
+        <Form className="register-form">
+          <label
+            style={{
+              fontFamily: "Copperplate, sans-serif",
+              fontSize: "13px",
+            }}
+            id="login-text"
+          >
+            ID
+          </label>
+          <Input
+            id="login_input"
+            placeholder="ID"
+            type="text"
+            onChange={(e) => setId(e.target.value)}
+          />
+          <label
+            style={{
+              fontFamily: "Copperplate, sans-serif",
+              fontSize: "13px",
+            }}
+            id="login-text"
+          >
+            Password
+          </label>
+          <Input
+            id="login_input"
+            placeholder="Password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button
+            className="btn-round"
+            color="info"
+            disabled={loading}
+            onClick={LoginFunc}
+            id="login-btn"
+          >
+            Login
+          </Button>
+        </Form>
+
         <div className="footer register-footer text-center">
           <h6>
             © {new Date().getFullYear()}, made with{" "}
