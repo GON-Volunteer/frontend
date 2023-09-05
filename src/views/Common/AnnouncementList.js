@@ -143,7 +143,6 @@ function AnnouncementList({ article1 }) {
             className="custom-table" // 클래스명 추가
             {...getTableProps()}
           >
-            {" "}
             <thead>
               {headerGroups.map((header) => (
                 <tr {...header.getHeaderGroupProps()}>
@@ -166,38 +165,50 @@ function AnnouncementList({ article1 }) {
                 return (
                   <tr id="rowFont" {...row.getRowProps()}>
                     {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td
+                        {...cell.getCellProps()}
+                        style={{
+                          maxWidth: "0",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {cell.render("Cell")}
+                      </td>
                     ))}
                   </tr>
                 );
               })}
             </tbody>
           </table>
-          <Pagination
-            className="pagination justify-content-center"
-            listClassName="justify-content-center"
-            aria-label="Page navigation example"
-          >
-            <PaginationItem disabled={currentPage === 1}>
-              <PaginationLink previous href="#" onClick={goToPrevPage} />
-            </PaginationItem>
-            {Array.from({ length: pageCount }, (_, index) => (
-              <PaginationItem key={index} active={index + 1 === currentPage}>
-                <PaginationLink
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentPage(index + 1);
-                  }}
-                >
-                  {index + 1}
-                </PaginationLink>
+          <div>
+            <Pagination
+              className="pagination justify-content-center"
+              listClassName="justify-content-center"
+              aria-label="Page navigation example"
+            >
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink previous href="#" onClick={goToPrevPage} />
               </PaginationItem>
-            ))}
-            <PaginationItem disabled={currentPage === pageCount}>
-              <PaginationLink next onClick={goToNextPage} />
-            </PaginationItem>
-          </Pagination>
+              {Array.from({ length: pageCount }, (_, index) => (
+                <PaginationItem key={index} active={index + 1 === currentPage}>
+                  <PaginationLink
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentPage(index + 1);
+                    }}
+                  >
+                    {index + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              <PaginationItem disabled={currentPage === pageCount}>
+                <PaginationLink next onClick={goToNextPage} />
+              </PaginationItem>
+            </Pagination>
+          </div>
         </div>
       </div>
     </div>

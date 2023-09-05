@@ -163,7 +163,6 @@ function Course_ArticleList({ article1 }) {
       <div>
         <div id="table">
           <table {...getTableProps()}>
-            {" "}
             <thead>
               {headerGroups.map((header) => (
                 <tr {...header.getHeaderGroupProps()}>
@@ -186,7 +185,17 @@ function Course_ArticleList({ article1 }) {
                 return (
                   <tr id="rowFont" {...row.getRowProps()}>
                     {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td
+                        {...cell.getCellProps()}
+                        style={{
+                          maxWidth: "0",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {cell.render("Cell")}
+                      </td>
                     ))}
                   </tr>
                 );
