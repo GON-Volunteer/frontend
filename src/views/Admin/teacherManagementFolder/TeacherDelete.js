@@ -68,7 +68,7 @@ function TeacherDelete() {
 
   const [teacherInfo, setTeacherInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(9); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
 
   useEffect(() => {
     axios
@@ -91,7 +91,8 @@ function TeacherDelete() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const handleDelete = async () => {
-    if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    // if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    if (selectedRow >= 0) {
       const url = `/api/teachers/${data[selectedRow]._id}`;
       try {
         const res = await axios.delete(url);
@@ -177,7 +178,16 @@ function TeacherDelete() {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "17px",
+              }}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
               Delete Teacher
             </Typography>
           </Toolbar>
@@ -185,7 +195,7 @@ function TeacherDelete() {
       </div>
 
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b> Failed to delete teacher information. X
           <button className="close" onClick={() => setErrPopupVisible(false)}>
             <span aria-hidden="true">&times;</span>

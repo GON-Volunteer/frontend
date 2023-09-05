@@ -62,7 +62,7 @@ function CourseDelete() {
   const [popupVisible, setPopupVisible] = useState(false);
   async function showTchList() {
     axios.get("/api/courses/").then((res) => {
-      if (Array.isArray(res.data) && res.data.length > 0) {
+      if (Array.isArray(res.data)) {
         const courses = res.data;
         setCourseInfo(courses);
       } else {
@@ -82,7 +82,8 @@ function CourseDelete() {
   }, []);
   const handleDelete = async () => {
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
-    if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    // if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    if (selectedRow >= 0) {
       try {
         const url = `/api/courses/${data[selectedRow]._id}`;
         await axios
@@ -177,14 +178,23 @@ function CourseDelete() {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "17px",
+              }}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
               Delete Course
             </Typography>
           </Toolbar>
         </AppBar>
       </div>
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b> Failed to delete course information. X
         </UncontrolledAlert>
         <UncontrolledAlert color="info" isOpen={popupVisible}>

@@ -109,7 +109,7 @@ function StudentDelete() {
   const [popupVisible, setPopupVisible] = useState(false);
   const handleDelete = async () => {
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
-    if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
+    if (selectedRow >= 0) {
       // console.log("rowIndex" + data[selectedRow]._id);
       const url = `/api/students/${data[selectedRow]._id.$oid}`;
       axios
@@ -196,14 +196,23 @@ function StudentDelete() {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "17px",
+              }}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
               Delete Student
             </Typography>
           </Toolbar>
         </AppBar>
       </div>
       <div className="popup-container">
-        <UncontrolledAlert color="info" isOpen={errpopupVisible}>
+        <UncontrolledAlert color="danger" isOpen={errpopupVisible}>
           <b>Failed!</b> Failed to delete student information. X
           <button className="close" onClick={() => setErrPopupVisible(false)}>
             <span aria-hidden="true">&times;</span>

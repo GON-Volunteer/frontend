@@ -81,7 +81,14 @@ function LoginPage() {
   return (
     <>
       <div className="login-page">
-        <h3 id="logintitle" className="title mx-auto">
+        <h3
+          style={{
+            fontFamily: "Copperplate, sans-serif",
+            fontSize: "17px",
+          }}
+          id="logintitle"
+          className="title mx-auto"
+        >
           Creative Learners' Academy
         </h3>
 
@@ -94,13 +101,29 @@ function LoginPage() {
             alt="logo"
           />
           <Form className="register-form">
-            <label id="login-text">ID</label>
+            <label
+              style={{
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "13px",
+              }}
+              id="login-text"
+            >
+              ID
+            </label>
             <Input
               placeholder="ID"
               type="text"
               onChange={(e) => setId(e.target.value)}
             />
-            <label id="login-text">Password</label>
+            <label
+              style={{
+                fontFamily: "Copperplate, sans-serif",
+                fontSize: "13px",
+              }}
+              id="login-text"
+            >
+              Password
+            </label>
             <Input
               placeholder="Password"
               type="password"

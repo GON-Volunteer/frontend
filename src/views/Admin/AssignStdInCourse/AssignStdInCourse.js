@@ -33,9 +33,13 @@ function AssignStdInCourse() {
       accessor: "subject_name",
       Header: "subject",
     },
+
     {
-      accessor: "teacher_name",
-      Header: "teacher",
+      accessor: "teacher_name", // 현재 "teacher" 컬럼
+      Header: "teacher1",
+    },
+    {
+      Header: "teacher2",
     },
   ];
 
@@ -43,7 +47,7 @@ function AssignStdInCourse() {
   const [courseInfo, setCourseInfo] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(100);
+  const [pageSize, setPageSize] = useState(1000);
   const [registerCourseInfo, setRegisterCourseInfo] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
@@ -148,27 +152,46 @@ function AssignStdInCourse() {
           Assign Teacher in Course
         </div> */}
 
-      <div id="table">
-        <h4 id="subListTitle">&nbsp;Assigned Student in Course </h4>
+      <div>
+        <div
+          style={{
+            fontWeight: "bold",
+            fontFamily: "Copperplate, sans-serif",
+            fontSize: "19px",
+            marginTop: "10px",
+          }}
+          id="subListTitle"
+        >
+          &nbsp;Assigned Student in Course{" "}
+        </div>
 
         <div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div>
-        <h4 id="subListTitle">&nbsp;Course List</h4>
+        <h4
+          style={{
+            marginBottom: "10px",
+          }}
+          id="subListTitle"
+        >
+          &nbsp;Course List
+        </h4>
 
-        <div>
-          {secondTableHeaderGroups.map((header) => (
-            <tr {...header.getHeaderGroupProps()} id="headerRow">
-              {header.headers.map((col) => (
-                <th {...col.getHeaderProps()} id="headerCell">
-                  {col.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
+        <div id="table">
           <table {...getSecondTableProps()}>
             {" "}
-            <tbody {...getSecondTableBodyProps()} id="std_course_body">
+            <thead>
+              {secondTableHeaderGroups.map((header) => (
+                <tr {...header.getHeaderGroupProps()} id="headerRow">
+                  {header.headers.map((col) => (
+                    <th {...col.getHeaderProps()} id="headerCell">
+                      {col.render("Header")}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getSecondTableBodyProps()}>
               {secondTableRows.map((row, rowIndex) => {
                 prepareSecondTableRow(row);
 
@@ -185,7 +208,13 @@ function AssignStdInCourse() {
                   >
                     {row.cells.map((cell) => (
                       <td {...cell.getCellProps()} id="dataCell">
-                        {cell.render("Cell")}
+                        {cell.column.Header === "teacher1"
+                          ? // "Teacher1" 헤더의 경우 teacher_name을 출력
+                            row.original.teacher_name[0]
+                          : cell.column.Header === "teacher2"
+                          ? // "Teacher2" 헤더의 경우 teacher2_name을 출력
+                            row.original.teacher_name[1]
+                          : cell.render("Cell")}
                       </td>
                     ))}
                   </tr>
