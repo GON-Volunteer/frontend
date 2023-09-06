@@ -68,7 +68,7 @@ export default function ButtonAppBar() {
           <Typography
             style={{
               fontFamily: "Copperplate, sans-serif",
-              fontSize: "15px",
+              fontSize: "14px",
             }}
             variant="h6"
             component="div"
