@@ -100,7 +100,6 @@ function LoginPage() {
         <div id="bottom">
           <img
             id="logoid"
-            width="220px"
             className="centered-img"
             src={require("assets/img/logo.png")}
             alt="logo"
@@ -139,7 +138,6 @@ function LoginPage() {
           />
           <Button
             className="btn-round"
-            color="info"
             disabled={loading}
             onClick={LoginFunc}
             id="login-btn"
