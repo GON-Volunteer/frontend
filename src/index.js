@@ -61,8 +61,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/nucleo-icons" element={<NucleoIcons />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<LoginPage />} />
 
           {/* </Route> */}
           <Route element={<LoginCheck />}>
