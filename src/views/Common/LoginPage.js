@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
+
 // css
 import "../../assets/css/Login.css";
 // reactstrap components
-import { Button, Card, Form, Input, Container, Row, Col } from "reactstrap";
+import { Button, Card, Form, Input, UncontrolledAlert } from "reactstrap";
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,7 +19,9 @@ function LoginPage() {
   const [iderrpopupVisible, setIDErrPopupVisible] = useState(false);
   const [pwerrpopupVisible, setPWErrPopupVisible] = useState(false);
   const [errpopupVisible, setErrPopupVisible] = useState(false);
+
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const url = "http://localhost:5000";
   const formRef = useRef();
   const [cookies, setCookie] = useCookies(["token"]);
@@ -58,7 +61,9 @@ function LoginPage() {
       password,
     };
 
+
     axios.post(BASE_URL + "/api/login/", body).then((res) => {
+
       if (res.data.code == 200) {
         //console.log(res.data);
         //console.log("Login");
@@ -106,7 +111,35 @@ function LoginPage() {
             <br /> Academy
           </h3>
         </div>
-
+        <div className="popup-container">
+          <UncontrolledAlert color="danger" isOpen={iderrpopupVisible}>
+            <b>Failed!</b> ID does not exists!
+            <button
+              className="close"
+              onClick={() => setIDErrPopupVisible(false)}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </UncontrolledAlert>
+          <UncontrolledAlert color="danger" isOpen={pwerrpopupVisible}>
+            <b>Failed!</b> Password is not correct!
+            <button
+              className="close"
+              onClick={() => setPWErrPopupVisible(false)}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </UncontrolledAlert>
+          <UncontrolledAlert
+            style={{
+              marginTop: "28px",
+            }}
+            color="danger"
+            isOpen={errpopupVisible}
+          >
+            <b>Failed!</b> There is no such account.
+          </UncontrolledAlert>
+        </div>
         <div id="bottom">
           <img
             id="logoid"
@@ -148,7 +181,7 @@ function LoginPage() {
           />
           <Button
             className="btn-round"
-            disabled={loading}
+            disabled={!(password && id)}
             onClick={LoginFunc}
             id="login-btn"
           >
