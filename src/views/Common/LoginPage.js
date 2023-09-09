@@ -20,6 +20,8 @@ function LoginPage() {
   const [pwerrpopupVisible, setPWErrPopupVisible] = useState(false);
   const [errpopupVisible, setErrPopupVisible] = useState(false);
 
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const url = "http://localhost:5000";
   const formRef = useRef();
   const [cookies, setCookie] = useCookies(["token"]);
@@ -59,7 +61,9 @@ function LoginPage() {
       password,
     };
 
-    axios.post(url + "/api/login/", body).then((res) => {
+
+    axios.post(BASE_URL + "/api/login/", body).then((res) => {
+
       if (res.data.code == 200) {
         //console.log(res.data);
         //console.log("Login");

@@ -75,16 +75,21 @@ const Course_ArticleCreate = () => {
     }
 
     await axios
-      .post(url + "/api/courses/" + id + "/articles/create", {
-        method: "POST",
-        body: JSON.stringify({
-          user_id: user._id,
-          title: title,
-          content: posting,
-          full_name: user.full_name,
-          attachmentUrl: attachmentUrl,
-        }),
-      })
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+          id +
+          "/articles/create",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            user_id: user._id,
+            title: title,
+            content: posting,
+            full_name: user.full_name,
+            attachmentUrl: attachmentUrl,
+          }),
+        }
+      )
       .then(() => {
         console.log("[CREATE] 새 게시글 생성");
         navigate("/courses/" + id + "/articles");

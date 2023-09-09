@@ -18,11 +18,14 @@ function LoginCheck() {
     const checkAuthorization = async () => {
       if (token) {
         try {
-          const response = await axios.get(url + "/api/auth/", {
-            headers: {
-              Authorization: token,
-            },
-          });
+          const response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/api/auth/`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
           console.log(response);
           if (response.data.code === "400") {
             dispatch(searchAction.clearUser(user));

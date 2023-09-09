@@ -31,7 +31,7 @@ function Course_List({ article1 }) {
   const token = cookies.token;
   useEffect(() => {
     axios
-      .get(url + "/api/courses/list", {
+      .get(`${process.env.REACT_APP_BASE_URL}/api/courses/list`, {
         headers: {
           Authorization: token,
         },

@@ -18,6 +18,7 @@ function CourseDelete() {
   const handleBackButtonClick = () => {
     navigate("/courseManagement");
   };
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const [selectedRow, setSelectedRow] = useState(null);
 
@@ -61,7 +62,7 @@ function CourseDelete() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   async function showTchList() {
-    axios.get("/api/courses/").then((res) => {
+    axios.get(BASE_URL + "/api/courses/").then((res) => {
       if (Array.isArray(res.data)) {
         const courses = res.data;
         setCourseInfo(courses);
@@ -71,7 +72,7 @@ function CourseDelete() {
     });
   }
   useEffect(() => {
-    axios.get("/api/courses/").then((res) => {
+    axios.get(BASE_URL + "/api/courses/").then((res) => {
       if (Array.isArray(res.data) && res.data.length > 0) {
         const courses = res.data;
         setCourseInfo(courses);
@@ -85,7 +86,7 @@ function CourseDelete() {
     // if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
     if (selectedRow >= 0) {
       try {
-        const url = `/api/courses/${data[selectedRow]._id}`;
+        const url = `${BASE_URL}/api/courses/${data[selectedRow]._id}`;
         await axios
           .delete(url)
           .then((res) => {

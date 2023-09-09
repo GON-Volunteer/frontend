@@ -12,6 +12,7 @@ function AssignTeacherInCourse() {
     teacher1_id: "",
     teacher2_id: "",
   });
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const [teachers, setTeachers] = useState([]);
   const outerDivRef = useRef(null);
@@ -143,7 +144,7 @@ function AssignTeacherInCourse() {
     await axios
       .get(
         // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AssignCourse"
-        "/api/courses/not-assigned"
+        `${BASE_URL}/api/courses/not-assigned`
       )
       .then((courseRes) => {
         console.log("non assign response" + JSON.stringify(courseRes.data));
@@ -157,7 +158,7 @@ function AssignTeacherInCourse() {
   }
   async function showAssignedCourseList() {
     await axios
-      .get("/api/courses/assigned")
+      .get(`${BASE_URL}/api/courses/assigned`)
       .then((res) => {
         console.log("assigned res.data??" + JSON.stringify(res.data));
         if (Array.isArray(res.data)) {
@@ -205,7 +206,10 @@ function AssignTeacherInCourse() {
       // data["course_id"] = selectedRowData;
       try {
         console.log("request data:" + JSON.stringify(requestData));
-        const response = await axios.post("/api/assign/teacher", requestData);
+        const response = await axios.post(
+          `${BASE_URL}/api/assign/teacher`,
+          requestData
+        );
         console.log("create이후 서버 응답:");
         console.log(JSON.stringify(response.data));
         // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
@@ -246,7 +250,7 @@ function AssignTeacherInCourse() {
     if (selectedSecondRow >= 0) {
       console.log("rowIndex" + registerCourseInfo[selectedSecondRow]);
       try {
-        const url = `/api/assign/teacher/${registerCourseInfo[selectedSecondRow]._id}`;
+        const url = `${BASE_URL}/api/assign/teacher/${registerCourseInfo[selectedSecondRow]._id}`;
         const res = await axios.delete(url);
 
         showAssignedCourseList();
@@ -273,13 +277,13 @@ function AssignTeacherInCourse() {
         const [registerCourseRes, courseRes, teachersRes] = await Promise.all([
           axios.get(
             // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AssignCourse"
-            "/api/courses/assigned"
+            `${BASE_URL}/api/courses/assigned`
           ),
           axios.get(
             // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/CourseList"
-            "api/courses/not-assigned"
+            `${BASE_URL}api/courses/not-assigned`
           ),
-          axios.get("/api/teachers/"),
+          axios.get(`${BASE_URL}/api/teachers/`),
         ]);
 
         if (Array.isArray(registerCourseRes.data)) {
