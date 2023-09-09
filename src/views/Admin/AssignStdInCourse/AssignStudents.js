@@ -28,6 +28,8 @@ function AssignStudents() {
   const [popupVisible, setPopupVisible] = useState(false);
   const [delStdpopupVisible, setDelStdpopupVisible] = useState(false);
   const [errorDelStdpopupVisible, setErrorDelStdpopupVisible] = useState(false);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const handleRowClick = (rowIndex) => {
     setSelectedRow(rowIndex);
     console.log(selectedRow);
@@ -125,7 +127,9 @@ function AssignStudents() {
   const fetchData = async () => {
     console.log("fetchData 호출");
     try {
-      const response = await axios.get(`/api/courses/${rowData._id}/students`);
+      const response = await axios.get(
+        `${BASE_URL}/api/courses/${rowData._id}/students`
+      );
       setRegiStdInfo(response.data.course_student);
       setUnregiStdInfo(response.data.not_course_student);
     } catch (error) {
@@ -154,7 +158,7 @@ function AssignStudents() {
       students: registerNewStd.map((studentId) => ({ _id: studentId })),
     };
     console.log("request body==============\n" + JSON.stringify(body));
-    await axios.post("/api/assign/student", body).then((res) => {
+    await axios.post(`${BASE_URL}/api/assign/student`, body).then((res) => {
       if (res.data.code === "200") {
         // 성공적으로 추가된 경우
         setPopupVisible(true);
@@ -178,7 +182,7 @@ function AssignStudents() {
     //   student_id: deleteStd,
     // };
     const queryString = deleteStd.map((id) => `student-id=${id}`).join("&");
-    const url = `/api/assign/student?course-id=${rowData._id}&${queryString}`;
+    const url = `${BASE_URL}/api/assign/student?course-id=${rowData._id}&${queryString}`;
     console.log("delete : ", url);
     await axios.delete(url).then((response) => {
       if (response.data.code === "200") {

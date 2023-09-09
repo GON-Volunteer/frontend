@@ -14,6 +14,8 @@ import React, { Component, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function StudentEdit() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const location = useLocation();
   const rowData = location.state
     ? location.state.rowData
@@ -52,7 +54,7 @@ function StudentEdit() {
       console.log(`/api/students/${rowData._id.$oid}`);
       await axios
         .patch(
-          `/api/students/${rowData._id.$oid}`,
+          `${BASE_URL}/api/students/${rowData._id.$oid}`,
           // "https://f12e3ca1-926d-4342-bd7c-a87451995428.mock.pstmn.io/DeleteStudent",
           data
         )

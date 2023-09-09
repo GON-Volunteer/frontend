@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Axios 사용 예시
 export default function CourseRegister() {
   const navigate = useNavigate();
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [formData, setFormData] = useState({
@@ -50,7 +51,7 @@ export default function CourseRegister() {
   const [subId, setSubId] = useState([]);
   useEffect(() => {
     axios
-      .get("/api/subjects/")
+      .get(BASE_URL + "/api/subjects/")
       .then((res) => {
         console.log("courseInfo:" + JSON.stringify(res.data));
         if (Array.isArray(res.data)) {
@@ -80,7 +81,7 @@ export default function CourseRegister() {
 
     try {
       console.log("add하는 data: " + JSON.stringify(data));
-      const response = await axios.post("/api/courses", data);
+      const response = await axios.post(BASE_URL + "/api/courses", data);
       console.log("서버 응답:");
       console.log(response.data);
 

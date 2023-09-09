@@ -82,7 +82,7 @@ function AnnouncementList({ article1 }) {
   // [READ] 게시글 DB에서 불러오기 핸들러
   const onReadPosting = async () => {
     await axios
-      .get(url + "/api/articles")
+      .get(`${process.env.REACT_APP_BASE_URL}/api/articles`)
       .then((res) => {
         console.log("[READ] 게시글 목록 Reloading");
         console.log(typeof res.data);

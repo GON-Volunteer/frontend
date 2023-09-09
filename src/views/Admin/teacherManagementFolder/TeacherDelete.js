@@ -74,7 +74,7 @@ function TeacherDelete() {
     axios
       .get(
         // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/teacherlist"
-        "/api/teachers/"
+        `${process.env.REACT_APP_BASE_URL}/api/teachers/`
       )
       .then((res) => {
         if (Array.isArray(res.data)) {
@@ -93,7 +93,7 @@ function TeacherDelete() {
   const handleDelete = async () => {
     // if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
     if (selectedRow >= 0) {
-      const url = `/api/teachers/${data[selectedRow]._id}`;
+      const url = `${process.env.REACT_APP_BASE_URL}/api/teachers/${data[selectedRow]._id}`;
       try {
         const res = await axios.delete(url);
         if (res.data.code === "200") {

@@ -20,7 +20,7 @@ const Announcement = () => {
 
   useEffect(() => {
     axios
-      .get(url + "/api/announcements")
+      .get(`${process.env.REACT_APP_BASE_URL}/api/announcements`)
       .then((res) => {
         setAnnouncements(res.data);
         setIsLoading(false);
