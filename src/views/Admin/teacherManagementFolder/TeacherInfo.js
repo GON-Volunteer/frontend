@@ -49,7 +49,7 @@ function TeacherInfo() {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
   useEffect(() => {
-    axios.get("/api/teachers/").then((res) => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}/api/teachers/`).then((res) => {
       console.log("???" + res);
       if (Array.isArray(res.data) && res.data.length > 0) {
         //map 사용시 새로운 배열 생성해서

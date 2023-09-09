@@ -76,7 +76,12 @@ const Course_Posting = ({}) => {
   // [READ] 게시글 DB에서 불러오기 핸들러
   const onReadBoard = async () => {
     await axios
-      .get(url + "/api/courses/" + id + "/articles/" + idx)
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+          id +
+          "/articles/" +
+          idx
+      )
       .then((res) => {
         console.log("[READ] Article Reloading");
         //console.log("Response data type:", typeof res.data);
@@ -115,13 +120,20 @@ const Course_Posting = ({}) => {
     if (ok) {
       event.preventDefault();
       await axios
-        .post(url + "/api/courses/" + id + "/articles/" + idx + "/update", {
-          method: "POST",
-          body: JSON.stringify({
-            edittitle: newTitle,
-            editContent: newPosting,
-          }),
-        })
+        .post(
+          `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+            id +
+            "/articles/" +
+            idx +
+            "/update",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              edittitle: newTitle,
+              editContent: newPosting,
+            }),
+          }
+        )
         .then(() => {
           console.log("[UPDATE] Article Update");
           onReadComment();
@@ -147,7 +159,13 @@ const Course_Posting = ({}) => {
     });
     if (ok) {
       await axios
-        .delete(url + "/api/courses/" + id + "/articles/" + idx + "/delete")
+        .delete(
+          `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+            id +
+            "/articles/" +
+            idx +
+            "/delete"
+        )
         .then(() => {
           console.log("[DELETE] Article Delete");
           navigate("/courses/" + id + "/articles");
@@ -179,12 +197,19 @@ const Course_Posting = ({}) => {
   const onClickLike = async (event) => {
     setLikeCount(likeCount + 1);
     await axios
-      .post(url + "/api/courses/" + id + "/articles/" + idx + "/like/click", {
-        method: "POST",
-        body: JSON.stringify({
-          likeuser: user._id,
-        }),
-      })
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+          id +
+          "/articles/" +
+          idx +
+          "/like/click",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            likeuser: user._id,
+          }),
+        }
+      )
       .then(() => {
         console.log("[CLICK] Posting Like");
       })
@@ -199,12 +224,19 @@ const Course_Posting = ({}) => {
       setLikeCount(likeCount - 1);
     }
     await axios
-      .post(url + "/api/courses/" + id + "/articles/" + idx + "/like/cancel", {
-        method: "POST",
-        body: JSON.stringify({
-          likeuser: user._id,
-        }),
-      })
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+          id +
+          "/articles/" +
+          idx +
+          "/like/cancel",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            likeuser: user._id,
+          }),
+        }
+      )
       .then(() => {
         console.log("[CANCEL] Posting Like");
       })
@@ -253,7 +285,11 @@ const Course_Posting = ({}) => {
     setLoadingRequest(true);
     await axios
       .post(
-        url + "/api/courses/" + id + "/articles/" + idx + "/comment/create",
+        `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+          id +
+          "/articles/" +
+          idx +
+          "/comment/create",
         {
           method: "POST",
           body: JSON.stringify({
@@ -279,7 +315,11 @@ const Course_Posting = ({}) => {
   const onReadComment = async () => {
     await axios
       .get(
-        url + "/api/courses/" + id + "/articles/" + idx + "/comment/read",
+        `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+          id +
+          "/articles/" +
+          idx +
+          "/comment/read",
         {}
       )
       .then((response) => {
@@ -299,8 +339,7 @@ const Course_Posting = ({}) => {
     if (ok) {
       await axios
         .delete(
-          url +
-            "/api/courses/" +
+          `${process.env.REACT_APP_BASE_URL}/api/courses/` +
             id +
             "/articles/" +
             idx +

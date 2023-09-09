@@ -74,7 +74,7 @@ const ArticleCreate = () => {
     }
 
     await axios
-      .post(url + "/api/articles/create", {
+      .post(`${process.env.REACT_APP_BASE_URL}/api/articles/create`, {
         method: "POST",
         body: JSON.stringify({
           user_id: user._id,

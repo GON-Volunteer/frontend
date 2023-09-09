@@ -54,7 +54,7 @@ const Comment = ({
   const onClickLike = async () => {
     setLikeCount(likeCount + 1);
     await axios
-      .post(url + "/api/comment/like/click", {
+      .post(`${process.env.REACT_APP_BASE_URL}/api/comment/like/click`, {
         body: JSON.stringify({
           comment_id: commentObj.comment_id,
           likeuser: user._id,
@@ -74,7 +74,7 @@ const Comment = ({
       setLikeCount(likeCount - 1);
     }
     await axios
-      .post(url + "/api/comment/like/cancel", {
+      .post(`${process.env.REACT_APP_BASE_URL}/api/comment/like/cancel`, {
         body: JSON.stringify({
           comment_id: commentObj.comment_id,
           likeuser: user._id,

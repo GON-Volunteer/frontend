@@ -42,7 +42,7 @@ function Register() {
       data["account"] = 2;
       console.log(data);
       const response = await axios.post(
-        "/api/students/",
+        `${process.env.REACT_APP_BASE_URL}/api/students/`,
         // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AddStudent",
         data
       );

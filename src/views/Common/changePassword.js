@@ -33,7 +33,10 @@ function ChangePassword() {
       console.log("request data:" + JSON.stringify(requestData));
       console.log(`/api/password/${_id}`);
 
-      const response = await axios.patch(`/api/password/${_id}`, requestData);
+      const response = await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/api/password/${_id}`,
+        requestData
+      );
 
       console.log(response.data);
       if (response.data.code === "200") {

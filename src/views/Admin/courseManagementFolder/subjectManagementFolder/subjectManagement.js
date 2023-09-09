@@ -11,6 +11,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import "../../../../assets/css/SubList.css";
 export default function SubjectManagement() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
     navigate("/courseManagement");
@@ -42,7 +43,7 @@ export default function SubjectManagement() {
 
   async function showSubList() {
     axios
-      .get("/api/subjects/")
+      .get(BASE_URL + "/api/subjects/")
       .then((res) => {
         console.log("res.data??" + res.data);
         if (Array.isArray(res.data)) {
@@ -76,7 +77,7 @@ export default function SubjectManagement() {
 
     try {
       console.log(data);
-      const response = await axios.post("/api/subjects/", data);
+      const response = await axios.post(BASE_URL + "/api/subjects/", data);
       console.log("서버 응답:");
       console.log(response.data);
       // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
@@ -104,7 +105,7 @@ export default function SubjectManagement() {
     if (selectedRow >= 0) {
       console.log("rowIndex" + data[selectedRow]._id);
       try {
-        const url = `/api/subjects/${data[selectedRow]._id}`;
+        const url = `${BASE_URL}/api/subjects/${data[selectedRow]._id}`;
         const res = await axios.delete(url);
         showSubList();
 
@@ -130,7 +131,7 @@ export default function SubjectManagement() {
   useEffect(() => {
     console.log("?", selectedRow);
     axios
-      .get("/api/subjects/")
+      .get(BASE_URL + "/api/subjects/")
       .then((res) => {
         console.log(res.data);
         if (Array.isArray(res.data)) {

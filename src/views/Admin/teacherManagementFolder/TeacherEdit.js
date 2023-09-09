@@ -50,24 +50,29 @@ function TeacherEdit() {
       // console.log("data너ㅁ겨주고" + JSON.stringify(data));
       //   navigate("/teacherManagement/TeacherInfo");
       console.log("req" + data);
-      await axios.patch(`/api/teachers/${rowData._id}`, data).then((res) => {
-        console.log("teacher edit이후 server res: " + res);
+      await axios
+        .patch(
+          `${process.env.REACT_APP_BASE_URL}/api/teachers/${rowData._id}`,
+          data
+        )
+        .then((res) => {
+          console.log("teacher edit이후 server res: " + res);
 
-        if (res.data.code == "200") {
-          // 성공적으로 추가된 경우
-          navigate("/teacherManagement/TeacherInfo");
-          //setPopupVisible(true);
-        } else if (res.data.code == "400") {
-          // 실패한 경우 처리
-          setErrPopupVisible(true);
-          setTimeout(() => {
-            setErrPopupVisible(false);
-          }, 3000);
-          setIsIdError(true); // ID 에러 상태 설정
-        } else {
-          console.log("어케할까");
-        }
-      });
+          if (res.data.code == "200") {
+            // 성공적으로 추가된 경우
+            navigate("/teacherManagement/TeacherInfo");
+            //setPopupVisible(true);
+          } else if (res.data.code == "400") {
+            // 실패한 경우 처리
+            setErrPopupVisible(true);
+            setTimeout(() => {
+              setErrPopupVisible(false);
+            }, 3000);
+            setIsIdError(true); // ID 에러 상태 설정
+          } else {
+            console.log("어케할까");
+          }
+        });
     };
     const handleBackButtonClick = () => {
       navigate("/teacherManagement/teacherinfo");

@@ -21,6 +21,7 @@ function StudentDelete() {
     navigate("/StudentManagement");
   };
   const [selectedRow, setSelectedRow] = useState(null);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const fullNameHeaderClass = "fullNameHeader";
 
@@ -31,7 +32,7 @@ function StudentDelete() {
   async function showStdList() {
     axios
       .get(
-        "/api/students/"
+        `${BASE_URL}/api/students/`
         // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/StudentList"
       )
       .then((res) => {
@@ -87,7 +88,7 @@ function StudentDelete() {
   useEffect(() => {
     axios
       .get(
-        "/api/students/"
+        `${BASE_URL}/api/students/`
         // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/StudentList"
       )
       .then((res) => {
@@ -111,7 +112,7 @@ function StudentDelete() {
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
     if (selectedRow >= 0) {
       // console.log("rowIndex" + data[selectedRow]._id);
-      const url = `/api/students/${data[selectedRow]._id.$oid}`;
+      const url = `${BASE_URL}/api/students/${data[selectedRow]._id.$oid}`;
       axios
         .delete(url)
         .then((res) => {
