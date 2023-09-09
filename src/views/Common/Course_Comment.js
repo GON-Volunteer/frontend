@@ -54,12 +54,17 @@ const Course_Comment = ({
   const onClickLike = async () => {
     setLikeCount(likeCount + 1);
     await axios
-      .post(url + "/api/courses/" + id + "/comment/like/click", {
-        body: JSON.stringify({
-          comment_id: commentObj.comment_id,
-          likeuser: user._id,
-        }),
-      })
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+          id +
+          "/comment/like/click",
+        {
+          body: JSON.stringify({
+            comment_id: commentObj.comment_id,
+            likeuser: user._id,
+          }),
+        }
+      )
       .then(() => {
         console.log("[CLICK] Comment Like");
       })
@@ -74,12 +79,17 @@ const Course_Comment = ({
       setLikeCount(likeCount - 1);
     }
     await axios
-      .post(url + "/api/courses/" + id + "/comment/like/cancel", {
-        body: JSON.stringify({
-          comment_id: commentObj.comment_id,
-          likeuser: user._id,
-        }),
-      })
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/api/courses/` +
+          id +
+          "/comment/like/cancel",
+        {
+          body: JSON.stringify({
+            comment_id: commentObj.comment_id,
+            likeuser: user._id,
+          }),
+        }
+      )
       .then(() => {
         console.log("[CANCEL] Comment Like");
       })

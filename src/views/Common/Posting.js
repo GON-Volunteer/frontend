@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 // [게시글] 컴포넌트
 const Posting = ({}) => {
-  const url = "http://localhost:5000";
+  const url = process.env.REACT_APP_BASE_URL;
   const { idx } = useParams(); // /articles/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
   const [loading, setLoading] = useState(true);
   const [board, setBoard] = useState({});
@@ -76,7 +76,7 @@ const Posting = ({}) => {
   // [READ] 게시글 DB에서 불러오기 핸들러
   const onReadBoard = async () => {
     await axios
-      .get(url + "/api/articles/" + idx)
+      .get(`${process.env.REACT_APP_BASE_URL}/api/articles/` + idx)
       .then((res) => {
         console.log("[READ] Article Reloading");
         //console.log("Response data type:", typeof res.data);

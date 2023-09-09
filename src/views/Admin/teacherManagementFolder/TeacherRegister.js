@@ -41,7 +41,10 @@ function TeacherRegister() {
     data["account"] = 1;
     try {
       console.log(data);
-      const response = await axios.post("/api/teachers/", data);
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/teachers/`,
+        data
+      );
       console.log("teacher add 서버 응답:");
       console.log(response.data);
       if (response.data.code === "200") {

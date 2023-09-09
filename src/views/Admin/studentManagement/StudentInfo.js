@@ -25,6 +25,7 @@ function StudentInfo() {
   const [selectedRow, setSelectedRow] = useState(null);
 
   const fullNameHeaderClass = "fullNameHeader";
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   // 체크박스가 체크되었는지 여부를 관리하는 상태
   const [checkedRows, setCheckedRows] = useState([]);
@@ -75,7 +76,7 @@ function StudentInfo() {
   useEffect(() => {
     axios
       .get(
-        "/api/students/"
+        `${BASE_URL}/api/students/`
         // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/StudentList"
       )
       .then((res) => {

@@ -6,6 +6,7 @@ import { searchAction } from "../../store/userSlice";
 import { useLocation, Outlet, Navigate } from "react-router-dom";
 
 function LoginCheckAdmin() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const url = "http://localhost:5000";
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
@@ -18,7 +19,7 @@ function LoginCheckAdmin() {
     const checkAuthorization = async () => {
       if (token) {
         try {
-          const response = await axios.get(url + "/api/auth/", {
+          const response = await axios.get(BASE_URL + "/api/auth/", {
             headers: {
               Authorization: token,
             },

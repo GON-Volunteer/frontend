@@ -6,7 +6,7 @@ import { searchAction } from "../../store/userSlice";
 import { useLocation, Outlet, Navigate } from "react-router-dom";
 
 function LoginCheckAdmin() {
-  const url = "http://localhost:5000";
+  const url = process.env.REACT_APP_BASE_URL;
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const token = cookies.token;
