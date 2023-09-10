@@ -281,7 +281,7 @@ function AssignTeacherInCourse() {
           ),
           axios.get(
             // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/CourseList"
-            `${BASE_URL}api/courses/not-assigned`
+            `${BASE_URL}/api/courses/not-assigned`
           ),
           axios.get(`${BASE_URL}/api/teachers/`),
         ]);

@@ -82,7 +82,7 @@ function AssignStdInCourse() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/api/courses`);
+        const response = await axios.get(`${BASE_URL}/api/courses/`);
         if (Array.isArray(response.data)) {
           setRegisterCourseInfo(response.data);
           console.log("eneter " + registerCourseInfo);
