@@ -29,8 +29,8 @@ export default function StudentManagement() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="management-menu-bar">
           <div className="management-menu-items">
-            <a
-              href="/studentManagement/register"
+            <Link
+              to={`/studentManagement/register`}
               style={{
                 fontFamily: "Copperplate, sans-serif",
               }}
@@ -39,33 +39,33 @@ export default function StudentManagement() {
                 <AddIcon />
               </ListItemIcon>
               Add
-            </a>
+            </Link>
 
-            <a
+            <Link
               style={{
                 fontFamily: "Copperplate, sans-serif",
               }}
-              href="/studentManagement/delete"
+              to={`/studentManagement/delete`}
             >
               {" "}
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>
               Delete
-            </a>
+            </Link>
 
-            <a
+            <Link
               style={{
                 fontFamily: "Copperplate, sans-serif",
               }}
-              href="/studentManagement/StudentInfo"
+              to={`/studentManagement/StudentInfo`}
             >
               {" "}
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
               Edit
-            </a>
+            </Link>
           </div>
         </div>
       </div>
