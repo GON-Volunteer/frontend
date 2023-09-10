@@ -81,7 +81,7 @@ export default function CourseRegister() {
 
     console.log("add하는 data: " + JSON.stringify(data));
     await axios
-      .post(`${BASE_URL}/api/courses`, data)
+      .post(`${BASE_URL}/api/courses/`, data)
       .then((response) => {
         console.log("서버 응답:");
         console.log(response.data);
