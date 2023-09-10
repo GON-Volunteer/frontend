@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -39,9 +39,9 @@ const Announcement = () => {
           <ul>
             {announcements.map((announcement) => (
               <li key={announcement.id}>
-                <a href={`/announcements/${announcement.id}`}>
+                <Link to={`/announcements/${announcement.id}`}>
                   {announcement.title}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
