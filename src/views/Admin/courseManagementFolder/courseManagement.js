@@ -29,30 +29,30 @@ export default function courseManagement() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="management-menu-bar">
           <div className="management-menu-items">
-            <a
+            <Link
               style={{
                 fontFamily: "Copperplate, sans-serif",
               }}
-              href="/courseManagement/subjectManagement"
+              to={`/courseManagement/subjectManagement`}
             >
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
               Add
-            </a>
+            </Link>
 
-            <a
+            <Link
               style={{
                 fontFamily: "Copperplate, sans-serif",
               }}
-              href="/courseDelete"
+              to={`/courseDelete`}
             >
               {" "}
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>
               Delete
-            </a>
+            </Link>
           </div>
         </div>
       </div>
