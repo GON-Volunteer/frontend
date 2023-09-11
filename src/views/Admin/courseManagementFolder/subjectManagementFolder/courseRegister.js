@@ -82,7 +82,6 @@ export default function CourseRegister() {
       subject_id: subId[formData.subject_idx],
     };
 
-    console.log("add하는 data: " + JSON.stringify(data));
     await axios
       .post(`${BASE_URL}/api/courses/`, data)
       .then((response) => {
