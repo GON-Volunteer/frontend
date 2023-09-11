@@ -23,42 +23,42 @@ export default function TeacherManagement() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="management-menu-bar">
           <div className="management-menu-items">
-            <a
+            <Link
               style={{
                 fontFamily: "Copperplate, sans-serif",
               }}
-              href="/teacherManagement/register"
+              to={`/teacherManagement/register`}
             >
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
               Add
-            </a>
+            </Link>
 
-            <a
+            <Link
               style={{
                 fontFamily: "Copperplate, sans-serif",
               }}
-              href="/teacherManagement/delete"
+              to={`/teacherManagement/delete`}
             >
               {" "}
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>
               Delete
-            </a>
-            <a
+            </Link>
+            <Link
               style={{
                 fontFamily: "Copperplate, sans-serif",
               }}
-              href="/teacherManagement/TeacherInfo"
+              to={`/teacherManagement/TeacherInfo`}
             >
               {" "}
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
               Edit
-            </a>
+            </Link>
           </div>
         </div>
       </div>
