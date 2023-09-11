@@ -22,6 +22,8 @@ export default function StudentManagement() {
           fontWeight: "bold",
           fontFamily: "Copperplate, sans-serif",
           fontSize: "21px",
+          marginTop: "10px",
+          color: "black",
         }}
       >
         &nbsp;Student Management
@@ -36,7 +38,7 @@ export default function StudentManagement() {
               }}
             >
               <ListItemIcon>
-                <AddIcon />
+                <AddIcon className="addicon" />
               </ListItemIcon>
               Add
             </Link>
@@ -49,7 +51,7 @@ export default function StudentManagement() {
             >
               {" "}
               <ListItemIcon>
-                <DeleteIcon />
+                <DeleteIcon className="deleteicon" />
               </ListItemIcon>
               Delete
             </Link>
@@ -62,7 +64,7 @@ export default function StudentManagement() {
             >
               {" "}
               <ListItemIcon>
-                <EditIcon />
+                <EditIcon className="editicon" />
               </ListItemIcon>
               Edit
             </Link>

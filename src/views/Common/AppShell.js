@@ -83,28 +83,28 @@ export default function ButtonAppBar() {
           onClick={goHome}
           sx={{ textAlign: "center", padding: "20px 10px" }}
         >
-          <HomeIcon />
+          <HomeIcon className="addicon" />
           Home
         </MenuItem>
         <MenuItem
           onClick={goAnnouncement}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <StarIcon />
+          <StarIcon className="deleteicon" />
           Announcement
         </MenuItem>
         <MenuItem
           onClick={goDashboard}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <BookIcon />
+          <BookIcon className="boardicon" />
           Dashboard of courses
         </MenuItem>
         <MenuItem
           onClick={changePassword}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <EditIcon />
+          <EditIcon className="editicon" />
           Change Password
         </MenuItem>
 

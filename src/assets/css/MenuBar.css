@@ -1,6 +1,6 @@
 /* MenuBar.css */
 .management-menu-bar {
-  background-color: #d9dddf9f;
+  /* background-color: #d9dddf9f; */
   height: 100%;
   width: 100%;
   display: flex;
@@ -20,14 +20,26 @@
   width: 100%;
   margin-left: 3%;
 }
-
+.boardicon {
+  color: blueviolet;
+}
+.addicon {
+  color: rgba(55, 0, 255, 0.892);
+}
+.deleteicon {
+  color: #e51e1ecc;
+}
+.editicon {
+  color: rgba(43, 173, 43, 0.774);
+}
 .management-menu-items a {
   display: flex;
   align-items: center;
   text-decoration: none;
+  /* color: #0045a5; */
   color: rgb(44, 0, 70);
   font-size: 16px;
-  font-weight: 900;
+  font-weight: 1000;
 
   padding-right: 100%;
   padding-bottom: 10px;

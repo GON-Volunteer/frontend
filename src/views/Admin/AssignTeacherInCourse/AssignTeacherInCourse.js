@@ -415,6 +415,7 @@ function AssignTeacherInCourse() {
             fontFamily: "Copperplate, sans-serif",
             fontSize: "19px",
             marginTop: "10px",
+            color: "black",
           }}
           id="subListTitle"
         >
@@ -426,7 +427,7 @@ function AssignTeacherInCourse() {
         <h4
           style={{
             fontWeight: "bold",
-
+            color: "black",
             fontSize: "21px",
             marginBottom: "10px",
           }}
@@ -525,7 +526,7 @@ function AssignTeacherInCourse() {
         <h4
           style={{
             fontWeight: "bold",
-
+            color: "black",
             fontSize: "21px",
             marginBottom: "10px",
           }}
