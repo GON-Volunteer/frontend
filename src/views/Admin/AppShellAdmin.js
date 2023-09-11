@@ -94,14 +94,14 @@ export default function ButtonAppBar() {
           onClick={goHome}
           sx={{ textAlign: "center", padding: "20px 10px" }}
         >
-          <HomeIcon />
+          <HomeIcon className="addicon" />
           Home
         </MenuItem>
         <MenuItem
           onClick={goAnnouncement}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <StarIcon />
+          <StarIcon className="deleteicon" />
           Announcement
         </MenuItem>
 
@@ -111,42 +111,42 @@ export default function ButtonAppBar() {
           onClick={goTeacherManagement}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <EditIcon />
+          <EditIcon className="editicon" />
           Teacher Management
         </MenuItem>
         <MenuItem
           onClick={goStudentManagement}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <EditIcon />
+          <EditIcon className="editicon" />
           Student Management
         </MenuItem>
         <MenuItem
           onClick={goCourseManagement}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <EditIcon />
+          <EditIcon className="editicon" />
           Course Management
         </MenuItem>
         <MenuItem
           onClick={goAssignTeacherInCourse}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <EditIcon />
+          <EditIcon className="editicon" />
           Assign Teacher in Course
         </MenuItem>
         <MenuItem
           onClick={goAssignStudentInCourse}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <EditIcon />
+          <EditIcon className="editicon" />
           Assign Student in Course
         </MenuItem>
         <MenuItem
           onClick={changePassword}
           sx={{ textAlign: "center", padding: "10px 10px" }}
         >
-          <EditIcon />
+          <EditIcon className="editicon" />
           Change Password
         </MenuItem>
 
