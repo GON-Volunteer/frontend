@@ -52,7 +52,7 @@ export default function CourseRegister() {
   const [subId, setSubId] = useState([]);
   useEffect(() => {
     axios
-      .get(BASE_URL + "/api/subjects/")
+      .get(`${BASE_URL}/api/subjects/`)
       .then((res) => {
         console.log("courseInfo:" + JSON.stringify(res.data));
         if (Array.isArray(res.data)) {
@@ -82,40 +82,37 @@ export default function CourseRegister() {
       subject_id: subId[formData.subject_idx],
     };
 
-    try {
-      console.log("add하는 data: " + JSON.stringify(data));
-      const response = await axios.post(BASE_URL + "/api/courses", data);
-      console.log("서버 응답:");
-      console.log(response.data);
-
-      if (response.data.code === "200") {
-        // 성공적으로 추가된 경우
-        setPopupVisible(true);
-        setTimeout(() => {
-          setPopupVisible(false);
-        }, 3000);
-        resetFormData();
+    console.log("add하는 data: " + JSON.stringify(data));
+    await axios
+      .post(`${BASE_URL}/api/courses/`, data)
+      .then((response) => {
+        console.log("서버 응답:");
+        console.log(response.data);
+        if (response.data.code === "200") {
+          // 성공적으로 추가된 경우
+          setPopupVisible(true);
+          setTimeout(() => {
+            setPopupVisible(false);
+          }, 3000);
+          resetFormData();
+          setLoading(false);
+        } else if (response.data.code === "400") {
+          // 실패한 경우 처리
+          setErrPopupVisible(true);
+          setTimeout(() => {
+            setErrPopupVisible(false);
+          }, 3000);
+          resetFormData();
+          setLoading(false);
+        } else {
+          console.log("어케할까");
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding course:", error);
         setLoading(false);
-      } else if (response.data.code === "400") {
-        // 실패한 경우 처리
-        setErrPopupVisible(true);
-        setTimeout(() => {
-          setErrPopupVisible(false);
-        }, 3000);
-        resetFormData();
-        setLoading(false);
-      } else {
-        console.log("어케할까");
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error adding course:", error);
-      setLoading(false);
-      setErrPopupVisible(true);
-      setTimeout(() => {
-        setErrPopupVisible(false);
-      }, 3000);
-    }
+      });
   };
   // const [batchOptions, setBatchOptions] = useState([]);
 
