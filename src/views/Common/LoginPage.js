@@ -26,7 +26,7 @@ function LoginPage() {
   const formRef = useRef();
   const [cookies, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
-
+  const [loadingRequest, setLoadingRequest] = useState(false);
   const goHome = () => {
     navigate("/home");
   };
@@ -55,42 +55,47 @@ function LoginPage() {
   // };
   const LoginFunc = (e) => {
     e.preventDefault();
-
+    if (loadingRequest) {
+      return;
+    }
+    setLoadingRequest(true);
     let body = {
       id,
       password,
     };
 
-
     axios.post(BASE_URL + "/api/login/", body).then((res) => {
-
       if (res.data.code == 200) {
         //console.log(res.data);
         //console.log("Login");
         goHome();
         setCookie("token", res.data.access_token); //cookie에 토큰저장
         dispatch(searchAction.loginUser(res.data));
+        setLoadingRequest(false);
       } else if (res.data.code === 401) {
         setIDErrPopupVisible(true);
         setTimeout(() => {
           setIDErrPopupVisible(false);
         }, 3000);
+        setLoadingRequest(false);
       } else if (res.data.code === 402) {
         setPWErrPopupVisible(true);
         setTimeout(() => {
           setPWErrPopupVisible(false);
         }, 3000);
+        setLoadingRequest(false);
       } else {
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
         }, 3000);
+        setLoadingRequest(false);
         // alert("Account information is incorrect");
         // console.log(res.data);
         // setMsg("ID, Password is empty");
       }
     });
-
+    setLoadingRequest(false);
     setLoading(true);
   };
   return (

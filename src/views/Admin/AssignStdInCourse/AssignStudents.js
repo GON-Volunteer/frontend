@@ -29,7 +29,7 @@ function AssignStudents() {
   const [delStdpopupVisible, setDelStdpopupVisible] = useState(false);
   const [errorDelStdpopupVisible, setErrorDelStdpopupVisible] = useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
-
+  const [loading, setLoading] = useState(false);
   const handleRowClick = (rowIndex) => {
     setSelectedRow(rowIndex);
     console.log(selectedRow);
@@ -153,6 +153,8 @@ function AssignStudents() {
   }, [registerNewStd, deleteStd]);
 
   const addHandler = async () => {
+    if (loading) return;
+    setLoading(true);
     const body = {
       course_id: rowData._id,
       students: registerNewStd.map((studentId) => ({ _id: studentId })),
@@ -168,12 +170,14 @@ function AssignStudents() {
         setSelectedRowIndices([]);
         fetchData();
         setRegisterNewStd([]);
+        setLoading(false);
       } else {
         // 실패한 경우 처리
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
         }, 3000);
+        setLoading(false);
       }
     });
   };

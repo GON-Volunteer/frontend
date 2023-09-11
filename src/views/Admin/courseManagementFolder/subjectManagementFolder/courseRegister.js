@@ -12,6 +12,7 @@ export default function CourseRegister() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     grade: "",
     section: "",
@@ -72,6 +73,8 @@ export default function CourseRegister() {
     navigate("/courseManagement/subjectManagement");
   };
   const handleAdd = async () => {
+    if (loading) return;
+    setLoading(true);
     const data = {
       grade: formData.grade,
       section: formData.section,
@@ -92,6 +95,7 @@ export default function CourseRegister() {
           setPopupVisible(false);
         }, 3000);
         resetFormData();
+        setLoading(false);
       } else if (response.data.code === "400") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
@@ -99,11 +103,14 @@ export default function CourseRegister() {
           setErrPopupVisible(false);
         }, 3000);
         resetFormData();
+        setLoading(false);
       } else {
         console.log("어케할까");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error adding course:", error);
+      setLoading(false);
       setErrPopupVisible(true);
       setTimeout(() => {
         setErrPopupVisible(false);

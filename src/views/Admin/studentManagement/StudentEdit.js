@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 function StudentEdit() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
-
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const rowData = location.state
     ? location.state.rowData
@@ -49,7 +49,8 @@ function StudentEdit() {
     };
 
     const onSubmit = async (data) => {
-      console.log("data너ㅁ겨주고" + JSON.stringify(data));
+      if (loading) return;
+      setLoading(true);
       // navigate("/studentManagement/StudentInfo");
       console.log(`/api/students/${rowData._id.$oid}`);
       await axios
@@ -67,6 +68,7 @@ function StudentEdit() {
             setIsSNError(false);
             reset();
             //setPopupVisible(true);
+            setLoading(false);
           } else if (response.data.code == "408") {
             // 실패한 경우 처리
             console.log("?", response.data.code);
@@ -76,6 +78,7 @@ function StudentEdit() {
             }, 3000);
             setIsIdError(true); // ID 에러 상태 설정
             setIsSNError(false);
+            setLoading(false);
           } else if (response.data.code == "409") {
             console.log(response.data.code, "?");
             setErrPopupVisible(true);
@@ -84,6 +87,7 @@ function StudentEdit() {
             }, 3000);
             setIsIdError(false);
             setIsSNError(true);
+            setLoading(false);
           } else if (response.data.code == "410") {
             setErrPopupVisible(true);
             setTimeout(() => {
@@ -91,12 +95,15 @@ function StudentEdit() {
             }, 3000);
             setIsSNError(true);
             setIsIdError(true);
+            setLoading(false);
           } else {
             console.log("어케할까");
+            setLoading(false);
           }
         })
         .catch((err) => {
           console.log("student info edit error:" + err);
+          setLoading(false);
         });
     };
     const handleBackButtonClick = () => {

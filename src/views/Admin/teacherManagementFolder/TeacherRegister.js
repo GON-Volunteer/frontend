@@ -33,12 +33,15 @@ function TeacherRegister() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [isIdError, setIsIdError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleBackButtonClick = () => {
     navigate("/TeacherManagement");
   };
 
   const onSubmit = async (data) => {
     data["account"] = 1;
+    if (loading) return;
+    setLoading(true);
     try {
       console.log(data);
       const response = await axios.post(
@@ -55,6 +58,7 @@ function TeacherRegister() {
         }, 3000);
         reset();
         setIsIdError(false);
+        setLoading(false);
       } else if (response.data.code == "400") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
@@ -62,6 +66,7 @@ function TeacherRegister() {
           setErrPopupVisible(false);
         }, 3000);
         setIsIdError(true); // ID 에러 상태 설정
+        setLoading(false);
       } else {
         console.log("어케할까");
       }
@@ -69,6 +74,7 @@ function TeacherRegister() {
       // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
     } catch (error) {
       console.error("Error sending data to server:", error);
+      setLoading(false);
     }
   }; //빈배열을 넘겨주면 컴포넌트가 마운트 되었을 때 한번만 실행됩니다.
 

@@ -107,7 +107,7 @@ function AssignTeacherInCourse() {
   const [registerCourseInfo, setRegisterCourseInfo] = useState([]);
   const [selectedRow, setSelectedRow] = useState();
   const [selectedSecondRow, setSelectedSecondRow] = useState();
-
+  const [loading, setLoading] = useState(false);
   const handleRowClick = (rowIndex) => {
     setSelectedRow(rowIndex);
     console.log(selectedRow);
@@ -181,6 +181,8 @@ function AssignTeacherInCourse() {
   const [errorTeacherpopupVisible, setErrorTeacherpopupVisible] =
     useState(false);
   const handleCreate = async () => {
+    if (loading) return;
+    setLoading(true);
     if (formData.teacher1_id == formData.teacher2_id) {
       setErrorTeacherpopupVisible(true);
       setTimeout(() => {
@@ -225,6 +227,7 @@ function AssignTeacherInCourse() {
           setTimeout(() => {
             setPopupVisible(false);
           }, 3000);
+          setLoading(false);
         } else if (response.data.code == "400") {
           setErrPopupVisible(true);
           setTimeout(() => {
@@ -234,13 +237,17 @@ function AssignTeacherInCourse() {
             teacher1_id: "",
             teacher2_id: "",
           });
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error sending new Subject data to server:", error);
+        setLoading(false);
       }
     }
   };
   const handleDelete = async () => {
+    if (loading) return;
+    setLoading(true);
     console.log(
       "rowIndex" +
         selectedSecondRow +
@@ -255,11 +262,14 @@ function AssignTeacherInCourse() {
 
         showAssignedCourseList();
         showNonAssignCourseList();
+        setLoading(false);
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
+        setLoading(false);
       }
     } else {
       console.log("Invalid rowIndex or data is empty.");
+      setLoading(false);
     }
     showAssignedCourseList();
     showNonAssignCourseList();

@@ -19,11 +19,13 @@ function ChangePassword() {
     margin: "5px",
   };
   const user = useSelector((state) => state.user);
-
+  const [loading, setLoading] = useState(false);
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const _id = useSelector((state) => state.user._id);
   const onSubmit = async (data) => {
+    if (loading) return;
+    setLoading(true);
     const requestData = {
       current_password: data.current_password,
       new_password: data.new_password,
@@ -45,19 +47,23 @@ function ChangePassword() {
         setTimeout(() => {
           setPopupVisible(false);
         }, 3000);
+        setLoading(false);
       } else if (response.data.code == "400") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
         }, 3000);
+        setLoading(false);
       } else {
         console.log("어케할까");
+        setLoading(false);
       }
       reset();
       // 서버의 응답 데이터를 확인하거나 다른 작업을 수행하시면 됩니다.
     } catch (error) {
       console.error("Error sending data to server:", error);
+      setLoading(false);
     }
   };
   return (
