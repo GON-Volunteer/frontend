@@ -30,6 +30,7 @@ const Comment = ({
   const [likeState, setLikeState] = useState(
     Boolean(commentObj.likepeople.find(liked))
   );
+  const [loading, setLoading] = useState(false);
 
   // [댓글] 이전에 사용자 댓글 좋아요 클릭 여부 확인
   function liked(element) {
@@ -52,6 +53,8 @@ const Comment = ({
 
   // [CLICK] 좋아요 클릭 핸들러
   const onClickLike = async () => {
+    if (loading) return;
+    setLoading(true);
     setLikeCount(likeCount + 1);
     await axios
       .post(`${process.env.REACT_APP_BASE_URL}/api/comment/like/click`, {
@@ -62,14 +65,18 @@ const Comment = ({
       })
       .then(() => {
         console.log("[CLICK] Comment Like");
+        setLoading(false);
       })
       .catch(() => {
         alert("[CLICK] Comment Like Error");
+        setLoading(false);
       });
   };
 
   // [CANCEL] 댓글 좋아요 취소 핸들러
   const onCancelLike = async () => {
+    if (loading) return;
+    setLoading(true);
     if (likeCount >= 0) {
       setLikeCount(likeCount - 1);
     }
@@ -82,9 +89,11 @@ const Comment = ({
       })
       .then(() => {
         console.log("[CANCEL] Comment Like");
+        setLoading(false);
       })
       .catch(() => {
         alert("[CANCEL] Comment Like Error");
+        setLoading(false);
       });
   };
 

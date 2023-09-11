@@ -28,7 +28,7 @@ function Register() {
 
   //server에 form data 전송 코드 작성하기
   // const onSubmit = (data) => console.log(data);
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
@@ -38,6 +38,8 @@ function Register() {
   const [isIdError, setIsIdError] = useState(false);
   const [isSNError, setIsSNError] = useState(false);
   const onSubmit = async (data) => {
+    if (loading) return;
+    setLoading(true);
     try {
       data["account"] = 2;
       console.log(data);
@@ -59,6 +61,7 @@ function Register() {
         setIsIdError(false);
         setIsSNError(false);
         reset();
+        setLoading(false);
       } else if (response.data.code == "408") {
         // 실패한 경우 처리
         setErrPopupVisible(true);
@@ -66,12 +69,14 @@ function Register() {
           setErrPopupVisible(false);
         }, 4000);
         setIsIdError(true); // ID 에러 상태 설정
+        setLoading(false);
       } else if (response.data.code == "409") {
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
         }, 4000);
         setIsSNError(true);
+        setLoading(false);
       } else if (response.data.code == "410") {
         setErrPopupVisible(true);
         setTimeout(() => {
@@ -79,11 +84,14 @@ function Register() {
         }, 4000);
         setIsSNError(true);
         setIsIdError(true);
+        setLoading(false);
       } else {
         console.log("어케할까");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error sending data to server:", error);
+      setLoading(false);
       // 요청이 실패했을 경우, 예외 처리를 하거나 에러 메시지를 표시하도록 처리합니다.
     }
   };

@@ -59,6 +59,9 @@ const Course_ArticleCreate = () => {
 
   // [CREATE] 게시글 생성 핸들러
   const onCreatePosting = async (event) => {
+    if (loadingRequest) {
+      return;
+    }
     event.preventDefault();
     setLoadingRequest(true);
     let attachmentUrl = "";

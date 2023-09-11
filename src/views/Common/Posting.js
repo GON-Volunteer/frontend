@@ -110,6 +110,10 @@ const Posting = ({}) => {
 
   // [UPDATE] 게시글 업데이트 핸들러
   const onUpdatePosting = async (event) => {
+    if (loadingRequest) {
+      return;
+    }
+    setLoadingRequest(true);
     const ok = await swal("Edit", {
       buttons: ["Cancel", "OK"],
     });
@@ -127,9 +131,11 @@ const Posting = ({}) => {
           console.log("[UPDATE] Article Update");
           onReadComment();
           onReadBoard();
+          setLoadingRequest(false);
         })
         .catch(() => {
           alert("[UPDATE] response (x)");
+          setLoadingRequest(false);
         });
       setEditing(false);
     }
@@ -143,6 +149,10 @@ const Posting = ({}) => {
 
   // [DELETE] 게시글 삭제 핸들러
   const onDeletePosting = async () => {
+    if (loadingRequest) {
+      return;
+    }
+    setLoadingRequest(true);
     const ok = await swal("Delete", {
       buttons: ["Cancel", "OK"],
     });
@@ -151,10 +161,12 @@ const Posting = ({}) => {
         .delete(url + "/api/articles/" + idx + "/delete")
         .then(() => {
           console.log("[DELETE] Article Delete");
+          setLoadingRequest(false);
           navigate("/Announcement-Page");
         })
         .catch(() => {
           //alert("[DELETE] response (x)");
+          setLoadingRequest(false);
         });
       if (attachment) {
         const attachmentRef = ref(storageService, attachment);
@@ -178,6 +190,10 @@ const Posting = ({}) => {
 
   // [CLICK] 게시글 좋아요 클릭 핸들러
   const onClickLike = async (event) => {
+    if (loadingRequest) {
+      return;
+    }
+    setLoadingRequest(true);
     setLikeCount(likeCount + 1);
     await axios
       .post(url + "/api/articles/" + idx + "/like/click", {
@@ -188,14 +204,20 @@ const Posting = ({}) => {
       })
       .then(() => {
         console.log("[CLICK] Posting Like");
+        setLoadingRequest(false);
       })
       .catch(() => {
         alert("[CLICK] Posting Like Error");
+        setLoadingRequest(false);
       });
   };
 
   // [CANCEL] 게시글 좋아요 취소 핸들러
   const onCancelLike = async (event) => {
+    if (loadingRequest) {
+      return;
+    }
+    setLoadingRequest(true);
     if (likeCount >= 0) {
       setLikeCount(likeCount - 1);
     }
@@ -208,9 +230,11 @@ const Posting = ({}) => {
       })
       .then(() => {
         console.log("[CANCEL] Posting Like");
+        setLoadingRequest(false);
       })
       .catch(() => {
         alert("[CANCEL] Posting Like Error");
+        setLoadingRequest(false);
       });
   };
 
@@ -250,8 +274,12 @@ const Posting = ({}) => {
 
   // [CREATE] 댓글 생성 핸들러
   const onCreateComment = async (event) => {
-    event.preventDefault();
+    if (loadingRequest) {
+      return;
+    }
     setLoadingRequest(true);
+    event.preventDefault();
+
     await axios
       .post(url + "/api/articles/" + idx + "/comment/create", {
         method: "POST",
@@ -265,12 +293,13 @@ const Posting = ({}) => {
         console.log("[CREATE] New Comment");
         setCommentCount(commentCount + 1);
         setNewComment(comment);
+        setLoadingRequest(false);
       })
       .catch(() => {
         alert("[CREATE] response (x)");
+        setLoadingRequest(false);
       });
     setComment("");
-    setLoadingRequest(false);
   };
 
   // [READ] 댓글 읽기 핸들러
@@ -288,6 +317,10 @@ const Posting = ({}) => {
 
   // [DELETE] 댓글
   const onDeleteComment = async (comment_id) => {
+    if (loadingRequest) {
+      return;
+    }
+    setLoadingRequest(true);
     const ok = await swal("Delete?", {
       buttons: ["Cancel", "OK"],
     });
@@ -298,11 +331,13 @@ const Posting = ({}) => {
           console.log("[DELETE] comment");
           setCommentCount(commentCount - 1);
           onReadComment();
+          setLoadingRequest(false);
         })
         .catch(() => {
           alert("[DELETE] comment response (x)");
           console.log(comment_id);
           console.log(idx);
+          setLoadingRequest(false);
         });
     }
   };

@@ -22,7 +22,7 @@ function StudentDelete() {
   };
   const [selectedRow, setSelectedRow] = useState(null);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
-
+  const [loading, setLoading] = useState(false);
   const fullNameHeaderClass = "fullNameHeader";
 
   //radio를 클릭하면 인덱스 받아오기
@@ -109,6 +109,8 @@ function StudentDelete() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const handleDelete = async () => {
+    if (loading) return;
+    setLoading(true);
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
     if (selectedRow >= 0) {
       // console.log("rowIndex" + data[selectedRow]._id);
@@ -123,23 +125,28 @@ function StudentDelete() {
             setTimeout(() => {
               setPopupVisible(false);
             }, 3000);
+            setLoading(false);
           } else if (res.data.code == "400") {
             // 실패한 경우 처리
             setErrPopupVisible(true);
             setTimeout(() => {
               setErrPopupVisible(false);
             }, 3000);
+            setLoading(false);
           } else {
             //유효하지않은 요청입니다.
             console.log("어케할까");
+            setLoading(false);
           }
           showStdList();
         })
         .catch((err) => {
           console.error("delete 실패. 에러발생:" + err);
+          setLoading(false);
         });
     } else {
       console.log("Invalid rowIndex or data is empty.");
+      setLoading(false);
     }
   };
 

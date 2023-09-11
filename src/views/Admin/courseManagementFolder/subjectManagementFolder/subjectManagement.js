@@ -32,7 +32,7 @@ export default function SubjectManagement() {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageSize, setPageSize] = useState(1000);
   const [inputValue, setInputValue] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const handleRadioChange = (rowIndex) => {
     setSelectedRow(rowIndex);
     console.log(rowIndex);
@@ -70,6 +70,9 @@ export default function SubjectManagement() {
     console.log(isElective + "?");
   };
   const handleCreate = async () => {
+    if (loading) return; // 이미 요청 중이라면 추가 요청을 막습니다.
+
+    setLoading(true);
     const data = {
       name: inputValue,
       is_elective_subject: isElective,
@@ -89,18 +92,23 @@ export default function SubjectManagement() {
         }, 3000);
         showSubList();
         setInputValue("");
+        setLoading(false);
       } else if (response.data.code == "400") {
         setErrPopupVisible(true);
         setTimeout(() => {
           setErrPopupVisible(false);
         }, 3000);
         setInputValue("");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error sending new Subject data to server:", error);
+      setLoading(false);
     }
   };
   const handleDelete = async () => {
+    if (loading) return; // 이미 요청 중이라면 추가 요청을 막습니다.
+    setLoading(true);
     console.log("rowIndex" + JSON.stringify(data[selectedRow]));
     if (selectedRow >= 0) {
       console.log("rowIndex" + data[selectedRow]._id);
@@ -114,17 +122,21 @@ export default function SubjectManagement() {
           setTimeout(() => {
             setDeletePopupVisible(false);
           }, 3000);
+          setLoading(false);
         } else if (res.data.code == "420") {
           setDeleteErrPopupVisible(true);
           setTimeout(() => {
             setDeleteErrPopupVisible(false);
           }, 5000);
+          setLoading(false);
         }
       } catch (error) {
         console.error("delete 실패. 에러발생:" + error);
+        setLoading(false);
       }
     } else {
       console.log("Invalid rowIndex or data is empty.");
+      setLoading(false);
     }
   };
 

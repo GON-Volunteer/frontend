@@ -21,7 +21,7 @@ function TeacherDelete() {
   };
   const [value, setValue] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   const fullNameHeaderClass = "fullNameHeader";
 
   //radio를 클릭하면 인덱스 받아오기
@@ -91,6 +91,8 @@ function TeacherDelete() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const handleDelete = async () => {
+    if (loading) return;
+    setLoading(true);
     // if (data.length > 0 && selectedRow >= 0 && selectedRow < data.length) {
     if (selectedRow >= 0) {
       const url = `${process.env.REACT_APP_BASE_URL}/api/teachers/${data[selectedRow]._id}`;
@@ -105,21 +107,26 @@ function TeacherDelete() {
           // 삭제가 성공하면 서버에서 새로운 데이터를 가져옴
           setSelectedRow(null); // 삭제 후 선택된 row 초기화
           showTchList();
+          setLoading(false);
         } else if (res.data.code === "400") {
           // 실패한 경우 처리
           setErrPopupVisible(true);
           setTimeout(() => {
             setErrPopupVisible(false);
           }, 3000);
+          setLoading(false);
         } else {
           //유효하지않은 요청입니다.
           console.log("어케할까");
+          setLoading(false);
         }
       } catch (err) {
         console.error("delete 실패. 에러발생:" + err);
+        setLoading(false);
       }
     } else {
       console.log("Invalid rowIndex or data is empty.");
+      setLoading(false);
     }
   };
 

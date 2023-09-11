@@ -31,6 +31,7 @@ function TeacherEdit() {
   };
   //server에 form data 전송 코드 작성하기
   const [value, setValue] = useState("");
+  const [loading, setLoading] = useState(false);
   const [resultClass, setResultClass] = useState([]);
   const navigate = useNavigate();
   const [errpopupVisible, setErrPopupVisible] = useState(false);
@@ -47,6 +48,8 @@ function TeacherEdit() {
     };
 
     const onSubmit = async (data) => {
+      if (loading) return;
+      setLoading(true);
       // console.log("data너ㅁ겨주고" + JSON.stringify(data));
       //   navigate("/teacherManagement/TeacherInfo");
       console.log("req" + data);
@@ -62,6 +65,7 @@ function TeacherEdit() {
             // 성공적으로 추가된 경우
             navigate("/teacherManagement/TeacherInfo");
             //setPopupVisible(true);
+            setLoading(false);
           } else if (res.data.code == "400") {
             // 실패한 경우 처리
             setErrPopupVisible(true);
@@ -69,8 +73,10 @@ function TeacherEdit() {
               setErrPopupVisible(false);
             }, 3000);
             setIsIdError(true); // ID 에러 상태 설정
+            setLoading(false);
           } else {
             console.log("어케할까");
+            setLoading(false);
           }
         });
     };
