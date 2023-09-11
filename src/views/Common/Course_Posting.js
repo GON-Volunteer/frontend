@@ -585,7 +585,7 @@ const Course_Posting = ({}) => {
                             onClick={toggleEditing}
                             style={{ color: "gray" }}
                           >
-                            <EditIcon />
+                            <EditIcon className="editicon" />
                           </IconButton>
                           {/* 게시글 삭제 버튼 */}
                           <IconButton

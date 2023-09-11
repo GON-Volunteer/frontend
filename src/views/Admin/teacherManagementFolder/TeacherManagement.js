@@ -16,6 +16,8 @@ export default function TeacherManagement() {
           fontWeight: "bold",
           fontFamily: "Copperplate, sans-serif",
           fontSize: "21px",
+          marginTop: "10px",
+          color: "black",
         }}
       >
         &nbsp;Teacher Management
@@ -30,7 +32,7 @@ export default function TeacherManagement() {
               to={`/teacherManagement/register`}
             >
               <ListItemIcon>
-                <AddIcon />
+                <AddIcon className="addicon" />
               </ListItemIcon>
               Add
             </Link>
@@ -43,7 +45,7 @@ export default function TeacherManagement() {
             >
               {" "}
               <ListItemIcon>
-                <DeleteIcon />
+                <DeleteIcon className="deleteicon" />
               </ListItemIcon>
               Delete
             </Link>
@@ -55,7 +57,7 @@ export default function TeacherManagement() {
             >
               {" "}
               <ListItemIcon>
-                <EditIcon />
+                <EditIcon className="editicon" />
               </ListItemIcon>
               Edit
             </Link>

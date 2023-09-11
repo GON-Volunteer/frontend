@@ -160,6 +160,7 @@ function AssignStdInCourse() {
             fontFamily: "Copperplate, sans-serif",
             fontSize: "19px",
             marginTop: "10px",
+            color: "black",
           }}
           id="subListTitle"
         >
@@ -172,6 +173,7 @@ function AssignStdInCourse() {
         <h4
           style={{
             marginBottom: "10px",
+            color: "black",
           }}
           id="subListTitle"
         >

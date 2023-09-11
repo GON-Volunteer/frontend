@@ -100,7 +100,7 @@ const Home = () => {
             // Define the custom "Add" button
             addButton: {
               text: "Add", // Button text
-              click: goGoogleCalendar,
+              // click: goGoogleCalendar,
             },
           }}
         />

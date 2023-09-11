@@ -22,6 +22,8 @@ export default function courseManagement() {
           fontWeight: "bold",
           fontFamily: "Copperplate, sans-serif",
           fontSize: "21px",
+          marginTop: "10px",
+          color: "black",
         }}
       >
         &nbsp;Course Management
@@ -36,7 +38,7 @@ export default function courseManagement() {
               to={`/courseManagement/subjectManagement`}
             >
               <ListItemIcon>
-                <AddIcon />
+                <AddIcon className="addicon" />
               </ListItemIcon>
               Add
             </Link>
@@ -49,7 +51,7 @@ export default function courseManagement() {
             >
               {" "}
               <ListItemIcon>
-                <DeleteIcon />
+                <DeleteIcon className="deleteicon" />
               </ListItemIcon>
               Delete
             </Link>

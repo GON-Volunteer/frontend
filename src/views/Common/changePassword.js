@@ -83,10 +83,11 @@ function ChangePassword() {
           fontFamily: "Copperplate, sans-serif",
           fontSize: "19px",
           marginTop: "10px",
+          color: "black",
         }}
         id="subListTitle"
       >
-        Change Password
+        &nbsp;Change Password
       </div>
       <UncontrolledAlert color="info" isOpen={errpopupVisible}>
         <b>Failed! Current password does not match </b>
@@ -162,7 +163,11 @@ function ChangePassword() {
           )}
         </div>
       </form>
-      <Button type="submit" onClick={handleSubmit(onSubmit)}>
+      <Button
+        style={{ marginLeft: "10px" }}
+        type="submit"
+        onClick={handleSubmit(onSubmit)}
+      >
         change password
       </Button>
     </div>
