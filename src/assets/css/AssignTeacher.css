@@ -31,3 +31,48 @@
 th {
   width: 25%; /* 너비 조정을 위한 고정된 값 설정 */
 }
+@media (max-width: 768px) {
+  #add_btn {
+    align-items: center;
+
+    flex-direction: column;
+    margin-left: 20px;
+    width: 80px;
+    height: 40px;
+    top: 100%;
+    right: 5%;
+    position: absolute;
+  }
+}
+
+/* 화면 크기가 768px보다 크고 1200px 이하일 때 (타블렛 뷰) */
+@media (min-width: 769px) and (max-width: 1200px) {
+  #add_btn {
+    align-items: center;
+
+    flex-direction: column;
+    margin-left: 20%;
+
+    width: 80px;
+    height: 40px;
+    top: 80%;
+    right: 5%;
+    position: absolute;
+  }
+}
+
+/* 화면 크기가 1201px 이상일 때 (데스크탑 뷰) */
+@media (min-width: 1201px) {
+  #add_btn {
+    align-items: center;
+
+    flex-direction: column;
+    margin-left: 20%;
+
+    width: 80px;
+    height: 40px;
+    top: 80%;
+    right: 5%;
+    position: absolute;
+  }
+}
