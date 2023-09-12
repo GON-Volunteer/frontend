@@ -33,7 +33,7 @@ function TeacherDelete() {
     axios
       .get(
         // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/teacherlist"
-        "/api/teachers/"
+        `${process.env.REACT_APP_BASE_URL}/api/teachers/`
       )
       .then((res) => {
         if (Array.isArray(res.data)) {

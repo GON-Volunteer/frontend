@@ -9,6 +9,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Button, UncontrolledAlert } from "reactstrap";
 //ref home.css file
 import { useNavigate } from "react-router-dom";
+import "../../../assets/css/AssignTeacher.css";
 function Register() {
   const formItemStyle = {
     margin: "5px",
@@ -279,7 +280,7 @@ function Register() {
             <small role="alert">{errors.passwordConfirm.message}</small>
           )}
         </div>
-        <Button id="leftBtn" type="submit">
+        <Button id="add_btn" type="submit">
           create
         </Button>
       </form>
