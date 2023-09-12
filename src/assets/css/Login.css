@@ -6,7 +6,7 @@
 .register-footer {
   /* 푸터 스타일 유지 */
   bottom: 0px;
-  position: absolute;
+  margin-top: 10px;
   z-index: 1;
   width: 100%;
   background: transparent;
@@ -36,13 +36,7 @@
 #logoid {
   width: 50%;
 }
-.centered-img {
-  /* 이미지 스타일 유지 */
-  display: block;
-  margin: auto;
-  margin-bottom: 130px;
-  margin-top: 130px;
-}
+
 .register-form {
   color: #4350af;
   text-align: start;
@@ -71,9 +65,23 @@
   #logoid {
     width: 55%;
   }
+  .centered-img {
+    /* 이미지 스타일 유지 */
+    display: block;
+    margin: auto;
+    margin-bottom: 30%;
+    margin-top: 30%;
+  }
 }
 @media (min-width: 769px) {
   #logoid {
     width: 20%;
+  }
+  .centered-img {
+    /* 이미지 스타일 유지 */
+    display: block;
+    margin: auto;
+    margin-bottom: 1%;
+    margin-top: 1%;
   }
 }
