@@ -87,7 +87,15 @@
   left: 85%;
   transform: translateX(-50%);
 }
+#tchDeleteBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
 
+  left: 85%;
+  transform: translateX(-50%);
+}
 @media (max-width: 768px) {
   #table th,
   #table td {
