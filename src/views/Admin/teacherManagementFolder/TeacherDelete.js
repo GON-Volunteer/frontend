@@ -38,9 +38,13 @@ function TeacherDelete() {
       .then((res) => {
         if (Array.isArray(res.data)) {
           //map 사용시 새로운 배열 생성해서
-
           console.log(res.data);
-          const teachers = res.data;
+          const teachers = res.data.filter((teacher) => {
+            const id = teacher.id;
+            return (
+              id !== "gonTeacher" && id !== "claschoolnp" && id !== "gonAdmin"
+            );
+          });
           setTeacherInfo(teachers);
         } else {
           console.log("데이터가 배열이 아닙니다.");
@@ -68,7 +72,7 @@ function TeacherDelete() {
 
   const [teacherInfo, setTeacherInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(6); //한페이지에 보여줄 페이지개수
 
   useEffect(() => {
     axios
@@ -79,7 +83,13 @@ function TeacherDelete() {
       .then((res) => {
         if (Array.isArray(res.data)) {
           console.log(res.data);
-          const teachers = res.data.map((item) => item);
+          const teachers = res.data.filter((teacher) => {
+            const id = teacher.id;
+            return (
+              id !== "gonTeacher" && id !== "claschoolnp" && id !== "gonAdmin"
+            );
+          });
+          // const teachers = res.data.map((item) => item);
           setTeacherInfo(teachers);
         } else {
           console.log("데이터가 배열이 아닙니다.");
@@ -259,14 +269,12 @@ function TeacherDelete() {
               })}
             </tbody>
           </table>
-        </div>
-        <div>
           <div className="pagination-container">
             <div className="pagination-wrapper">
               <Button
                 disabled={!(selectedRow >= 0) | (selectedRow === null)}
                 onClick={handleDelete}
-                id="deleteBtn"
+                id="tchDeleteBtn"
               >
                 Delete
               </Button>
@@ -301,6 +309,7 @@ function TeacherDelete() {
             </div>
           </div>
         </div>
+        <div></div>
       </div>
     </div>
   );
