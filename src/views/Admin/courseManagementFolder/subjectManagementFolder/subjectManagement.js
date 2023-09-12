@@ -345,18 +345,10 @@ export default function SubjectManagement() {
           >
             Create
           </Button>
-        </div>
-        <h5
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginRight: "20px",
-          }}
-        >
           <Button color="info" onClick={handleNext} id="nextBtn">
             Next
           </Button>
-        </h5>
+        </div>
       </div>
     </div>
   );

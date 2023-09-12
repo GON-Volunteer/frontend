@@ -47,15 +47,20 @@ function TeacherInfo() {
 
   const [teacherInfo, setTeacherInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(6); //한페이지에 보여줄 페이지개수
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/api/teachers/`).then((res) => {
       console.log("???" + res);
-      if (Array.isArray(res.data) && res.data.length > 0) {
+      if (Array.isArray(res.data)) {
         //map 사용시 새로운 배열 생성해서
         // const resultObj = res.data.map((item) => item);
         // setTeacherInfo(resultObj);
-        const teachers = res.data;
+        const teachers = res.data.filter((teacher) => {
+          const id = teacher.id;
+          return (
+            id !== "gonTeacher" && id !== "claschoolnp" && id !== "gonAdmin"
+          );
+        });
         setTeacherInfo(teachers);
         console.log("teacherinfo" + teachers);
       } else {
@@ -197,7 +202,7 @@ function TeacherInfo() {
         <div>
           <div className="pagination-container">
             <div className="pagination-wrapper">
-              <Button onClick={handleEdit} id="EditBtn">
+              <Button onClick={handleEdit} id="tchDeleteBtn">
                 Edit
               </Button>
               <Pagination
