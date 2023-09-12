@@ -70,6 +70,17 @@
   #title {
     margin-right: 30vw;
   }
+  #add_btn {
+    align-items: center;
+
+    flex-direction: column;
+    margin-left: 20px;
+    width: 80px;
+    height: 40px;
+    top: 100%;
+    right: 5%;
+    position: absolute;
+  }
 }
 
 /* 화면 크기가 768px보다 크고 1200px 이하일 때 (타블렛 뷰) */
@@ -77,11 +88,33 @@
   #title {
     margin-right: 60vw;
   }
+  #add_btn {
+    align-items: center;
+
+    flex-direction: column;
+    margin-left: 20px;
+    width: 80px;
+    height: 40px;
+    top: 100%;
+    right: 5%;
+    position: absolute;
+  }
 }
 
 /* 화면 크기가 1201px 이상일 때 (데스크탑 뷰) */
 @media (min-width: 1201px) {
   #title {
     margin-right: 80vw; /* 데스크탑 뷰에서는 더 큰 간격으로 설정합니다. */
+  }
+  #add_btn {
+    align-items: center;
+
+    flex-direction: column;
+    margin-left: 20%;
+    margin-bottom: 10%;
+    width: 80px;
+    height: 40px;
+
+    position: absolute;
   }
 }

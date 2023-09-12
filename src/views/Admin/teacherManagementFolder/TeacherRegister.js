@@ -216,7 +216,7 @@ function TeacherRegister() {
             <small role="alert">{errors.passwordConfirm.message}</small>
           )}
         </div>
-        <Button id="leftBtn" type="submit">
+        <Button id="add_btn" type="submit">
           create
         </Button>
       </form>
