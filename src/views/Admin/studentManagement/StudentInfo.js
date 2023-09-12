@@ -72,7 +72,7 @@ function StudentInfo() {
 
   const [studentInfo, setstudentInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(10); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(6); //한페이지에 보여줄 페이지개수
   useEffect(() => {
     axios
       .get(
@@ -81,8 +81,10 @@ function StudentInfo() {
       )
       .then((res) => {
         if (Array.isArray(res.data)) {
-          const resultObj = res.data.map((item) => item);
-          setstudentInfo(resultObj);
+          const students = res.data.filter(
+            (student) => student.id !== "gonStudent"
+          );
+          setstudentInfo(students);
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
