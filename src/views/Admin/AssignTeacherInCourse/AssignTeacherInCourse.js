@@ -91,7 +91,11 @@ function AssignTeacherInCourse() {
     },
   ];
   const renderTeacher1Options = () => {
-    return teachers.map((teacher) => (
+    const teachersOptions = teachers.filter((teacher) => {
+      const id = teacher.id;
+      return id !== "gonTeacher" && id !== "claschoolnp" && id !== "gonAdmin";
+    });
+    return teachersOptions.map((teacher) => (
       <option key={teacher.full_name} value={teacher._id}>
         {teacher.full_name}
       </option>
