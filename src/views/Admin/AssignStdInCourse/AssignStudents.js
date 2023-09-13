@@ -130,8 +130,11 @@ function AssignStudents() {
       const response = await axios.get(
         `${BASE_URL}/api/courses/${rowData._id}/students`
       );
+      const students = response.data.not_course_student.filter(
+        (student) => student.id !== "gonStudent"
+      );
       setRegiStdInfo(response.data.course_student);
-      setUnregiStdInfo(response.data.not_course_student);
+      setUnregiStdInfo(students);
     } catch (error) {
       console.log("course regi Student get err:", error);
     }
