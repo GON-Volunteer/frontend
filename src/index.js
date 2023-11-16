@@ -15,6 +15,7 @@ import LoginPage from "views/Common/LoginPage.js";
 import AnnouncementPage from "views/Common/AnnouncementPage";
 import AnnouncementList from "views/Common/AnnouncementList";
 import ChangePassword from "views/Common/changePassword";
+import SignUp from "views/Common/SignUp.js";
 //admin - student manage
 import StudentManagement from "views/Admin/studentManagement/StudentManagement";
 import StudentRegister from "views/Admin/studentManagement/StudentRegister";
@@ -62,9 +63,15 @@ root.render(
         <Routes>
           <Route path="/nucleo-icons" element={<NucleoIcons />} />
           <Route path="*" element={<LoginPage />} />
-
+          <Route
+            path="/SignUp"
+            element={<SignUp />}
+            
+          />
           {/* </Route> */}
           <Route element={<LoginCheck />}>
+            
+
             <Route path="home" element={<Home />} />
             <Route path="/articles/:idx" element={<Posting />} />
             <Route path="/Announcement-page" element={<AnnouncementPage />} />

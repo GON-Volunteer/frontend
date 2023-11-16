@@ -21,6 +21,7 @@ function LoginPage() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  console.log(BASE_URL);
 
   const url = "http://localhost:5000";
   const formRef = useRef();
@@ -29,6 +30,9 @@ function LoginPage() {
   const [loadingRequest, setLoadingRequest] = useState(false);
   const goHome = () => {
     navigate("/home");
+  };
+  const SignUp = () => { //회원가입
+    navigate("/SignUp");
   };
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
@@ -53,7 +57,23 @@ function LoginPage() {
   //   const id = e.target.elements["id"].value;
   //   const password = e.target.elements["password"].value;
   // };
+
+  // const SignUpFunc = (e) => { 
+  //     e.preventDefault();
+  //     console.log("서버 응답:");
+  //     axios.post(BASE_URL + "/SignUp").then((res) => {
+  //       console.log("서버 응답:");
+  //     console.log(res.data.code);
+  //       if (res.data.code == 200) {
+  //         SignUp();
+  //       }
+
+  //     })
+  // };
+
+
   const LoginFunc = (e) => {
+
     e.preventDefault();
     if (loadingRequest) {
       return;
@@ -63,8 +83,10 @@ function LoginPage() {
       id,
       password,
     };
-
+    
     axios.post(BASE_URL + "/api/login/", body).then((res) => {
+      console.log("서버 응답:");
+      console.log(res.data.code);
       if (res.data.code == 200) {
         //console.log(res.data);
         //console.log("Login");
@@ -192,6 +214,15 @@ function LoginPage() {
           >
             Login
           </Button>
+
+          <Button
+            className="btn-round"
+            onClick={SignUp}
+            id="signUp-btn"
+          >
+            SignUp
+          </Button>
+
         </Form>
 
         <div className="footer register-footer text-center">

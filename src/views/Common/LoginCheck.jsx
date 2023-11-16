@@ -42,6 +42,7 @@ function LoginCheck() {
         }
       } else {
         dispatch(searchAction.clearUser(user));
+        console.log(user);
         alert("Not authorized");
         console.log("Not have token");
         setRenderComponent(
