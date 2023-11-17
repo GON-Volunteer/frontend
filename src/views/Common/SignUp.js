@@ -55,7 +55,7 @@ function SignUp (){
         if (loading) return;
         setLoading(true);
         try {
-          const response=null; //edit
+          let response;
           data["account"] = 2;
           console.log(data);
 
@@ -71,6 +71,11 @@ function SignUp (){
               data
             );
           }
+          // const response = await axios.post(
+          //       `${process.env.REACT_APP_BASE_URL}/api/students/`,
+          //       // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AddStudent",
+          //       data
+          //     );
     
           console.log("서버 응답:");
           console.log(response.data.code);
@@ -460,20 +465,6 @@ function SignUp (){
                 },
               },
             })}
-            // {…register("passwordConfirm", {
-            //   required: "Fill in the blanks.",
-            //   minLength: {
-            //     value: 7,
-            //     message: "Enter at least 7 digits.",
-            //   },
-            //   validate: {
-            //     check:(val) => {
-            //       if (getValues("pw") !== val) {
-            //         return "Password do not match.";
-            //       }
-            //     },
-            //   },
-            // })}
           />
           {errors.passwordConfirm && (
             <small role="alert">{errors.passwordConfirm.message}</small>
