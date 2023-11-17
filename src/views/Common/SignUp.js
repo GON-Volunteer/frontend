@@ -15,8 +15,24 @@ import "../../assets/css/SignUp.css";
 
 
 
-function SignUp (){
+
+function SignUp() {
     const url = "http://localhost:5000";
+    const [username, setUsername] = useState("");
+    const [selectedOption, setSelectedOption] = useState('studentForm');
+
+
+    const handleName = (e) => {
+      
+      setUsername(e.target.reset());
+    }
+
+    const handleRadioChange = (event) => {
+      setSelectedOption(event.target.value);
+      //document.getElementsByTagName('form').reset();
+      //document.getElementById("full_name").reset();
+      //$('input[type="text"], input[type="password"], textarea').val('');
+    };
     
     const formItemStyle = {
         margin: "5px",
@@ -32,7 +48,7 @@ function SignUp (){
         reset,
         getValues, //input 값을 가져올 수 있는 함수
         formState: { errors }, //form state에 관한 정보를 담고 있는 객체
-      } = useForm({ mode: "onSubmit" });
+      } = useForm({mode: "onSubmit"});
     
       //server에 form data 전송 코드 작성하기
       // const onSubmit = (data) => console.log(data);
@@ -40,6 +56,8 @@ function SignUp (){
       const navigate = useNavigate();
       const [errpopupVisible, setErrPopupVisible] = useState(false);
       const [popupVisible, setPopupVisible] = useState(false);
+
+
     //   const handleBackButtonClick = () => {
     //     navigate("/studentManagement");
     //   };
@@ -91,7 +109,7 @@ function SignUp (){
             reset();
             setLoading(false);
             LoginFunc();
-          } else if (response.data.code == "408") {
+          } else if (response.data.code === "408") {
             // 실패한 경우 처리
             setErrPopupVisible(true);
             setTimeout(() => {
@@ -99,14 +117,14 @@ function SignUp (){
             }, 4000);
             setIsIdError(true); // ID 에러 상태 설정
             setLoading(false);
-          } else if (response.data.code == "409") {
+          } else if (response.data.code === "409") {
             setErrPopupVisible(true);
             setTimeout(() => {
               setErrPopupVisible(false);
             }, 4000);
             setIsSNError(true);
             setLoading(false);
-          } else if (response.data.code == "410") {
+          } else if (response.data.code === "410") {
             setErrPopupVisible(true);
             setTimeout(() => {
               setErrPopupVisible(false);
@@ -124,11 +142,10 @@ function SignUp (){
           // 요청이 실패했을 경우, 예외 처리를 하거나 에러 메시지를 표시하도록 처리합니다.
         }
       };
-      const [selectedOption, setSelectedOption] = useState('studentForm');
+      
 
-      const handleRadioChange = (event) => {
-        setSelectedOption(event.target.value);
-      };
+
+     
     return (
       
         <div>
@@ -162,10 +179,10 @@ function SignUp (){
           </div>
           
           <div className="checkAccount">
-          <input type="radio" name="account" value="studentForm" checked={selectedOption === 'studentForm'} onChange={handleRadioChange}/>
+          <input type="radio" name="SelectedRadioType" id="studentForm" value="studentForm" checked={selectedOption === 'studentForm'} onChange={handleRadioChange} onClick={()=>reset()}/>
               <span class="up">Student</span>
               &nbsp;&nbsp;
-          <input type="radio" name="account" value="teacherForm" checked={selectedOption === 'teacherForm'} onChange={handleRadioChange}/>
+          <input type="radio" name="SelectedRadioType" id="teacherForm" value="teacherForm" checked={selectedOption === 'teacherForm'} onChange={handleRadioChange} onClick={()=>reset()}/>
               <span class="up">Teacher</span>
           </div>
 {/* ---------------------------------------------student-------------------------------------------------- */}
@@ -187,7 +204,7 @@ function SignUp (){
             </UncontrolledAlert>
           </div>
     
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form id="students_form" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control__items" style={formItemStyle}>
               <label htmlFor="s_n">S.N : </label>
               <input
@@ -214,6 +231,8 @@ function SignUp (){
                 id="full_name"
                 type="text"
                 placeholder="Full Name"
+                //value={username}
+                //onChange={onChangeUserName}
                 {...register("full_name", {
                   required: "Full Name is required.",
                 })}
@@ -379,7 +398,7 @@ function SignUp (){
           <b>Success!</b> Teacher registered successfully! X
         </UncontrolledAlert>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form id="teachers_form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control__items" style={formItemStyle}>
           <label htmlFor="full_name">Full Name : </label>
           <input
@@ -387,6 +406,8 @@ function SignUp (){
             id="full_name"
             type="text"
             placeholder="Full Name"
+            // value={username}
+            // onChange={onChangeUserName}
             {...register("full_name", {
               required: "Full Name is required.",
             })}
