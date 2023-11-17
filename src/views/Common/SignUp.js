@@ -65,7 +65,7 @@ function SignUp (){
               // "https://4ece099f-93aa-44bb-a61a-5b0fa04f47ac.mock.pstmn.io/AddStudent",
               data
             );
-          }else{
+          }else if(selectedOption === 'teacherForm'){
             response = await axios.post(
               `${process.env.REACT_APP_BASE_URL}/api/teachers/`,
               data
