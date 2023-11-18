@@ -108,7 +108,10 @@ function SignUp() {
             setIsSNError(false);
             reset();
             setLoading(false);
-            LoginFunc();
+            setTimeout(() => {
+              LoginFunc();
+            }, 3000);
+            //LoginFunc();
           } else if (response.data.code === "408") {
             // 실패한 경우 처리
             setErrPopupVisible(true);
