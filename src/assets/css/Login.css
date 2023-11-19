@@ -61,15 +61,15 @@
     border: #3a469d;
   }
 
-  .register-footer {
-    /* 푸터 스타일 유지 */
+  /* .register-footer {
+   
     bottom: 0px;
     position: absolute;
     z-index: 1;
     width: 100%;
     background: transparent;
     color: #2b63de;
-  }
+  } */
 }
 @media (min-width: 769px) {
   #logoid {

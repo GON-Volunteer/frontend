@@ -55,8 +55,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 export let persistorInfo = persistStore(store); //persistStore():유지하고싶은 redux store을 인자로 넣으면 persistor 객체를 반환
 root.render(
   <Provider store={store}>
-    {/* persistor={}: localStorage에 저장할 스토어를 persistor객체로 전달 */}
-    {/* <PersistGate loading={null} persistor={persistorInfo}> */}
     <CookiesProvider>
       <BrowserRouter>
         <Routes>

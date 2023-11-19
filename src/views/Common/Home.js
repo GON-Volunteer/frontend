@@ -12,54 +12,79 @@ import AppShell from "./AppShell";
 import AppShellAdmin from "../Admin/AppShellAdmin";
 import AppShellTeacher from "../Teacher/AppShellTeacher";
 import AnnouncementList from "./AnnouncementList.js";
+// import { google } from "googleapis";
 
-const Announcement = () => {
-  const url = "http://localhost:5000";
-  const [announcements, setAnnouncements] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+// const Announcement = () => {
+//   const url = "http://localhost:5000";
+//   const [announcements, setAnnouncements] = useState([]);
+//   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/announcements`)
-      .then((res) => {
-        setAnnouncements(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  return (
-    <div className="announcement">
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <div>
-          <ul>
-            {announcements.map((announcement) => (
-              <li key={announcement.id}>
-                <Link to={`/announcements/${announcement.id}`}>
-                  {announcement.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-};
+//   return (
+//     <div className="announcement">
+//       {isLoading ? (
+//         <div>Loading...</div>
+//       ) : (
+//         <div>
+//           <ul>
+//             {announcements.map((announcement) => (
+//               <li key={announcement.id}>
+//                 <Link to={`/announcements/${announcement.id}`}>
+//                   {announcement.title}
+//                 </Link>
+//               </li>
+//             ))}
+//           </ul>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
 const Home = () => {
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+
   const navigate = useNavigate();
   const goAncList = (e) => {
     e.preventDefault();
     navigate("/Announcement-Page");
   };
   const user = useSelector((state) => state.user);
+  const eventDetails = {
+    summary: "나경 새로운 일정",
+    start: {
+      dateTime: "2023-11-13T10:00:00",
+      timeZone: "Asia/Seoul",
+    },
+    end: {
+      dateTime: "2023-11-01T11:00:00",
+      timeZone: "Asia/Seoul",
+    },
+  };
 
+  const googleid = "gofn2023@gmail.com";
+  useEffect(() => {
+    // const script1 = document.createElement("script");
+    // script1.src = "https://apis.google.com/js/api.js";
+    // script1.async = true;
+    // script1.defer = true;
+    // script1.onload = () => gapiLoaded();
+    // document.body.appendChild(script1);
+    // const script2 = document.createElement("script");
+    // script2.src = "https://accounts.google.com/gsi/client";
+    // script2.async = true;
+    // script2.defer = true;
+    // script2.onload = () => gisLoaded();
+    // document.body.appendChild(script2);
+    // axios
+    //   .get(`${process.env.REACT_APP_BASE_URL}/api/announcements`)
+    //   .then((res) => {
+    //     setAnnouncements(res.data);
+    //     setIsLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  }, []);
   const goGoogleCalendar = () => {
     // 구글 캘린더 링크로 이동하는 URL
     const googleCalendarLink = "https://calendar.google.com";
@@ -100,7 +125,7 @@ const Home = () => {
             // Define the custom "Add" button
             addButton: {
               text: "Add", // Button text
-              // click: goGoogleCalendar,
+              // click: addGoogleCalendarEvent,
             },
           }}
         />
