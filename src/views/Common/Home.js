@@ -13,53 +13,51 @@ import AppShellAdmin from "../Admin/AppShellAdmin";
 import AppShellTeacher from "../Teacher/AppShellTeacher";
 import AnnouncementList from "./AnnouncementList.js";
 
-const Announcement = () => {
-  const url = "http://localhost:5000";
-  const [announcements, setAnnouncements] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/announcements`)
-      .then((res) => {
-        setAnnouncements(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  return (
-    <div className="announcement">
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <div>
-          <ul>
-            {announcements.map((announcement) => (
-              <li key={announcement.id}>
-                <Link to={`/announcements/${announcement.id}`}>
-                  {announcement.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-};
-
 const Home = () => {
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+  const access_token = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
   const navigate = useNavigate();
   const goAncList = (e) => {
     e.preventDefault();
     navigate("/Announcement-Page");
   };
   const user = useSelector((state) => state.user);
+  const apiUrl =
+    "https://www.googleapis.com/calendar/v3/calendars/gofn2023@gmail.com/events";
+  const handleAddEvent = async () => {
+    try {
+      // Google Calendar API에 요청 보내기
+      const response = await axios.post(
+        apiUrl,
+        {
+          summary: "Sample Event",
+          description: "A sample event added using axios",
+          start: {
+            dateTime: "2023-12-03T10:00:00", 
+            timeZone: "Asia/Seoul", 
+          },
+          end: {
+            dateTime: "2023-12-03T12:00:00", // 종료 일시
+            timeZone: "Asia/Seoul", // 사용자의 시간대로 변경
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`, // 여기에 Google Calendar API에 대한 액세스 토큰을 넣어야 합니다.
+          },
+        }
+      );
 
+      // 성공적으로 이벤트가 추가되었을 때의 처리
+      console.log("Event added successfully:", response.data);
+    } catch (error) {
+      // 오류 처리
+      console.error("Error adding event:", error.response.data);
+    }
+  };
+  // useEffect(() => {
+
+  // }, []);
   const goGoogleCalendar = () => {
     // 구글 캘린더 링크로 이동하는 URL
     const googleCalendarLink = "https://calendar.google.com";
@@ -67,6 +65,7 @@ const Home = () => {
     // 새 창에서 구글 캘린더 링크 열기
     window.open(googleCalendarLink, "_blank");
   };
+
   return (
     <div className="Home-container">
       {user.account === 1 ? (
@@ -100,7 +99,7 @@ const Home = () => {
             // Define the custom "Add" button
             addButton: {
               text: "Add", // Button text
-              // click: goGoogleCalendar,
+              click: handleAddEvent,
             },
           }}
         />
