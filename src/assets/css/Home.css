@@ -56,16 +56,16 @@
 
 #simple_announce {
   width: 90%;
-  margin: 0 auto; /* 수평 중앙 정렬 */
+  margin: 10px auto; /* 수평 중앙 정렬 */
 }
 .custom-table th,
 .custom-table td {
   font-size: 12px !important; /* 강제로 스타일 적용 */
-  /* 다른 스타일 속성들 */
 }
 .custom-table {
   margin-bottom: 5px;
 }
+
 @media (max-width: 768px) {
   #title {
     margin-right: 30vw;

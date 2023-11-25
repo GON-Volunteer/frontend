@@ -79,7 +79,7 @@ function Course_ArticleList({ article1 }) {
     onReadPosting();
   }, []);
   const data = useMemo(() => article, [article]);
-  console.log("data?:" + JSON.stringify(data));
+  // console.log("data?:" + JSON.stringify(data));
   // 현재 페이지에 해당하는 데이터를 가져오는 함수
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * pageSize;

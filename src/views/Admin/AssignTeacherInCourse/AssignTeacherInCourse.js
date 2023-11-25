@@ -7,6 +7,7 @@ import axios from "axios"; // Axios 사용 예시
 import { useNavigate } from "react-router-dom";
 import "../../../assets/css/AssignTeacher.css";
 import AppShellAdmin from "../AppShellAdmin";
+import styles from "../../../assets/css/Table.module.css";
 function AssignTeacherInCourse() {
   const [formData, setFormData] = useState({
     teacher1_id: "",
@@ -440,10 +441,13 @@ function AssignTeacherInCourse() {
           &nbsp;Assign teacher to the course!
         </h4>
         <div id="table" className="AssignTeacherTable">
-          <table {...getTableProps()}>
-            <thead>
+          <table className={styles.custom_table} {...getTableProps()}>
+            <thead className={styles.custom_thead}>
               {headerGroups.map((header) => (
-                <tr {...header.getHeaderGroupProps()}>
+                <tr
+                  className={styles.custom_tr}
+                  {...header.getHeaderGroupProps()}
+                >
                   {header.headers.map((col) => (
                     <th {...col.getHeaderProps()}>{col.render("Header")}</th>
                   ))}
@@ -457,6 +461,7 @@ function AssignTeacherInCourse() {
                 const isRowSelected = rowIndex === selectedRow;
                 return (
                   <tr
+                    className={styles.custom_tr}
                     key={rowIndex}
                     id="rowFont"
                     {...row.getRowProps()}
@@ -542,11 +547,14 @@ function AssignTeacherInCourse() {
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
         </div> */}
         <div id="table" className="AssignTeacherTable">
-          <table {...getSecondTableProps()}>
+          <table className={styles.custom_table} {...getSecondTableProps()}>
             {" "}
-            <thead>
+            <thead className={styles.custom_thead}>
               {secondTableHeaderGroups.map((header) => (
-                <tr {...header.getHeaderGroupProps()}>
+                <tr
+                  className={styles.custom_tr}
+                  {...header.getHeaderGroupProps()}
+                >
                   {header.headers.map((col) => (
                     <th {...col.getHeaderProps()} id="headerCell">
                       {col.render("Header")}
@@ -561,6 +569,7 @@ function AssignTeacherInCourse() {
                 const isRowSelected = rowIndex === selectedSecondRow;
                 return (
                   <tr
+                    className={styles.custom_tr}
                     key={rowIndex}
                     id="rowFont"
                     {...row.getRowProps()}

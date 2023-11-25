@@ -15,6 +15,7 @@ import "../../../assets/css/DeleteTable.css";
 // import RadioGroup from "../../components/RadioGroup";
 import { Link } from "react-router-dom";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import styles from "../../../assets/css/Table.module.css";
 
 function StudentInfo() {
   const navigate = useNavigate();
@@ -73,7 +74,27 @@ function StudentInfo() {
   const [studentInfo, setstudentInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageSize, setPageSize] = useState(6); //한페이지에 보여줄 페이지개수
-  useEffect(() => {
+  const handleWindowResize = () => {
+    const windowHeight = window.innerHeight;
+    if (windowHeight < 600) {
+      console.log("windowHeight:", windowHeight);
+      setPageSize(7);
+    } else if (windowHeight >= 600 && windowHeight < 700) {
+      setPageSize(8);
+    } else if (windowHeight >= 700 && windowHeight < 800) {
+      console.log("windowHeight:", windowHeight);
+      setPageSize(10);
+    } else if (windowHeight >= 800 && windowHeight < 900) {
+      setPageSize(12);
+    } else if (windowHeight >= 900 && windowHeight < 1000) {
+      console.log("windowHeight:", windowHeight);
+      setPageSize(14);
+    } else {
+      setPageSize(16);
+    }
+    onReadStudentInfo();
+  };
+  const onReadStudentInfo = async () => {
     axios
       .get(
         `${BASE_URL}/api/students/`
@@ -89,6 +110,17 @@ function StudentInfo() {
           console.log("데이터가 배열이 아닙니다.");
         }
       });
+  };
+  useEffect(() => {
+    onReadStudentInfo();
+
+    handleWindowResize(); // 초기 설정
+    window.addEventListener("resize", handleWindowResize);
+    onReadStudentInfo();
+    // 컴포넌트가 언마운트될 때 등록된 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
   }, []);
 
   //studentInfo에 변경이 있을 때만 업데이트
@@ -179,11 +211,18 @@ function StudentInfo() {
       </div>
       <div>
         <div id="table">
-          <table id="Stdtable" {...getTableProps()}>
+          <table
+            className={styles.custom_table}
+            id="Stdtable"
+            {...getTableProps()}
+          >
             {" "}
-            <thead>
+            <thead className={styles.custom_thead}>
               {headerGroups.map((header) => (
-                <tr {...header.getHeaderGroupProps()}>
+                <tr
+                  className={styles.custom_tr}
+                  {...header.getHeaderGroupProps()}
+                >
                   {header.headers.map((col) => (
                     <th
                       {...col.getHeaderProps()}
@@ -203,6 +242,7 @@ function StudentInfo() {
                 const isRowSelected = rowIndex === selectedRow;
                 return (
                   <tr
+                    className={styles.custom_tr}
                     key={rowIndex}
                     id="rowFont"
                     {...row.getRowProps()}

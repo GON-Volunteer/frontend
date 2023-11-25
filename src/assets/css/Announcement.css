@@ -5,13 +5,6 @@
   font-weight: bold;
   color: black;
 }
-tr {
-  border: 1px solid rgb(151, 151, 151);
-}
-
-table {
-  width: 100%; /* 테이블의 최대 너비를 500px로 설정합니다. */
-}
 
 .title-text {
   font-size: 0.725em;

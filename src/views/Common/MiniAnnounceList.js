@@ -1,20 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable, usePagination } from "react-table";
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
-import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios"; // Axios 사용 예시
-import { useNavigate, Link } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import "../../assets/css/Home.css";
 import styles from "../../assets/css/Table.module.css";
-function AnnouncementList({ article1 }) {
+function MiniAnnouncement() {
   const today = new Date();
   console.log(today);
-  const url = "http://localhost:5000";
-  const navigate = useNavigate();
-  const handleBackButtonClick = () => {
-    navigate("/StudentManagement");
-  };
-  const fullNameHeaderClass = "fullNameHeader";
 
   //accessor와 받아오는 data keyname이 같아야함
   const columnData = [
@@ -29,8 +22,6 @@ function AnnouncementList({ article1 }) {
     {
       accessor: "title",
       Header: "Title",
-      headerClassName: fullNameHeaderClass,
-      //페이지 내용 이동 함수
       Cell: ({ cell: { value }, row: { original } }) => (
         <Link to={`/articles/${original.posting_id}`}>{value}</Link>
       ),
@@ -58,42 +49,13 @@ function AnnouncementList({ article1 }) {
       },
     },
   ];
-  const handleWindowResize = () => {
-    const windowHeight = window.innerHeight;
-    if (windowHeight < 600) {
-      console.log("windowHeight:", windowHeight);
-      setPageSize(7);
-    } else if (windowHeight >= 600 && windowHeight < 700) {
-      setPageSize(8);
-    } else if (windowHeight >= 700 && windowHeight < 800) {
-      console.log("windowHeight:", windowHeight);
-      setPageSize(10);
-    } else if (windowHeight >= 800 && windowHeight < 900) {
-      setPageSize(12);
-    } else if (windowHeight >= 900 && windowHeight < 1000) {
-      console.log("windowHeight:", windowHeight);
-      setPageSize(14);
-    } else {
-      setPageSize(16);
-    }
-    onReadPosting();
-  };
   const columns = useMemo(() => columnData, []);
 
   const [article, setArticle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(); //한페이지에 보여줄 페이지개수
+  const [pageSize, setPageSize] = useState(4); //한페이지에 보여줄 페이지개수
   useEffect(() => {
     onReadPosting();
-    handleWindowResize(); // 초기 설정
-    window.addEventListener("resize", handleWindowResize);
-    // 컴포넌트가 마운트되었을 때 초기 데이터 로딩
-    onReadPosting();
-
-    // 컴포넌트가 언마운트될 때 등록된 이벤트 리스너 제거
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
   }, []);
   const data = useMemo(() => article, [article]);
   // console.log("data?:" + JSON.stringify(data));
@@ -207,43 +169,9 @@ function AnnouncementList({ article1 }) {
             })}
           </tbody>
         </table>
-        <div>
-          <div className="pagination-container">
-            <div className="pagination-wrapper">
-              <Pagination
-                className="pagination justify-content-center"
-                listClassName="justify-content-center"
-                aria-label="Page navigation example"
-              >
-                <PaginationItem disabled={currentPage === 1}>
-                  <PaginationLink previous href="#" onClick={goToPrevPage} />
-                </PaginationItem>
-                {Array.from({ length: pageCount }, (_, index) => (
-                  <PaginationItem
-                    key={index}
-                    active={index + 1 === currentPage}
-                  >
-                    <PaginationLink
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setCurrentPage(index + 1);
-                      }}
-                    >
-                      {index + 1}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-                <PaginationItem disabled={currentPage === pageCount}>
-                  <PaginationLink next onClick={goToNextPage} />
-                </PaginationItem>
-              </Pagination>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
 }
 
-export default AnnouncementList;
+export default MiniAnnouncement;

@@ -63,15 +63,9 @@ root.render(
         <Routes>
           <Route path="/nucleo-icons" element={<NucleoIcons />} />
           <Route path="*" element={<LoginPage />} />
-          <Route
-            path="/SignUp"
-            element={<SignUp />}
-            
-          />
+          <Route path="/SignUp" element={<SignUp />} />
           {/* </Route> */}
           <Route element={<LoginCheck />}>
-            
-
             <Route path="home" element={<Home />} />
             <Route path="/articles/:idx" element={<Posting />} />
             <Route path="/Announcement-page" element={<AnnouncementPage />} />

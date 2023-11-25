@@ -11,6 +11,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import "../../../assets/css/AssignTeacher.css";
 import AppShellAdmin from "../AppShellAdmin";
+import styles from "../../../assets/css/Table.module.css";
+
 function AssignStdInCourse() {
   const navigate = useNavigate();
 
@@ -181,11 +183,15 @@ function AssignStdInCourse() {
         </h4>
 
         <div id="table">
-          <table {...getSecondTableProps()}>
+          <table className={styles.custom_table} {...getSecondTableProps()}>
             {" "}
-            <thead>
+            <thead className={styles.custom_thead}>
               {secondTableHeaderGroups.map((header) => (
-                <tr {...header.getHeaderGroupProps()} id="headerRow">
+                <tr
+                  className={styles.custom_tr}
+                  {...header.getHeaderGroupProps()}
+                  id="headerRow"
+                >
                   {header.headers.map((col) => (
                     <th {...col.getHeaderProps()} id="headerCell">
                       {col.render("Header")}
@@ -200,6 +206,7 @@ function AssignStdInCourse() {
 
                 return (
                   <tr
+                    className={styles.custom_tr}
                     key={rowIndex}
                     id="rowFont"
                     {...row.getRowProps()}

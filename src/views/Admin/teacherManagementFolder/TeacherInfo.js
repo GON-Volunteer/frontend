@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { Button, UncontrolledAlert } from "reactstrap";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import "../../../assets/css/DeleteTable.css";
+import styles from "../../../assets/css/Table.module.css";
+
 function TeacherInfo() {
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
@@ -47,10 +49,30 @@ function TeacherInfo() {
 
   const [teacherInfo, setTeacherInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [pageSize, setPageSize] = useState(6); //한페이지에 보여줄 페이지개수
-  useEffect(() => {
+  const [pageSize, setPageSize] = useState(); //한페이지에 보여줄 페이지개수
+  const handleWindowResize = () => {
+    const windowHeight = window.innerHeight;
+    if (windowHeight < 600) {
+      console.log("windowHeight:", windowHeight);
+      setPageSize(7);
+    } else if (windowHeight >= 600 && windowHeight < 700) {
+      setPageSize(8);
+    } else if (windowHeight >= 700 && windowHeight < 800) {
+      console.log("windowHeight:", windowHeight);
+      setPageSize(10);
+    } else if (windowHeight >= 800 && windowHeight < 900) {
+      setPageSize(12);
+    } else if (windowHeight >= 900 && windowHeight < 1000) {
+      console.log("windowHeight:", windowHeight);
+      setPageSize(14);
+    } else {
+      setPageSize(16);
+    }
+    onReadTeachersInfo();
+  };
+  const onReadTeachersInfo = async () => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/api/teachers/`).then((res) => {
-      console.log("???" + res);
+      // console.log("???" + res);
       if (Array.isArray(res.data)) {
         //map 사용시 새로운 배열 생성해서
         // const resultObj = res.data.map((item) => item);
@@ -67,6 +89,17 @@ function TeacherInfo() {
         console.log("데이터가 배열이 아닙니다.");
       }
     });
+  };
+  useEffect(() => {
+    onReadTeachersInfo();
+
+    handleWindowResize(); // 초기 설정
+    window.addEventListener("resize", handleWindowResize);
+    onReadTeachersInfo();
+    // 컴포넌트가 언마운트될 때 등록된 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
   }, []);
 
   //teacherInfo 변경이 있을 때만 업데이트
@@ -157,11 +190,14 @@ function TeacherInfo() {
       </div>
       <div>
         <div id="table">
-          <table {...getTableProps()}>
+          <table className={styles.custom_table} {...getTableProps()}>
             {" "}
-            <thead>
+            <thead className={styles.custom_thead}>
               {headerGroups.map((header) => (
-                <tr {...header.getHeaderGroupProps()}>
+                <tr
+                  className={styles.custom_tr}
+                  {...header.getHeaderGroupProps()}
+                >
                   {header.headers.map((col) => (
                     <th
                       {...col.getHeaderProps()}
@@ -181,6 +217,7 @@ function TeacherInfo() {
                 const isRowSelected = rowIndex === selectedRow;
                 return (
                   <tr
+                    className={styles.custom_tr}
                     key={rowIndex}
                     id="rowFont"
                     {...row.getRowProps()}

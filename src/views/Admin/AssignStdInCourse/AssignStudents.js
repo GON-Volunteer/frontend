@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
+import styles from "../../../assets/css/Table.module.css";
 function AssignStudents() {
   const location = useLocation();
   const rowData = location.state
@@ -140,18 +140,6 @@ function AssignStudents() {
     }
   };
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await axios.get(
-    //       `/api/courses/${rowData._id}/students`
-    //     );
-    //     setRegiStdInfo(response.data.course_student);
-    //     setUnregiStdInfo(response.data.not_course_student);
-    //   } catch (error) {
-    //     console.log("course regi Student get err:", error);
-    //   }
-    // };
-
     fetchData();
   }, [registerNewStd, deleteStd]);
 
@@ -344,11 +332,18 @@ function AssignStudents() {
         </div>
         <div>
           <div id="table">
-            <table {...getTableProps()} id="courseListTable">
+            <table
+              className={styles.custom_table}
+              {...getTableProps()}
+              id="courseListTable"
+            >
               {" "}
-              <thead>
+              <thead className={styles.custom_thead}>
                 {headerGroups.map((header) => (
-                  <tr {...header.getHeaderGroupProps()}>
+                  <tr
+                    className={styles.custom_tr}
+                    {...header.getHeaderGroupProps()}
+                  >
                     <th>check</th>
                     {header.headers.map((col) => (
                       <th {...col.getHeaderProps()}>{col.render("Header")}</th>
@@ -364,6 +359,7 @@ function AssignStudents() {
                   const isRowChecked = deleteSelectIdx.includes(rowIndex);
                   return (
                     <tr
+                      className={styles.custom_tr}
                       key={rowIndex}
                       id="rowFont"
                       {...row.getRowProps()}
@@ -426,11 +422,14 @@ function AssignStudents() {
         </div>
         <div>
           <div id="table">
-            <table {...getSecondTableProps()}>
+            <table className={styles.custom_table} {...getSecondTableProps()}>
               {" "}
-              <thead>
+              <thead className={styles.custom_thead}>
                 {secondTableHeaderGroups.map((header) => (
-                  <tr {...header.getHeaderGroupProps()}>
+                  <tr
+                    className={styles.custom_tr}
+                    {...header.getHeaderGroupProps()}
+                  >
                     <th>check</th>
                     {header.headers.map((col) => (
                       <th {...col.getHeaderProps()}>{col.render("Header")}</th>
@@ -446,6 +445,7 @@ function AssignStudents() {
                   const isRowChecked = selectedRowIndices.includes(rowIndex);
                   return (
                     <tr
+                      className={styles.custom_tr}
                       key={rowIndex}
                       id="rowFont"
                       {...row.getRowProps()}
