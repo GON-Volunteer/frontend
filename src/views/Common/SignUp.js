@@ -31,6 +31,8 @@ function SignUp() {
 
   const formItemStyle = {
     margin: "5px",
+    width:"170px",
+    height:"30px",
   };
   const redBorderStyle = {
     margin: "10px",
@@ -181,7 +183,7 @@ function SignUp() {
           onChange={handleRadioChange}
           onClick={() => reset()}
         />
-        <span class="up">Student</span>
+        <span class="up">  Student</span>
         &nbsp;&nbsp;
         <input
           type="radio"
@@ -192,7 +194,7 @@ function SignUp() {
           onChange={handleRadioChange}
           onClick={() => reset()}
         />
-        <span class="up">Teacher</span>
+        <span class="up">  Teacher</span>
       </div>
       {/* ---------------------------------------------student-------------------------------------------------- */}
       {selectedOption === "studentForm" && (
@@ -216,16 +218,21 @@ function SignUp() {
           </div>
 
           <form id="students_form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+              {/* 본래 여기에 formItemStyle 있었음 */}
               <label htmlFor="s_n">S.N : </label>
               <input
                 id="s_n"
                 type="text"
                 placeholder="Serial_Number"
+                
                 style={isSNError ? redBorderStyle : formItemStyle}
                 {...register("s_n", {
                   required: "Serial number is required.",
-                })}
+                  
+                })
+
+                }
                 onChange={() => {
                   if (isSNError) {
                     setIsSNError(false); // Clear the error state when the input value changes
@@ -235,7 +242,7 @@ function SignUp() {
                 title="Please enter only numbers."
               />
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="full_name">Full Name : </label>
               <input
                 style={formItemStyle}
@@ -249,7 +256,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="phone_num">Phone No : </label>
               <input
                 style={formItemStyle}
@@ -261,7 +268,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="father_phone_num">Father Phone No : </label>
               <input
                 style={formItemStyle}
@@ -271,7 +278,7 @@ function SignUp() {
                 {...register("father_phone_num")}
               />
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="mother_phone_num">Mother Phone No : </label>
               <input
                 id="mother_phone_num"
@@ -281,7 +288,7 @@ function SignUp() {
                 {...register("mother_phone_num")}
               />
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="guardians_phone_num">Guardians Phone No : </label>
               <input
                 id="guardians_phone_num"
@@ -291,7 +298,7 @@ function SignUp() {
                 {...register("guardians_phone_num")}
               />
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="id">ID : </label>
               <input
                 id="id"
@@ -311,9 +318,9 @@ function SignUp() {
                   }
                 }}
               />
-              {errors.id && <small role="alert">{errors.id.message}</small>}
+              {errors.id && <small role="alert" style={{color:"red"}}>{errors.id.message}</small>}
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="pw">PW : </label>
               <input
                 id="pw"
@@ -329,7 +336,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="passwordConfirm">Re-type PW:</label>
               <input
                 style={formItemStyle}
@@ -352,10 +359,13 @@ function SignUp() {
                 })}
               />
               {errors.passwordConfirm && (
-                <small role="alert">{errors.passwordConfirm.message}</small>
+                <small role="alert" style={{color:"red"}}>{errors.passwordConfirm.message}</small>
               )}
             </div>
-            <Button id="add_btn" type="submit">
+            <Button id="add_btn" type="submit" style={{
+                marginTop:"10px",
+                marginRight:"10px"
+              }}>
               create
             </Button>
           </form>
@@ -410,7 +420,7 @@ function SignUp() {
             </UncontrolledAlert>
           </div>
           <form id="teachers_form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="full_name">Full Name : </label>
               <input
                 style={formItemStyle}
@@ -424,7 +434,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="phone_num">Phone No : </label>
               <input
                 style={formItemStyle}
@@ -437,7 +447,7 @@ function SignUp() {
               />
             </div>
 
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="id">ID : </label>
               <input
                 id="id"
@@ -457,10 +467,10 @@ function SignUp() {
                   }
                 }}
               />
-              {errors.id && <small role="alert">{errors.id.message}</small>}
+              {errors.id && <small role="alert" style={{color:"red"}}>{errors.id.message}</small>}
             </div>
 
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="pw">PW : </label>
               <input
                 id="pw"
@@ -476,7 +486,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={formItemStyle}>
+            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
               <label htmlFor="passwordConfirm">Re-type PW:</label>
               <input
                 style={formItemStyle}
@@ -488,6 +498,7 @@ function SignUp() {
                   minLength: {
                     value: 7,
                     message: "Enter at least 7 digits.",
+                    
                   },
                   validate: {
                     check: (val) => {
@@ -499,10 +510,13 @@ function SignUp() {
                 })}
               />
               {errors.passwordConfirm && (
-                <small role="alert">{errors.passwordConfirm.message}</small>
+                <small role="alert" style={{color:"red"}}>{errors.passwordConfirm.message}</small>
               )}
             </div>
-            <Button id="add_btn" type="submit">
+            <Button id="add_btn" type="submit" style={{
+                marginTop:"10px",
+                marginRight:"10px"
+              }}>
               create
             </Button>
           </form>
