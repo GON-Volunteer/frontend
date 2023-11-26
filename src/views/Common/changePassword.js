@@ -17,6 +17,8 @@ function ChangePassword() {
   } = useForm({ mode: "onSubmit" });
   const formItemStyle = {
     margin: "5px",
+    width:"170px",
+    height:"30px",
   };
   const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
@@ -102,7 +104,7 @@ function ChangePassword() {
         </button>
       </UncontrolledAlert>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="current_password">Current Password : </label>
           <input
             style={formItemStyle}
@@ -114,7 +116,7 @@ function ChangePassword() {
             })}
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="new_password">New PW : </label>
           <input
             id="new_password"
@@ -129,11 +131,11 @@ function ChangePassword() {
               },
             })}
           />
-          {/* {errors.password && (
-            <s small role="alert">{errors.password.message}</s>
-          )} */}
+          {errors.password && (
+            <small role="alert" style={{color:"red"}}>{errors.password.message}</small>
+          )}
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="passwordConfirm">Re-type New PW:</label>
           <input
             style={formItemStyle}
@@ -158,13 +160,15 @@ function ChangePassword() {
               },
             })}
           />
-          {errors.passwordConfirm && (
-            <small role="alert">{errors.passwordConfirm.message}</small>
-          )}
         </div>
+        <div>        {errors.passwordConfirm && (
+            <small role="alert" style={{color:"red", marginLeft:"10px"}}>{errors.passwordConfirm.message}</small>
+          )}</div>
+
       </form>
       <Button
-        style={{ marginLeft: "10px" }}
+        style={{float:"right", marginTop:"10px",
+        marginRight:"10px"}}
         type="submit"
         onClick={handleSubmit(onSubmit)}
       >

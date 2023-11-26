@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 function TeacherRegister() {
   const formItemStyle = {
     margin: "5px",
+    width:"170px",
+    height:"30px",
   };
   const redBorderStyle = {
     margin: "10px",
@@ -125,8 +127,8 @@ function TeacherRegister() {
           <b>Success!</b> Teacher registered successfully! X
         </UncontrolledAlert>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-control__items" style={formItemStyle}>
+      <form onSubmit={handleSubmit(onSubmit)} style={{marginTop:"20px"}}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="full_name">Full Name : </label>
           <input
             style={formItemStyle}
@@ -138,7 +140,7 @@ function TeacherRegister() {
             })}
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="phone_num">Phone No : </label>
           <input
             style={formItemStyle}
@@ -151,7 +153,7 @@ function TeacherRegister() {
           />
         </div>
 
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="id">ID : </label>
           <input
             id="id"
@@ -171,10 +173,10 @@ function TeacherRegister() {
               }
             }}
           />
-          {errors.id && <small role="alert">{errors.id.message}</small>}
+          {errors.id && <small role="alert" style={{color:"red"}}>{errors.id.message}</small>}
         </div>
 
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="pw">PW : </label>
           <input
             id="pw"
@@ -190,7 +192,7 @@ function TeacherRegister() {
             })}
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="passwordConfirm">Re-type PW:</label>
           <input
             style={formItemStyle}
@@ -213,10 +215,13 @@ function TeacherRegister() {
             })}
           />
           {errors.passwordConfirm && (
-            <small role="alert">{errors.passwordConfirm.message}</small>
+            <small role="alert" style={{color:"red"}}>{errors.passwordConfirm.message}</small>
           )}
         </div>
-        <Button id="add_btn" type="submit">
+        <Button id="add_btn" type="submit" style={{
+            marginTop:"10px",
+            marginRight:"10px"
+          }}>
           create
         </Button>
       </form>

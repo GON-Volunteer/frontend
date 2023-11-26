@@ -30,6 +30,8 @@ function StudentEdit() {
   const [errpopupVisible, setErrPopupVisible] = useState(false);
   const formItemStyle = {
     margin: "5px",
+    width:"170px",
+    height:"30px",
   };
   const redBorderStyle = {
     margin: "10px",
@@ -149,8 +151,8 @@ function StudentEdit() {
           </UncontrolledAlert>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-control__items" style={formItemStyle}>
+        <form onSubmit={handleSubmit(onSubmit)} style={{marginTop:"20px"}}>
+          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
             <label htmlFor="s_n">S.N : </label>
             <input
               id="s_n"
@@ -170,7 +172,7 @@ function StudentEdit() {
               title="Please enter only numbers."
             />
           </div>
-          <div className="form-control__items" style={formItemStyle}>
+          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
             <label htmlFor="full_name">Full Name : </label>
             <input
               style={formItemStyle}
@@ -183,7 +185,7 @@ function StudentEdit() {
               })}
             />
           </div>
-          <div className="form-control__items" style={formItemStyle}>
+          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
             <label htmlFor="phone_num">Phone No : </label>
             <input
               style={formItemStyle}
@@ -196,7 +198,7 @@ function StudentEdit() {
               })}
             />
           </div>
-          <div className="form-control__items" style={formItemStyle}>
+          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
             <label htmlFor="father_phone_num">Father Phone No : </label>
             <input
               style={formItemStyle}
@@ -207,7 +209,7 @@ function StudentEdit() {
               {...register("father_phone_num")}
             />
           </div>
-          <div className="form-control__items" style={formItemStyle}>
+          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
             <label htmlFor="mother_phone_num">Mother Phone No : </label>
             <input
               id="mother_phone_num"
@@ -218,7 +220,7 @@ function StudentEdit() {
               {...register("mother_phone_num")}
             />
           </div>
-          <div className="form-control__items" style={formItemStyle}>
+          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
             <label htmlFor="guardians_phone_num">Guardians Phone No : </label>
             <input
               id="guardians_phone_num"
@@ -229,7 +231,7 @@ function StudentEdit() {
               {...register("guardians_phone_num")}
             />
           </div>
-          <div className="form-control__items" style={formItemStyle}>
+          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
             <label htmlFor="id">ID : </label>
             <input
               id="id"
@@ -250,9 +252,9 @@ function StudentEdit() {
                 }
               }}
             />
-            {errors.id && <small role="alert">{errors.id.message}</small>}
+            {errors.id && <small role="alert" style={{color:"red"}}>{errors.id.message}</small>}
           </div>
-          <div className="form-control__items" style={formItemStyle}>
+          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
             <label htmlFor="pw">PW : </label>
             <input
               id="pw"
@@ -272,7 +274,7 @@ function StudentEdit() {
                     <small role="alert">{errors.password.message}</small>
                   )} */}
           </div>
-          <div className="form-control__items" style={formItemStyle}>
+          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
             <label htmlFor="password">Re-type PW:</label>
             <input
               style={formItemStyle}
@@ -296,10 +298,13 @@ function StudentEdit() {
               })}
             />
             {errors.passwordConfirm && (
-              <small role="alert">{errors.passwordConfirm.message}</small>
+              <small role="alert" style={{color:"red"}}>{errors.passwordConfirm.message}</small>
             )}
           </div>
-          <Button id="leftBtn" type="submit">
+          <Button id="leftBtn" type="submit" style={{
+            marginTop:"10px",
+            marginRight:"10px"
+          }}>
             Edit
           </Button>
         </form>

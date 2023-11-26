@@ -173,7 +173,7 @@ function SignUp() {
         </AppBar>
       </div>
 
-      <div className="checkAccount">
+      <div className="checkAccount" style={{marginTop:"20px"}}>
         <input
           type="radio"
           name="SelectedRadioType"
@@ -218,7 +218,7 @@ function SignUp() {
           </div>
 
           <form id="students_form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               {/* 본래 여기에 formItemStyle 있었음 */}
               <label htmlFor="s_n">S.N : </label>
               <input
@@ -242,7 +242,7 @@ function SignUp() {
                 title="Please enter only numbers."
               />
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="full_name">Full Name : </label>
               <input
                 style={formItemStyle}
@@ -256,7 +256,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="phone_num">Phone No : </label>
               <input
                 style={formItemStyle}
@@ -268,7 +268,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="father_phone_num">Father Phone No : </label>
               <input
                 style={formItemStyle}
@@ -278,7 +278,7 @@ function SignUp() {
                 {...register("father_phone_num")}
               />
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="mother_phone_num">Mother Phone No : </label>
               <input
                 id="mother_phone_num"
@@ -288,7 +288,7 @@ function SignUp() {
                 {...register("mother_phone_num")}
               />
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="guardians_phone_num">Guardians Phone No : </label>
               <input
                 id="guardians_phone_num"
@@ -298,7 +298,7 @@ function SignUp() {
                 {...register("guardians_phone_num")}
               />
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="id">ID : </label>
               <input
                 id="id"
@@ -320,7 +320,7 @@ function SignUp() {
               />
               {errors.id && <small role="alert" style={{color:"red"}}>{errors.id.message}</small>}
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="pw">PW : </label>
               <input
                 id="pw"
@@ -336,7 +336,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="passwordConfirm">Re-type PW:</label>
               <input
                 style={formItemStyle}
@@ -420,7 +420,7 @@ function SignUp() {
             </UncontrolledAlert>
           </div>
           <form id="teachers_form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="full_name">Full Name : </label>
               <input
                 style={formItemStyle}
@@ -434,7 +434,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="phone_num">Phone No : </label>
               <input
                 style={formItemStyle}
@@ -447,7 +447,7 @@ function SignUp() {
               />
             </div>
 
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="id">ID : </label>
               <input
                 id="id"
@@ -470,7 +470,7 @@ function SignUp() {
               {errors.id && <small role="alert" style={{color:"red"}}>{errors.id.message}</small>}
             </div>
 
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="pw">PW : </label>
               <input
                 id="pw"
@@ -486,7 +486,7 @@ function SignUp() {
                 })}
               />
             </div>
-            <div className="form-control__items" style={{width:"402px", margin:"5px"}}>
+            <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
               <label htmlFor="passwordConfirm">Re-type PW:</label>
               <input
                 style={formItemStyle}

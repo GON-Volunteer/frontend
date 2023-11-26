@@ -13,6 +13,8 @@ import "../../../assets/css/AssignTeacher.css";
 function Register() {
   const formItemStyle = {
     margin: "5px",
+    width:"170px",
+    height:"30px",
   };
   const redBorderStyle = {
     margin: "10px",
@@ -142,8 +144,8 @@ function Register() {
         </UncontrolledAlert>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-control__items" style={formItemStyle}>
+      <form onSubmit={handleSubmit(onSubmit)} style={{marginTop:"20px"}}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="s_n">S.N : </label>
           <input
             id="s_n"
@@ -162,7 +164,7 @@ function Register() {
             title="Please enter only numbers."
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="full_name">Full Name : </label>
           <input
             style={formItemStyle}
@@ -174,7 +176,7 @@ function Register() {
             })}
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="phone_num">Phone No : </label>
           <input
             style={formItemStyle}
@@ -186,7 +188,7 @@ function Register() {
             })}
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="father_phone_num">Father Phone No : </label>
           <input
             style={formItemStyle}
@@ -196,7 +198,7 @@ function Register() {
             {...register("father_phone_num")}
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="mother_phone_num">Mother Phone No : </label>
           <input
             id="mother_phone_num"
@@ -206,7 +208,7 @@ function Register() {
             {...register("mother_phone_num")}
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="guardians_phone_num">Guardians Phone No : </label>
           <input
             id="guardians_phone_num"
@@ -216,7 +218,7 @@ function Register() {
             {...register("guardians_phone_num")}
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="id">ID : </label>
           <input
             id="id"
@@ -236,9 +238,9 @@ function Register() {
               }
             }}
           />
-          {errors.id && <small role="alert">{errors.id.message}</small>}
+          {errors.id && <small role="alert" style={{color:"red"}}>{errors.id.message}</small>}
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="pw">PW : </label>
           <input
             id="pw"
@@ -254,7 +256,7 @@ function Register() {
             })}
           />
         </div>
-        <div className="form-control__items" style={formItemStyle}>
+        <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
           <label htmlFor="passwordConfirm">Re-type PW:</label>
           <input
             style={formItemStyle}
@@ -277,10 +279,13 @@ function Register() {
             })}
           />
           {errors.passwordConfirm && (
-            <small role="alert">{errors.passwordConfirm.message}</small>
+            <small role="alert" style={{color:"red"}}>{errors.passwordConfirm.message}</small>
           )}
         </div>
-        <Button id="add_btn" type="submit">
+        <Button id="add_btn" type="submit" style={{
+            marginTop:"10px",
+            marginRight:"10px"
+          }}>
           create
         </Button>
       </form>
