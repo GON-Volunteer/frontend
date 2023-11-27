@@ -152,9 +152,9 @@ export default function CourseRegister() {
           <b>Success!</b> New course created successfully!
         </UncontrolledAlert>
       </div>
-      <form>
+      <form style={{marginTop:"20px"}}>
         <FormGroup className="col-md-4">
-          <Label id="courseRegiInput" for="inputState">
+          <Label id="courseRegiInput" for="inputState"  style={{ marginLeft: "5px" }}>
             grade
           </Label>
           <Input
@@ -183,7 +183,7 @@ export default function CourseRegister() {
           </Input>
         </FormGroup>
         <FormGroup className="col-md-4">
-          <Label for="inputState">Section</Label>
+          <Label for="inputState"  style={{ marginLeft: "5px" }}>Section</Label>
           <Input
             type="select"
             name="section"
@@ -199,7 +199,7 @@ export default function CourseRegister() {
           </Input>
         </FormGroup>
         <FormGroup className="col-md-4">
-          <Label for="inputState">Batch</Label>
+          <Label for="inputState"  style={{ marginLeft: "5px" }}>Batch</Label>
           <Input
             type="select"
             name="batch"
@@ -214,7 +214,7 @@ export default function CourseRegister() {
           </Input>
         </FormGroup>
         <FormGroup className="col-md-4">
-          <Label for="inputState">Subject</Label>
+          <Label for="inputState"  style={{ marginLeft: "5px" }}>Subject</Label>
           <Input
             type="select"
             name="subject_idx"

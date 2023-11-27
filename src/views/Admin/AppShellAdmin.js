@@ -92,14 +92,14 @@ export default function ButtonAppBar() {
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
         <MenuItem
           onClick={goHome}
-          sx={{ textAlign: "center", padding: "20px 10px" }}
+          
         >
           <HomeIcon className="addicon" />
           Home
         </MenuItem>
         <MenuItem
           onClick={goAnnouncement}
-          sx={{ textAlign: "center", padding: "10px 10px" }}
+          sx={{ textAlign: "center", padding: "20px 10px" }}
         >
           <StarIcon className="deleteicon" />
           Announcement

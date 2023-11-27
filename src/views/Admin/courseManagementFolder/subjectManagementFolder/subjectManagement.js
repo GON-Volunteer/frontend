@@ -157,6 +157,12 @@ export default function SubjectManagement() {
         } else {
           console.log("데이터가 배열이 아닙니다.");
         }
+        var divTable = document.getElementById("tbodyContainer");
+        var firstRowHeight = document.querySelector("#tbody tr:first-child").clientHeight;
+
+        // 세 행의 높이 * 3을 div의 높이로 할당
+        divTable.style.height = (firstRowHeight * 3) + "px";
+
       })
       .catch((Err) => {
         console.log(Err);

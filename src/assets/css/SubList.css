@@ -34,6 +34,7 @@
   flex-direction: column;
 }
 #subManageCreateBtn {
+  margin-top: 20px;
   margin-bottom: 10px;
   margin-left: 20px;
   width: 80px;
@@ -73,7 +74,7 @@
   font-weight: bold;
 
   font-size: 25px;
-  margin-top: 20px;
+  margin-top: 60px;
 }
 #newSubDiv {
   margin-top: 18px;
@@ -91,12 +92,16 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top :20px;
   margin-left: 20px;
   width: 80px;
   height: 40px;
 }
 #table {
   overflow-x: auto;
+}
+#tbodyContainer{
+  height:150px;
 }
 #tbody {
   display: block;
