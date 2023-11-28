@@ -32,7 +32,10 @@ function AnnouncementList({ article1 }) {
       headerClassName: fullNameHeaderClass,
       //페이지 내용 이동 함수
       Cell: ({ cell: { value }, row: { original } }) => (
-        <Link to={`/articles/${original.posting_id}`}>{value}</Link>
+        <Link to={`/articles/${original.posting_id}`}>
+          {" "}
+          <span style={{ color: "rgb(12, 35, 180)" }}>{value}</span>
+        </Link>
       ),
     },
     {
@@ -159,15 +162,7 @@ function AnnouncementList({ article1 }) {
   return (
     <div>
       <div>
-        <table
-          style={{
-            fontSize: "14px",
-            borderRadius: "10px!important",
-          }}
-          id="table"
-          className={styles.custom_table}
-          {...getTableProps()}
-        >
+        <table id="table" className={styles.custom_table} {...getTableProps()}>
           <thead className={styles.custom_thead}>
             {headerGroups.map((header) => (
               <tr

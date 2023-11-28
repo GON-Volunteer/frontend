@@ -2597,14 +2597,14 @@ textarea.form-control {
 .pagination > li.active > span:hover,
 .pagination > li.active > a:focus,
 .pagination > li.active > span:focus {
-  background-color: #f5593d;
-  border-color: #f5593d;
+  background-color: #623df5;
+  border-color: #7a3df5;
   color: #fff;
 }
 .page-item.active .page-link {
-  background-color: #f5593d;
+  background-color: #623df5;
   color: white;
-  border-color: #f5593d;
+  border-color: #7a3df5;
 }
 .nav-pills .nav-link {
   border-radius: 0;

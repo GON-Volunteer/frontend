@@ -92,16 +92,17 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top :20px;
+  margin-top: 20px;
   margin-left: 20px;
   width: 80px;
   height: 40px;
 }
 #table {
   overflow-x: auto;
+  width: 100%;
 }
-#tbodyContainer{
-  height:150px;
+#tbodyContainer {
+  height: 150px;
 }
 #tbody {
   display: block;

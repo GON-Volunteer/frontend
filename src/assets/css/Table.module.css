@@ -8,7 +8,8 @@
 .custom_table {
   width: 100%;
   margin-bottom: 10px;
-  background-color: rgba(129, 129, 132, 0.214);
+  background-color: rgba(162, 162, 176, 0.214);
+  border-radius: 10px;
 }
 .custom_home_table {
   width: 100%;

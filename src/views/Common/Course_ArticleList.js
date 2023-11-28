@@ -43,7 +43,7 @@ function Course_ArticleList({ article1 }) {
       //페이지 내용 이동 함수
       Cell: ({ cell: { value }, row: { original } }) => (
         <Link to={"/courses/" + id + `/articles/${original.posting_id}`}>
-          {value}
+          <span style={{ color: "rgb(12, 35, 180)" }}>{value}</span>
         </Link>
       ),
     },

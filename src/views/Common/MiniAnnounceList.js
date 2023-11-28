@@ -23,7 +23,9 @@ function MiniAnnouncement() {
       accessor: "title",
       Header: "Title",
       Cell: ({ cell: { value }, row: { original } }) => (
-        <Link to={`/articles/${original.posting_id}`}>{value}</Link>
+        <Link to={`/articles/${original.posting_id}`}>
+          <span style={{ color: "rgb(12, 35, 180)" }}>{value}</span>
+        </Link>
       ),
     },
     {
