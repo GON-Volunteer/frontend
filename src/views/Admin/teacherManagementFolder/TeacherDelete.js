@@ -185,7 +185,9 @@ function TeacherDelete() {
 
   // 이전 페이지로 이동하는 함수
   const goToPrevPage = () => {
-    setCurrentPage((prev) => prev - 1);
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   // 현재 페이지에 해당하는 데이터를 가져옵니다.
@@ -194,7 +196,10 @@ function TeacherDelete() {
     [data, currentPage]
   );
   const pageCount = Math.ceil(data.length / pageSize);
-
+  const itemsPerPage = 5; // 한 페이지당 아이템 수
+  const startPage =
+    Math.floor((currentPage - 1) / itemsPerPage) * itemsPerPage + 1;
+  const endPage = Math.min(startPage + itemsPerPage - 1, pageCount);
   const {
     getTableProps,
     getTableBodyProps,
@@ -297,47 +302,51 @@ function TeacherDelete() {
               })}
             </tbody>
           </table>
-          <div className="pagination-container">
-            <div className="pagination-wrapper">
+          <div id="pagination-nav">
+            <div className="pagination-container">
               <Button
                 disabled={!(selectedRow >= 0) | (selectedRow === null)}
                 onClick={handleDelete}
-                id="tchDeleteBtn"
+                id="rightBtn"
               >
                 Delete
               </Button>
-              <Pagination
-                className="pagination justify-content-center"
-                listClassName="justify-content-center"
-                aria-label="Page navigation example"
-              >
-                <PaginationItem disabled={currentPage === 1}>
-                  <PaginationLink previous href="#" onClick={goToPrevPage} />
-                </PaginationItem>
-                {Array.from({ length: pageCount }, (_, index) => (
-                  <PaginationItem
-                    key={index}
-                    active={index + 1 === currentPage}
-                  >
-                    <PaginationLink
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setCurrentPage(index + 1);
-                      }}
-                    >
-                      {index + 1}
-                    </PaginationLink>
+              <div className="pagination-wrapper">
+                <Pagination
+                  className="pagination justify-content-center"
+                  listClassName="justify-content-center"
+                  aria-label="Page navigation example"
+                >
+                  <PaginationItem disabled={currentPage === 1}>
+                    <PaginationLink previous href="#" onClick={goToPrevPage} />
                   </PaginationItem>
-                ))}
-                <PaginationItem disabled={currentPage === pageCount}>
-                  <PaginationLink next onClick={goToNextPage} />
-                </PaginationItem>
-              </Pagination>
+                  {Array.from(
+                    { length: endPage - startPage + 1 },
+                    (_, index) => (
+                      <PaginationItem
+                        key={startPage + index}
+                        active={startPage + index === currentPage}
+                      >
+                        <PaginationLink
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(startPage + index);
+                          }}
+                        >
+                          {startPage + index}
+                        </PaginationLink>
+                      </PaginationItem>
+                    )
+                  )}
+                  <PaginationItem disabled={currentPage === pageCount}>
+                    <PaginationLink next onClick={goToNextPage} />
+                  </PaginationItem>
+                </Pagination>
+              </div>
             </div>
           </div>
         </div>
-        <div></div>
       </div>
     </div>
   );

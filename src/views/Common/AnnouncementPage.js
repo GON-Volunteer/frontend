@@ -3,22 +3,16 @@ import AppShell from "./AppShell";
 import AppShellAdmin from "..//Admin/AppShellAdmin";
 import { useSelector } from "react-redux";
 import AppShellTeacher from "../Teacher/AppShellTeacher";
-import { Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
-import DeleteIcon from "@mui/icons-material/Delete";
 // css
 import "../../assets/css/Announcement.css";
-// reactstrap components
 
 // core components
 import AnnouncementList from "./AnnouncementList";
 
 function AnnouncementPage() {
   const user = useSelector((state) => state.user);
-  const goArticleCreate = (e) => {
-    e.preventDefault();
-    navigate("/ArticleCreate");
-  };
+
   const navigate = useNavigate();
   return (
     <>
@@ -45,17 +39,17 @@ function AnnouncementPage() {
       <div>
         <AnnouncementList />
       </div>
-      <div className="pagination-container">
+      {/* <div className="pagination-container">
         <div className="pagination-wrapper">
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             {user.account === 0 && (
-              <Button color="info" onClick={goArticleCreate} id="deleteBtn">
+              <Button color="info" onClick={goArticleCreate} id="rightBtn">
                 Create
               </Button>
             )}
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

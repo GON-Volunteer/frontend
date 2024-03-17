@@ -125,7 +125,11 @@ function TeacherInfo() {
     const endIndex = startIndex + pageSize;
     return data.slice(startIndex, endIndex);
   };
-
+  const pageCount = Math.ceil(data.length / pageSize);
+  const itemsPerPage = 5; // 한 페이지당 아이템 수
+  const startPage =
+    Math.floor((currentPage - 1) / itemsPerPage) * itemsPerPage + 1;
+  const endPage = Math.min(startPage + itemsPerPage - 1, pageCount);
   // 다음 페이지로 이동하는 함수
   const goToNextPage = () => {
     setCurrentPage((prev) => prev + 1);
@@ -133,7 +137,9 @@ function TeacherInfo() {
 
   // 이전 페이지로 이동하는 함수
   const goToPrevPage = () => {
-    setCurrentPage((prev) => prev - 1);
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   // 현재 페이지에 해당하는 데이터를 가져옵니다.
@@ -158,7 +164,6 @@ function TeacherInfo() {
     },
     usePagination
   );
-  const pageCount = Math.ceil(data.length / pageSize);
   return (
     <div>
       <div>
@@ -236,12 +241,12 @@ function TeacherInfo() {
           </table>
         </div>
 
-        <div>
+        <div id="pagination-nav">
           <div className="pagination-container">
+            <Button onClick={handleEdit} id="rightBtn">
+              Edit
+            </Button>
             <div className="pagination-wrapper">
-              <Button onClick={handleEdit} id="tchDeleteBtn">
-                Edit
-              </Button>
               <Pagination
                 className="pagination justify-content-center"
                 listClassName="justify-content-center"
@@ -250,19 +255,19 @@ function TeacherInfo() {
                 <PaginationItem disabled={currentPage === 1}>
                   <PaginationLink previous href="#" onClick={goToPrevPage} />
                 </PaginationItem>
-                {Array.from({ length: pageCount }, (_, index) => (
+                {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
                   <PaginationItem
-                    key={index}
-                    active={index + 1 === currentPage}
+                    key={startPage + index}
+                    active={startPage + index === currentPage}
                   >
                     <PaginationLink
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
-                        setCurrentPage(index + 1);
+                        setCurrentPage(startPage + index);
                       }}
                     >
-                      {index + 1}
+                      {startPage + index}
                     </PaginationLink>
                   </PaginationItem>
                 ))}

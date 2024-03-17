@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable, usePagination } from "react-table";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useSelector } from "react-redux";
+// reactstrap components
+import { Button } from "reactstrap";
+
 import axios from "axios"; // Axios 사용 예시
 import { useNavigate, Link } from "react-router-dom";
 import "../../assets/css/Home.css";
@@ -11,11 +14,13 @@ function AnnouncementList({ article1 }) {
   console.log(today);
   const url = "http://localhost:5000";
   const navigate = useNavigate();
-  const handleBackButtonClick = () => {
-    navigate("/StudentManagement");
-  };
-  const fullNameHeaderClass = "fullNameHeader";
 
+  const fullNameHeaderClass = "fullNameHeader";
+  const user = useSelector((state) => state.user);
+  const goArticleCreate = (e) => {
+    e.preventDefault();
+    navigate("/ArticleCreate");
+  };
   //accessor와 받아오는 data keyname이 같아야함
   const columnData = [
     {
@@ -134,7 +139,9 @@ function AnnouncementList({ article1 }) {
 
   // 이전 페이지로 이동하는 함수
   const goToPrevPage = () => {
-    setCurrentPage((prev) => prev - 1);
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   // 현재 페이지에 해당하는 데이터를 가져옵니다.
@@ -143,6 +150,10 @@ function AnnouncementList({ article1 }) {
     [data, currentPage]
   );
   const pageCount = Math.ceil(data.length / pageSize);
+  const itemsPerPage = 5; // 한 페이지당 아이템 수
+  const startPage =
+    Math.floor((currentPage - 1) / itemsPerPage) * itemsPerPage + 1;
+  const endPage = Math.min(startPage + itemsPerPage - 1, pageCount);
   const {
     getTableProps,
     getTableBodyProps,
@@ -202,8 +213,13 @@ function AnnouncementList({ article1 }) {
             })}
           </tbody>
         </table>
-        <div>
+        <div id="pagination-nav">
           <div className="pagination-container">
+            {user.account === 0 && (
+              <Button color="info" onClick={goArticleCreate} id="rightBtn">
+                Create
+              </Button>
+            )}
             <div className="pagination-wrapper">
               <Pagination
                 className="pagination justify-content-center"
@@ -213,19 +229,19 @@ function AnnouncementList({ article1 }) {
                 <PaginationItem disabled={currentPage === 1}>
                   <PaginationLink previous href="#" onClick={goToPrevPage} />
                 </PaginationItem>
-                {Array.from({ length: pageCount }, (_, index) => (
+                {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
                   <PaginationItem
-                    key={index}
-                    active={index + 1 === currentPage}
+                    key={startPage + index}
+                    active={startPage + index === currentPage}
                   >
                     <PaginationLink
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
-                        setCurrentPage(index + 1);
+                        setCurrentPage(startPage + index);
                       }}
                     >
-                      {index + 1}
+                      {startPage + index}
                     </PaginationLink>
                   </PaginationItem>
                 ))}
