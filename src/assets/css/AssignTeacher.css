@@ -1,6 +1,6 @@
 #inputState {
   display: inline;
-  margin-top:10px;
+  margin-top: 10px;
   margin-bottom: 25px;
 }
 #std_course_body {
@@ -47,7 +47,7 @@ th {
   }
 }
 
-/* 화면 크기가 768px보다 크고 1200px 이하일 때 (타블렛 뷰) */
+/* 화면 크기가 768px보다 크고 1200px 이하일 때 (태블렛 뷰) */
 @media (min-width: 769px) and (max-width: 1200px) {
   #add_btn {
     align-items: center;

@@ -2,13 +2,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
 import axios from "axios"; // Axios 사용 예시
-import { FormGroup, Label, Input, Button, UncontrolledAlert } from "reactstrap";
+import { Button, UncontrolledAlert } from "reactstrap";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import React, { Component, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function TeacherEdit() {
@@ -24,8 +24,8 @@ function TeacherEdit() {
   } = useForm({ mode: "onSubmit" });
   const formItemStyle = {
     margin: "5px",
-    width:"170px",
-    height:"30px",
+    width: "170px",
+    height: "30px",
   };
   const redBorderStyle = {
     margin: "10px",
@@ -124,8 +124,11 @@ function TeacherEdit() {
             </button>
           </UncontrolledAlert>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} style={{marginTop:"20px"}}>
-          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
+        <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: "20px" }}>
+          <div
+            className="form-control__items"
+            style={{ width: "100%", margin: "5px" }}
+          >
             <label htmlFor="full_name">Full Name : </label>
             <input
               style={formItemStyle}
@@ -138,7 +141,10 @@ function TeacherEdit() {
               })}
             />
           </div>
-          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
+          <div
+            className="form-control__items"
+            style={{ width: "100%", margin: "5px" }}
+          >
             <label htmlFor="phone_num">Phone No : </label>
             <input
               style={formItemStyle}
@@ -152,7 +158,10 @@ function TeacherEdit() {
             />
           </div>
 
-          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
+          <div
+            className="form-control__items"
+            style={{ width: "100%", margin: "5px" }}
+          >
             <label htmlFor="id">ID : </label>
             <input
               id="id"
@@ -173,9 +182,16 @@ function TeacherEdit() {
                 }
               }}
             />
-            {errors.id && <small role="alert" style={{color:"red"}}>{errors.id.message}</small>}
+            {errors.id && (
+              <small role="alert" style={{ color: "red" }}>
+                {errors.id.message}
+              </small>
+            )}
           </div>
-          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
+          <div
+            className="form-control__items"
+            style={{ width: "100%", margin: "5px" }}
+          >
             <label htmlFor="pw">PW : </label>
             <input
               id="pw"
@@ -195,7 +211,10 @@ function TeacherEdit() {
                     <small role="alert">{errors.password.message}</small>
                   )} */}
           </div>
-          <div className="form-control__items" style={{width:"100%", margin:"5px"}}>
+          <div
+            className="form-control__items"
+            style={{ width: "100%", margin: "5px" }}
+          >
             <label htmlFor="passwordConfirm">Re-type PW:</label>
             <input
               style={formItemStyle}
@@ -219,13 +238,19 @@ function TeacherEdit() {
               })}
             />
             {errors.passwordConfirm && (
-              <small role="alert" style={{color:"red"}}>{errors.passwordConfirm.message}</small>
+              <small role="alert" style={{ color: "red" }}>
+                {errors.passwordConfirm.message}
+              </small>
             )}
           </div>
-          <Button id="leftBtn" type="submit" style={{
-            marginTop:"10px",
-            marginRight:"10px"
-          }}>
+          <Button
+            id="leftBtn"
+            type="submit"
+            style={{
+              marginTop: "10px",
+              marginRight: "10px",
+            }}
+          >
             Edit
           </Button>
         </form>
