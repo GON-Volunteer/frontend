@@ -41,13 +41,21 @@
   height: 30px;
   margin-top: 15px;
   margin-bottom: 10px; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.pagination-container {
+  bottom: 0;
+
   position: fixed;
-  bottom: 100%;
-  left: 80%;
-  transform: translateX(-50%);
+  width: 100vw;
+  align-items: center;
+}
+
+.pagination-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 #subject_name {
@@ -60,22 +68,6 @@
   margin-left: 20px;
   width: 80px;
   height: 30px;
-}
-
-.pagination-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: fixed;
-  bottom: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-}
-
-.pagination-wrapper {
-  position: relative;
-  margin-bottom: 10px;
 }
 
 #EditBtn {
