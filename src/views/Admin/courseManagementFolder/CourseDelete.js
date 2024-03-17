@@ -148,6 +148,7 @@ function CourseDelete() {
   // 이전 페이지로 이동하는 함수
   const goToPrevPage = () => {
     setCurrentPage((prev) => prev - 1);
+    }
   };
 
   // 현재 페이지에 해당하는 데이터를 가져옵니다.
